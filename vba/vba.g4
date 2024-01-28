@@ -1963,15 +1963,11 @@ LINE_CONTINUATION
     : ' ' UNDERSCORE NEWLINE
     ;
 
-CRLF
-    : \r \n
-    ;
-
 // MS-VBAL v1.7 sec 3.2.1
 NEWLINE
-    : CRLF
-    | \r
-    | \n
+    : '\r\n'
+    | '\r'
+    | '\n'
     | \u2028
     | \u2029
     ;
