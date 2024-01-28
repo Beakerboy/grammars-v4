@@ -1965,7 +1965,7 @@ LINE_CONTINUATION
 
 // MS-VBAL v1.7 sec 3.2.1
 NEWLINE
-    : \r\n
+    : \r \n
     | \r
     | \n
     | \u2028
