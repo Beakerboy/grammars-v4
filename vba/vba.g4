@@ -1957,12 +1957,19 @@ fragment AMPM
     ;
 
 // whitespace, line breaks, comments, ...
+// MS-VBAL v1.7 sec 3.2.2
+// *WSC underscore *WSC line-terminator
 LINE_CONTINUATION
-    : [ \t]+ UNDERSCORE '\r'? '\n' WS* -> skip
+    : ' ' UNDERSCORE NEWLINE
     ;
 
+// MS-VBAL v1.7 sec 3.2.1
 NEWLINE
-    : [\r\n\u2028\u2029]+
+    : \r\n
+    | \r
+    | \n
+    | \u2028
+    | \u2029
     ;
 
 REMCOMMENT
@@ -1986,7 +1993,7 @@ UNDERSCORE
     ;
 
 WS
-    : ([ \t] | LINE_CONTINUATION)+
+    : ([ \t\u0019] | LINE_CONTINUATION)+
     ;
 
 // identifier
