@@ -206,6 +206,17 @@ additionExpression
     : expression WS? PLUS WS? expression
     ;
 
+// 5.6.16.8
+addressofExpression
+    : ADDRESSOF WS? procedurePointerExpression
+    ;
+
+// 5.6.13.1
+argumentExpression
+    : BYVAL? expression
+    | addressofExpression
+    ;
+
 // 5.6.13.1
 argumentList
     : positionalOrNamedArgumentList?
@@ -220,6 +231,12 @@ positionalArgument
     : argumentExpression?
     ;
 
+// 5.6.16.8
+procedurePointerExpression
+    : simpleNameExpression
+    | memberAccessExpression
+    ;
+
 requiredPositionalArgument
     : argumentExpression
     ;
@@ -230,11 +247,6 @@ namedArgumenList
 
 namedArgument
     : unrestrictedName WS? ASSIGN WS? argumentExpression
-    ;
-
-argumentExpression
-    : BYVAL? expression
-    | addressofExpression
     ;
 
 // 5.6.9.3
@@ -249,6 +261,11 @@ arithmeticExpression
     | exponentiationExpression
     ;
 
+// 5.6.9.4
+concatenationOperatorExpression
+    : expression WS? AMPERSAND WS? expression
+    ;
+
 // 5.6.9.3.5
 divisionExpression
     : expression WS? DIV WS? expression
@@ -259,9 +276,19 @@ exponentiationExpression
     : expression WS? POW WS? expression
     ;
 
+// 5.6.9.5.1
+equalityOperatorExpression
+    : expression WS? EQ WS? expression
+    ;
+
 // 5.6.13
 indexExpression
     : lExpression WS? LPAREN WS? argumentList WS? RPAREN
+    ;
+
+// 
+inequalityOperatorExpression
+    : expression WS? NEQ WS? expression
     ;
 
 // 5.6.11
@@ -319,6 +346,16 @@ parenthesizedExpression
     : LPAREN WS? expression WS? RPAREN
     ;
 
+// 5.6.9.5
+relationalOperatorExpression
+    : equalityOperatorExpression
+    | inequalityOperatorExpression
+    | lessThanOperatorExpression
+    | greaterThanOperatorExpression
+    | lessThanEqualOperatorExpression
+    | greaterThanEqualOperatorExpression
+    ;
+
 // 5.6.10
 simpleNameExpression
     : IDENTIFIER
@@ -359,7 +396,7 @@ constStmt
     ;
 
 constSubStmt
-    : ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? expression
+    : ambiguousIdentifier typeSuffix? (WS asTypeClause)? WS? EQ WS? expression
     ;
 
 dateStmt
@@ -367,7 +404,7 @@ dateStmt
     ;
 
 declareStmt
-    : (visibility WS)? DECLARE WS (PTRSAFE WS)? ((FUNCTION typeHint?) | SUB) WS ambiguousIdentifier typeHint? WS LIB WS STRINGLITERAL (
+    : (visibility WS)? DECLARE WS (PTRSAFE WS)? ((FUNCTION typeSuffix?) | SUB) WS ambiguousIdentifier typeSuffix? WS LIB WS STRINGLITERAL (
         WS ALIAS WS STRINGLITERAL
     )? (WS? argList)? (WS asTypeClause)?
     ;
@@ -390,13 +427,13 @@ deftypeStmt
     ;
 
 deleteSettingStmt
-    : DELETESETTING WS valueStmt WS? ',' WS? valueStmt (WS? ',' WS? valueStmt)?
+    : DELETESETTING WS expression WS? ',' WS? expression (WS? ',' WS? expression)?
     ;
 
 doLoopStmt
     : DO endOfStatement block? LOOP
-    | DO WS (WHILE | UNTIL) WS valueStmt endOfStatement block? LOOP
-    | DO endOfStatement block LOOP WS (WHILE | UNTIL) WS valueStmt
+    | DO WS (WHILE | UNTIL) WS expression endOfStatement block? LOOP
+    | DO endOfStatement block LOOP WS (WHILE | UNTIL) WS expression
     ;
 
 endStmt
@@ -408,15 +445,15 @@ enumerationStmt
     ;
 
 enumerationStmt_Constant
-    : ambiguousIdentifier (WS? EQ WS? valueStmt)? endOfStatement
+    : ambiguousIdentifier (WS? EQ WS? expression)? endOfStatement
     ;
 
 eraseStmt
-    : ERASE WS valueStmt (',' WS? valueStmt)*?
+    : ERASE WS expression (',' WS? expression)*?
     ;
 
 errorStmt
-    : ERROR WS valueStmt
+    : ERROR WS expression
     ;
 
 eventStmt
@@ -432,23 +469,23 @@ exitStmt
     ;
 
 filecopyStmt
-    : FILECOPY WS valueStmt WS? ',' WS? valueStmt
+    : FILECOPY WS expression WS? ',' WS? expression
     ;
 
 forEachStmt
-    : FOR WS EACH WS ambiguousIdentifier typeHint? WS IN WS valueStmt endOfStatement block? NEXT (
+    : FOR WS EACH WS ambiguousIdentifier typeSuffix? WS IN WS expression endOfStatement block? NEXT (
         WS ambiguousIdentifier
     )?
     ;
 
 forNextStmt
-    : FOR WS ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? valueStmt WS TO WS valueStmt (
-        WS STEP WS valueStmt
+    : FOR WS ambiguousIdentifier typeSuffix? (WS asTypeClause)? WS? EQ WS? expression WS TO WS expression (
+        WS STEP WS expression
     )? endOfStatement block? NEXT (WS ambiguousIdentifier)?
     ;
 
 functionStmt
-    : (visibility WS)? (STATIC WS)? FUNCTION WS? ambiguousIdentifier typeHint? (WS? argList)? (
+    : (visibility WS)? (STATIC WS)? FUNCTION WS? ambiguousIdentifier typeSuffix? (WS? argList)? (
         WS? asTypeClause
     )? endOfStatement block? END_FUNCTION
     ;
@@ -475,7 +512,7 @@ ifBlockStmt
     ;
 
 ifConditionStmt
-    : valueStmt
+    : expression
     ;
 
 ifElseIfBlockStmt
@@ -499,7 +536,7 @@ killStmt
     ;
 
 letStmt
-    : (LET WS)? implicitCallStmt_InStmt WS? (EQ | PLUS_EQ | MINUS_EQ) WS? typeHint? valueStmt typeHint?
+    : (LET WS)? implicitCallStmt_InStmt WS? (EQ | PLUS_EQ | MINUS_EQ) WS? typeSuffix? expression typeSuffix?
     ;
 
 lineInputStmt
@@ -647,11 +684,11 @@ rsetStmt
     ;
 
 savepictureStmt
-    : SAVEPICTURE WS valueStmt WS? ',' WS? valueStmt
+    : SAVEPICTURE WS expression WS? ',' WS? expression
     ;
 
 saveSettingStmt
-    : SAVESETTING WS valueStmt WS? ',' WS? valueStmt WS? ',' WS? valueStmt WS? ',' WS? valueStmt
+    : SAVESETTING WS expression WS? ',' WS? expression WS? ',' WS? expression WS? ',' WS? expression
     ;
 
 seekStmt
@@ -664,7 +701,7 @@ selectCaseStmt
 
 sC_Selection
     : IS WS? comparisonOperator WS? expression # caseCondIs
-    | valueStmt WS TO WS expression            # caseCondTo
+    | expression WS TO WS expression            # caseCondTo
     | expression                               # caseCondValue
     ;
 
@@ -837,11 +874,11 @@ argsCall
     ;
 
 argCall
-    : LPAREN? ((BYVAL | BYREF | PARAMARRAY) WS)? RPAREN? valueStmt
+    : LPAREN? ((BYVAL | BYREF | PARAMARRAY) WS)? RPAREN? expression
     ;
 
 dictionaryCallStmt
-    : '!' ambiguousIdentifier typeHint?
+    : '!' ambiguousIdentifier typeSuffix?
     ;
 
 // atomic rules for statements
@@ -851,7 +888,7 @@ argList
     ;
 
 arg
-    : (OPTIONAL WS)? ((BYVAL | BYREF) WS)? (PARAMARRAY WS)? ambiguousIdentifier typeHint? (
+    : (OPTIONAL WS)? ((BYVAL | BYREF) WS)? (PARAMARRAY WS)? ambiguousIdentifier typeSuffix? (
         WS? LPAREN WS? RPAREN
     )? (WS? asTypeClause)? (WS? argDefaultValue)?
     ;
@@ -865,7 +902,7 @@ subscripts
     ;
 
 subscript_
-    : (valueStmt WS TO WS)? typeHint? valueStmt typeHint?
+    : (expression WS TO WS)? typeSuffix? ezpression typeSuffix?
     ;
 
 // atomic rules ----------------------------------
@@ -2123,6 +2160,7 @@ MULT
 
 NEQ
     : '<>'
+    | '><'
     ;
 
 PLUS
