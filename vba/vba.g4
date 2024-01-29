@@ -208,32 +208,31 @@ additionExpression
 
 // 5.6.13.1
 argumentList
-    : [positional-or-named-argument-list]
+    :[positional-or-named-argument-list]
     ;
 
- positional-or-named-argument-list
-    : *(positional-argument ",") required-positional-argument 
-    | *(positional-argument ",") named-argument-list
+positional -or -named -argument -list
+    :* (positional -argument ", ") required -positional -argument
+    |* (positional -argument ", ") named -argument -list
     ;
 
- positional-argument
-    : [argumentExpression]
+positional -argument
+    :[argumentExpression]
     ;
 
- required-positional-argument
+required -positional -argument
     : argumentExpression
     ;
 
- named-argument-list
-    : named-argument *("," named-argument)
+named -argument -list
+    : named -argument* (", " named -argument)
     ;
 
- named-argument
-    : unrestricted-name ":""=" argumentExpression
-
- argumentExpression
-    : ["byval"] expression
-    | addressof-expression
+named -argument
+    : unrestricted -name "
+    : "" = " argumentExpression argumentExpression
+    :["byval"] expression
+    | addressof -expression
     ;
 
 // 5.6.9.3
