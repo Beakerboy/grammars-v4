@@ -665,22 +665,22 @@ lExpression
     ;
 
 stmts
-    : literal                                                                  # vsLiteral
-    | implicitCallStmt_InStmt                                                  # vsICS
+    : literal                                                                    # vsLiteral
+    | implicitCallStmt_InStmt                                                    # vsICS
     | LPAREN WS? expression (WS? ',' WS? expression)* RPAREN                     # vsStruct
-    | NEW WS? expression                                                        # vsNew
-    | midStmt                                                                  # vsMid
-    | ADDRESSOF WS? expression                                                  # vsAddressOf
-    | implicitCallStmt_InStmt WS? ASSIGN WS? expression                         # vsAssign
+    | NEW WS? expression                                                         # vsNew
+    | midStmt                                                                    # vsMid
+    | ADDRESSOF WS? expression                                                   # vsAddressOf
+    | implicitCallStmt_InStmt WS? ASSIGN WS? expression                          # vsAssign
     | expression WS? POW WS? expression                                          # vsPow
-    | MINUS WS? expression                                                      # vsNegation
-    | PLUS WS? expression                                                       # vsPlus
+    | MINUS WS? expression                                                       # vsNegation
+    | PLUS WS? expression                                                        # vsPlus
     | expression WS? (DIV | MULT) WS? expression                                 # vsDivMult
     | expression WS? MOD WS? expression                                          # vsMod
     | expression WS? (PLUS | MINUS) WS? expression                               # vsAddMinus
     | expression WS? AMPERSAND WS? expression                                    # vsAmp
     | expression WS? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) WS? expression # vsRelational
-    | NOT WS? expression                                                        # vsNot
+    | NOT WS? expression                                                         # vsNot
     | expression WS? AND WS? expression                                          # vsAnd
     | expression WS? OR WS? expression                                           # vsOr
     | expression WS? XOR WS? expression                                          # vsXor
