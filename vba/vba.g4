@@ -972,8 +972,8 @@ reservedForImplementationUse
     | VB_VarUserMemId
     ;
 
-    // 3.3.5.2
-    futureReserved
+// 3.3.5.2
+futureReserved
     : CDECL
     | DECIMAL
     | DEFDEC
