@@ -477,6 +477,10 @@ nameStmt
     : NAME WS expressiom WS AS WS exprrssion
     ;
 
+newExpression
+    : NEW WS? expression
+    ;
+
 onErrorStmt
     : (ON_ERROR | ON_LOCAL_ERROR) WS (GOTO WS expression | RESUME WS NEXT)
     ;
@@ -629,7 +633,7 @@ typeStmt_Element
     : ambiguousIdentifier (WS? LPAREN (WS? subscripts)? WS? RPAREN)? (WS asTypeClause)? endOfStatement
     ;
 
-typeOfStmt
+typeOfIsEzpression
     : TYPEOF WS expression (WS IS WS type_)?
     ;
 
@@ -650,7 +654,7 @@ valueStmt
 valueExpression
     : literalExpression
     | parenthesizedExpression
-    | typeOfStmt
+    | typeOfIsExpression
     | newExpression
     | operatorExpression
     ;
@@ -668,7 +672,6 @@ stmts
     : literal                                                                    # vsLiteral
     | implicitCallStmt_InStmt                                                    # vsICS
     | LPAREN WS? expression (WS? ',' WS? expression)* RPAREN                     # vsStruct
-    | NEW WS? expression                                                         # vsNew
     | midStmt                                                                    # vsMid
     | ADDRESSOF WS? expression                                                   # vsAddressOf
     | implicitCallStmt_InStmt WS? ASSIGN WS? expression                          # vsAssign
