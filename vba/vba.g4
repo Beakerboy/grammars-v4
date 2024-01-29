@@ -655,8 +655,7 @@ typeOfIsEzpression
 
 // 5.6.9.3.1
 unaryMinusExpression
-    : "-" WS? expression
-unloadStmt
+    : "-" WS? expression unloadStmt
     : UNLOAD WS expression
     ;
 
