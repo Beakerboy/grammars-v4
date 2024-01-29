@@ -251,7 +251,11 @@ blockStmt
     | implicitCallStmt_InStmt
     ;
 
-// statements ----------------------------------
+// expressions ----------------------------------
+// 5.6.9.3.2
+additionExpression
+    : expression WS? PLUS WS? expression
+    ;
 
 appactivateStmt
     : APPACTIVATE WS expression (WS? ',' WS? expression)?
