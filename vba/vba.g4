@@ -957,19 +957,20 @@ reservedForImplementationUse
     | VB_GLOBALNAMESPACE
     | VB_HELPID
     | VB_INVOKE_FUNC
-    | VB_Invoke_Property
-    | VB_Invoke_PropertyPut
-    | VB_Invoke_PropertyPutRefVB_MemberFlags
-    | VB_Name
-    | VB_PredeclaredId
-    | VB_ProcData
-    | VB_TemplateDerived
-    | VB_UserMemId
-    | VB_VarDescription
-    | VB_VarHelpID
-    | VB_VarMemberFlags
-    | VB_VarProcData
-    | VB_VarUserMemId
+    | VB_INVOKE_PROPERTY
+    | VB_INVOKE_PROPERTYPUT
+    | VB_INVOKE_PROPERTYPUTREF
+    | VB_MEMBERFLAGS
+    | VB_NAME
+    | VB_PREDECLAREDID
+    | VB_PROCDATA
+    | VB_TEMPLATEDERIVED
+    | VB_USERMEMID
+    | VB_VARDESCRIPTION
+    | VB_VARHELPID
+    | VB_VARMEMBERFLAGS
+    | VB_VARPROCDATA
+    | VB_VARUSERMEMID
     ;
 
 // 3.3.5.2
