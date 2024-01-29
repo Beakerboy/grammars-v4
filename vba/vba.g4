@@ -701,7 +701,7 @@ selectCaseStmt
 
 sC_Selection
     : IS WS? comparisonOperator WS? expression # caseCondIs
-    | expression WS TO WS expression            # caseCondTo
+    | expression WS TO WS expression           # caseCondTo
     | expression                               # caseCondValue
     ;
 
