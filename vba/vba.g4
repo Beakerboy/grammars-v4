@@ -254,7 +254,7 @@ blockStmt
 // statements ----------------------------------
 
 appactivateStmt
-    : APPACTIVATE WS valueStmt (WS? ',' WS? valueStmt)?
+    : APPACTIVATE WS expression (WS? ',' WS? expression)?
     ;
 
 beepStmt
@@ -262,11 +262,11 @@ beepStmt
     ;
 
 chdirStmt
-    : CHDIR WS valueStmt
+    : CHDIR WS expression
     ;
 
 chdriveStmt
-    : CHDRIVE WS valueStmt
+    : CHDRIVE WS expression
     ;
 
 closeStmt
@@ -278,11 +278,11 @@ constStmt
     ;
 
 constSubStmt
-    : ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? valueStmt
+    : ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? expression
     ;
 
 dateStmt
-    : DATE WS? EQ WS? valueStmt
+    : DATE WS? EQ WS? expression
     ;
 
 declareStmt
@@ -373,15 +373,15 @@ functionStmt
     ;
 
 getStmt
-    : GET WS fileNumber WS? ',' WS? valueStmt? WS? ',' WS? valueStmt
+    : GET WS fileNumber WS? ',' WS? ezpression? WS? ',' WS? expression
     ;
 
 goSubStmt
-    : GOSUB WS valueStmt
+    : GOSUB WS expression
     ;
 
 goToStmt
-    : GOTO WS valueStmt
+    : GOTO WS expression
     ;
 
 ifThenElseStmt
@@ -410,11 +410,11 @@ implementsStmt
     ;
 
 inputStmt
-    : INPUT WS fileNumber (WS? ',' WS? valueStmt)+
+    : INPUT WS fileNumber (WS? ',' WS? expression)+
     ;
 
 killStmt
-    : KILL WS valueStmt
+    : KILL WS expression
     ;
 
 letStmt
@@ -422,7 +422,7 @@ letStmt
     ;
 
 lineInputStmt
-    : LINE_INPUT WS fileNumber WS? ',' WS? valueStmt
+    : LINE_INPUT WS fileNumber WS? ',' WS? expression
     ;
 
 lineNumber
@@ -430,19 +430,19 @@ lineNumber
     ;
 
 loadStmt
-    : LOAD WS valueStmt
+    : LOAD WS expression
     ;
 
 lockStmt
-    : LOCK WS valueStmt (WS? ',' WS? valueStmt (WS TO WS valueStmt)?)?
+    : LOCK WS expression (WS? ',' WS? expression (WS TO WS expression)?)?
     ;
 
 lsetStmt
-    : LSET WS implicitCallStmt_InStmt WS? EQ WS? valueStmt
+    : LSET WS implicitCallStmt_InStmt WS? EQ WS? expression
     ;
 
 macroConstStmt
-    : MACRO_CONST WS? ambiguousIdentifier WS? EQ WS? valueStmt
+    : MACRO_CONST WS? ambiguousIdentifier WS? EQ WS? expression
     ;
 
 macroIfThenElseStmt
@@ -470,30 +470,30 @@ midStmt
     ;
 
 mkdirStmt
-    : MKDIR WS valueStmt
+    : MKDIR WS expression
     ;
 
 nameStmt
-    : NAME WS valueStmt WS AS WS valueStmt
+    : NAME WS expressiom WS AS WS exprrssion
     ;
 
 onErrorStmt
-    : (ON_ERROR | ON_LOCAL_ERROR) WS (GOTO WS valueStmt | RESUME WS NEXT)
+    : (ON_ERROR | ON_LOCAL_ERROR) WS (GOTO WS expression | RESUME WS NEXT)
     ;
 
 onGoToStmt
-    : ON WS valueStmt WS GOTO WS valueStmt (WS? ',' WS? valueStmt)*
+    : ON WS expression WS GOTO WS expression (WS? ',' WS? expression)*
     ;
 
 onGoSubStmt
-    : ON WS valueStmt WS GOSUB WS valueStmt (WS? ',' WS? valueStmt)*
+    : ON WS expression WS GOSUB WS expression (WS? ',' WS? expression)*
     ;
 
 openStmt
-    : OPEN WS valueStmt WS FOR WS (APPEND | BINARY | INPUT | OUTPUT | RANDOM) (
+    : OPEN WS expression WS FOR WS (APPEND | BINARY | INPUT | OUTPUT | RANDOM) (
         WS ACCESS WS (READ | WRITE | READ_WRITE)
     )? (WS (SHARED | LOCK_READ | LOCK_WRITE | LOCK_READ_WRITE))? WS AS WS fileNumber (
-        WS LEN WS? EQ WS? valueStmt
+        WS LEN WS? EQ WS? expression
     )?
     ;
 
@@ -503,7 +503,7 @@ outputList
     ;
 
 outputList_Expression
-    : valueStmt
+    : expression
     | (SPC | TAB) (WS? LPAREN WS? argsCall WS? RPAREN)?
     ;
 
@@ -526,7 +526,7 @@ propertyLetStmt
     ;
 
 putStmt
-    : PUT WS fileNumber WS? ',' WS? valueStmt? WS? ',' WS? valueStmt
+    : PUT WS fileNumber WS? ',' WS? expression? WS? ',' WS? expression
     ;
 
 raiseEventStmt
@@ -534,7 +534,7 @@ raiseEventStmt
     ;
 
 randomizeStmt
-    : RANDOMIZE (WS valueStmt)?
+    : RANDOMIZE (WS expression)?
     ;
 
 redimStmt
@@ -558,11 +558,11 @@ returnStmt
     ;
 
 rmdirStmt
-    : RMDIR WS valueStmt
+    : RMDIR WS expression
     ;
 
 rsetStmt
-    : RSET WS implicitCallStmt_InStmt WS? EQ WS? valueStmt
+    : RSET WS implicitCallStmt_InStmt WS? EQ WS? expression
     ;
 
 savepictureStmt
@@ -574,17 +574,17 @@ saveSettingStmt
     ;
 
 seekStmt
-    : SEEK WS fileNumber WS? ',' WS? valueStmt
+    : SEEK WS fileNumber WS? ',' WS? expression
     ;
 
 selectCaseStmt
-    : SELECT WS CASE WS valueStmt endOfStatement sC_Case* END_SELECT
+    : SELECT WS CASE WS expression endOfStatement sC_Case* END_SELECT
     ;
 
 sC_Selection
-    : IS WS? comparisonOperator WS? valueStmt # caseCondIs
-    | valueStmt WS TO WS valueStmt            # caseCondTo
-    | valueStmt                               # caseCondValue
+    : IS WS? comparisonOperator WS? expression # caseCondIs
+    | valueStmt WS TO WS expression            # caseCondTo
+    | expression                               # caseCondValue
     ;
 
 sC_Case
@@ -598,15 +598,15 @@ sC_Cond
     ;
 
 sendkeysStmt
-    : SENDKEYS WS valueStmt (WS? ',' WS? valueStmt)?
+    : SENDKEYS WS expression (WS? ',' WS? expression)?
     ;
 
 setattrStmt
-    : SETATTR WS valueStmt WS? ',' WS? valueStmt
+    : SETATTR WS expression WS? ',' WS? expression
     ;
 
 setStmt
-    : SET WS implicitCallStmt_InStmt WS? EQ WS? valueStmt
+    : SET WS implicitCallStmt_InStmt WS? EQ WS? expression
     ;
 
 stopStmt
@@ -618,7 +618,7 @@ subStmt
     ;
 
 timeStmt
-    : TIME WS? EQ WS? valueStmt
+    : TIME WS? EQ WS? expression
     ;
 
 typeStmt
@@ -630,15 +630,15 @@ typeStmt_Element
     ;
 
 typeOfStmt
-    : TYPEOF WS valueStmt (WS IS WS type_)?
+    : TYPEOF WS expression (WS IS WS type_)?
     ;
 
 unloadStmt
-    : UNLOAD WS valueStmt
+    : UNLOAD WS expression
     ;
 
 unlockStmt
-    : UNLOCK WS fileNumber (WS? ',' WS? valueStmt (WS TO WS valueStmt)?)?
+    : UNLOCK WS fileNumber (WS? ',' WS? expression (WS TO WS expression)?)?
     ;
 
 // operator precedence is represented by rule order
@@ -650,7 +650,7 @@ valueStmt
 valueExpression
     : literalExpression
     | parenthesizedExpression
-    | typeOfIsExpression
+    | typeOfStmt
     | newExpression
     | operatorExpression
     ;
@@ -667,26 +667,25 @@ lExpression
 stmts
     : literal                                                                  # vsLiteral
     | implicitCallStmt_InStmt                                                  # vsICS
-    | LPAREN WS? valueStmt (WS? ',' WS? valueStmt)* RPAREN                     # vsStruct
-    | NEW WS? valueStmt                                                        # vsNew
-    | typeOfStmt                                                               # vsTypeOf
+    | LPAREN WS? expression (WS? ',' WS? expression)* RPAREN                     # vsStruct
+    | NEW WS? expression                                                        # vsNew
     | midStmt                                                                  # vsMid
-    | ADDRESSOF WS? valueStmt                                                  # vsAddressOf
-    | implicitCallStmt_InStmt WS? ASSIGN WS? valueStmt                         # vsAssign
-    | valueStmt WS? POW WS? valueStmt                                          # vsPow
-    | MINUS WS? valueStmt                                                      # vsNegation
-    | PLUS WS? valueStmt                                                       # vsPlus
-    | valueStmt WS? (DIV | MULT) WS? valueStmt                                 # vsDivMult
-    | valueStmt WS? MOD WS? valueStmt                                          # vsMod
-    | valueStmt WS? (PLUS | MINUS) WS? valueStmt                               # vsAddMinus
-    | valueStmt WS? AMPERSAND WS? valueStmt                                    # vsAmp
-    | valueStmt WS? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) WS? valueStmt # vsRelational
-    | NOT WS? valueStmt                                                        # vsNot
-    | valueStmt WS? AND WS? valueStmt                                          # vsAnd
-    | valueStmt WS? OR WS? valueStmt                                           # vsOr
-    | valueStmt WS? XOR WS? valueStmt                                          # vsXor
-    | valueStmt WS? EQV WS? valueStmt                                          # vsEqv
-    | valueStmt WS? IMP WS? valueStmt                                          # vsImp
+    | ADDRESSOF WS? expression                                                  # vsAddressOf
+    | implicitCallStmt_InStmt WS? ASSIGN WS? expression                         # vsAssign
+    | expression WS? POW WS? expression                                          # vsPow
+    | MINUS WS? expression                                                      # vsNegation
+    | PLUS WS? expression                                                       # vsPlus
+    | expression WS? (DIV | MULT) WS? expression                                 # vsDivMult
+    | expression WS? MOD WS? expression                                          # vsMod
+    | expression WS? (PLUS | MINUS) WS? expression                               # vsAddMinus
+    | expression WS? AMPERSAND WS? expression                                    # vsAmp
+    | expression WS? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) WS? expression # vsRelational
+    | NOT WS? expression                                                        # vsNot
+    | expression WS? AND WS? expression                                          # vsAnd
+    | expression WS? OR WS? expression                                           # vsOr
+    | expression WS? XOR WS? expression                                          # vsXor
+    | expression WS? EQV WS? expression                                          # vsEqv
+    | expression WS? IMP WS? expression                                          # vsImp
     ;
 
 variableStmt
