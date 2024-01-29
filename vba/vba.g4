@@ -249,8 +249,8 @@ literalExpression
 
 // 5.6.12
 memberAccessExpression
-    : lExpression "." WS? unrestrictedName
-    | lExpression line -continuation "." WS? unrestrictedName
+    : lExpression '.' WS? unrestrictedName
+    | lExpression WS? LINE_CONTINUATION WS? '.' WS? unrestrictedName
     ;
 
 // 5.6.9.3.6
@@ -276,6 +276,11 @@ operatorExpression
     | likeExpression
     | isExpression
     | logicalExpression
+    ;
+
+// 5.6.6
+parenthesizedExpression
+    : LPAREN WS? expression WS? RPAREN
     ;
 
 // 5.6.10
@@ -545,11 +550,6 @@ outputList
 outputList_Expression
     : expression
     | (SPC | TAB) (WS? LPAREN WS? argsCall WS? RPAREN)?
-    ;
-
-// 5.6.6
-parenthesizedExpression
-    : LPAREN WS? expression WS? RPAREN
     ;
 
 printStmt
