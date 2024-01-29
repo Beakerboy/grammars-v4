@@ -690,7 +690,7 @@ widthStmt
     ;
 
 withStmt
-    : WITH WS (implicitCallStmt_InStmt | (NEW WS type_)) endOfStatement block? END_WITH
+    : WITH WS (implicitCallStmt_InStmt | (NEW WS type_)) WS? endOfStatement block? END_WITH
     ;
 
 writeStmt
