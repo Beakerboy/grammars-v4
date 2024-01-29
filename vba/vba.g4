@@ -657,13 +657,16 @@ typeStmt_Element
     : ambiguousIdentifier (WS? LPAREN (WS? subscripts)? WS? RPAREN)? (WS asTypeClause)? endOfStatement
     ;
 
-typeOfIsEzpression
+typeOfIsExpression
     : TYPEOF WS expression (WS IS WS type_)?
     ;
 
 // 5.6.9.3.1
 unaryMinusExpression
-    : "-" WS? expression unloadStmt
+    : "-" WS? expression
+    ;
+
+unloadStmt
     : UNLOAD WS expression
     ;
 
