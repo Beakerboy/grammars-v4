@@ -266,10 +266,7 @@ arithmeticExpression
     | divisionExpression
     | integerDivisionExpression
     | moduloExpression
-    | exponentiationExpression
-
-beepStmt
-    : BEEP
+    | exponentiationExpression beepStmt: BEEP
     ;
 
 chdirStmt
