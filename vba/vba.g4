@@ -643,6 +643,28 @@ unlockStmt
 
 // operator precedence is represented by rule order
 valueStmt
+    : valueExpression
+    | lExpression
+    ;
+
+valueExpression
+    : literalExpression
+    | parenthesizedExpression
+    | typeOfIsExpression
+    | newExpression
+    | operatorExpression
+    ;
+
+lExpression
+    : simpleNameExpression
+    | instanceExpression
+    | memberAccessExpression
+    | indexExpression
+    | dictionaryAccessExpression
+    | withExpression
+    ;
+
+stmts
     : literal                                                                  # vsLiteral
     | implicitCallStmt_InStmt                                                  # vsICS
     | LPAREN WS? valueStmt (WS? ',' WS? valueStmt)* RPAREN                     # vsStruct
