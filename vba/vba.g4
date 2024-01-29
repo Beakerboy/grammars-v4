@@ -906,6 +906,8 @@ type_
     ;
 
 // 3.3.5.3
+// if changes are made here, they should be made in the
+// lexer as well.
 typeSuffix
     : '&'
     | '%'
@@ -921,6 +923,213 @@ visibility
     | PUBLIC
     | FRIEND
     | GLOBAL
+    ;
+
+// 3.3.5.2
+reservedIdentifier
+    : selectKeyword
+    | markerKeyword
+    | operatorIdentifier
+    | specialForm
+    | reservedName
+    | literalIdentifier
+    | remKeyword
+    | reservedForImplementationUse
+    | futureReserved
+    
+// 3.3.5.2
+remKeyword
+    : REM
+    ;
+
+// 3.3.5.2
+reservedForImplementationUse
+    : ATTRIBUTE
+    | LINEINPUT
+    | VB_Base" / "VB_Control" / "VB_Creatable" /  "VB_Customizable" / "VB_Description" / "VB_Exposed" / "VB_Ext_KEY " / "VB_GlobalNameSpace" / "VB_HelpID" / "VB_Invoke_Func" / "VB_Invoke_Property " / "VB_Invoke_PropertyPut" / "VB_Invoke_PropertyPutRefVB_MemberFlags" / "VB_Name" / "VB_PredeclaredId" / "VB_ProcData" / "VB_TemplateDerived" / "VB_UserMemId" / "VB_VarDescription" / "VB_VarHelpID" / "VB_VarMemberFlags" / "VB_VarProcData " / "VB_VarUserMemId" 
+  
+// 3.3.5.2
+futureReserved
+    : CDECL
+    | DECIMAL
+    | DEFDEC
+    ;
+
+// 3.3.5.2
+selectKeyword
+    : CALL
+    | CASE
+    | CLOSE
+    | CONST
+    | DECLARE
+    | DEFBOOL
+    | DEFBYTE
+    | DEFCUR
+    | DEFDATE
+    | DEFDBL
+    | DEFINT
+    | DEFLNG
+    | DEFLNGLNG
+    | DEFLNGPTR
+    | DEFOBJ
+    | DEFSNG
+    | DEFSTR
+    | DEFVAR
+    | DIM
+    | DO
+    | ELSE
+    | ELSEIF
+    | END
+    | ENDIF
+    | ENUM
+    | ERASE
+    | EVENT
+    | EXIT
+    | FOR
+    | FRIEND
+    | FUNCTION
+    | GET
+    | GLOBAL
+    | GOSUB
+    | GOTO
+    | IF
+    | IMPLEMENTS
+    | INPUT
+    | LET
+    | LOCK
+    | LOOP
+    | LSET
+    | NEXT
+    | ON
+    | OPEN
+    | OPTION
+    | PRINT
+    | PRIVATE
+    | PUBLIC
+    | PUT
+    | RAISEEVENT
+    | REDIM
+    | RESUME
+    | RETURN
+    | RSET
+    | SEEK
+    | SELECT
+    | SET
+    | STATIC
+    | STOP
+    | SUB
+    | TYPE
+    | UNLOCK
+    | WEND
+    | WHILE
+    | WITH
+    | WRITE
+    ;
+
+// 3.3.5.2
+literalIdentifier
+    : booleanLiteralIdentifier
+    | objectLiteralIdentifier
+    | variantLiteralIdentifier
+    ;
+
+// 3.3.5.2
+booleanLiteralIdentifier
+    : TRUE
+    | FALSE
+    ;
+
+// 3.3.5.2
+objectLiteralIdentifier
+    : NOTHING
+    ;
+
+// 3.3.5.2
+variantLiteralIdentifier
+    : EMPTY
+    | NULL
+    ;
+
+// 3.3.5.2
+markerKeyword
+    : ANY
+    | AS
+    | BYREF
+    | BYVAL
+    | CASE
+    | EACH
+    | ELSE
+    | IN
+    | NEW
+    | SHARED
+    | UNTIL
+    | WITHEVENTS
+    | WRITE
+    | OPTIONAL
+    | PARAMARRAY
+    | PRESERVE
+    | SPC
+    | TAB
+    | THEN
+    | TO
+    ;
+
+// 3.3.5.2
+operatorIdentifier
+    : ADDRESSOF
+    | AND
+    | EQV
+    | IMP
+    | IS
+    | LIKE
+    | NEW
+    | MOD
+    | NOT
+    | OR
+    | TYPEOF
+    | XOR
+    ;
+
+// 3.3.5.2
+reservedName
+    : Abs
+    | CBOOL
+    | CBYTE
+    | CCUR
+    | CDATE
+    | CDBL
+    | CDEC
+    | CINT
+    | CLNG
+    | CLNGLNG
+    | CLNGPTR
+    | CSNG
+    | CSTR
+    | CVAR
+    | CVERR
+    | DATE
+    | DEBUG
+    | DOEVENTS
+    | FIX
+    | INT
+    | LEN
+    | LENB
+    | ME
+    | PSET
+    | SCALE
+    | SGN
+    | STRING
+    ;
+
+// 3.3.5.2
+specialForm
+    : ARRAY
+    | CIRCLE
+    | INPUT
+    | INPUTB
+    | LBOUND
+    | SCALE
+    | UBOUND
     ;
 
 // ambiguous keywords
