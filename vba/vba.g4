@@ -936,9 +936,10 @@ reservedIdentifier
     | remKeyword
     | reservedForImplementationUse
     | futureReserved
+    ;
 
-    // 3.3.5.2
-    remKeyword
+// 3.3.5.2
+remKeyword
     : REM
     ;
 
@@ -946,10 +947,30 @@ reservedIdentifier
 reservedForImplementationUse
     : ATTRIBUTE
     | LINEINPUT
-    | VB_Base " / "VB_Control " / "VB_Creatable " / "VB_Customizable " / "VB_Description " / "VB_Exposed " / "VB_Ext_KEY " / "VB_GlobalNameSpace " / "
-        VB_HelpID " / "VB_Invoke_Func " / "VB_Invoke_Property " / "VB_Invoke_PropertyPut " / "VB_Invoke_PropertyPutRefVB_MemberFlags " / "VB_Name " /
-        "VB_PredeclaredId " / "VB_ProcData " / "VB_TemplateDerived " / "VB_UserMemId " / "VB_VarDescription " / "VB_VarHelpID " / "VB_VarMemberFlags "
-        / "VB_VarProcData " / "VB_VarUserMemId "
+    | VB_BASE
+    | VB_CONTROL
+    | VB_CREATABLE
+    | VB_CUSTOMIZABLE
+    | VB_DESCRIPTION
+    | VB_EXPOSED
+    | VB_EXT_KEY
+    | VB_GLOBALNAMESPACE
+    | VB_HELPID
+    | VB_INVOKE_FUNC
+    | VB_Invoke_Property
+    | VB_Invoke_PropertyPut
+    | VB_Invoke_PropertyPutRefVB_MemberFlags
+    | VB_Name
+    | VB_PredeclaredId
+    | VB_ProcData
+    | VB_TemplateDerived
+    | VB_UserMemId
+    | VB_VarDescription
+    | VB_VarHelpID
+    | VB_VarMemberFlags
+    | VB_VarProcData
+    | VB_VarUserMemId
+    ;
 
     // 3.3.5.2
     futureReserved
