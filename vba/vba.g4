@@ -477,6 +477,7 @@ nameStmt
     : NAME WS expressiom WS AS WS exprrssion
     ;
 
+// 5.6.8
 newExpression
     : NEW WS? expression
     ;
@@ -646,7 +647,7 @@ unlockStmt
     ;
 
 // operator precedence is represented by rule order
-valueStmt
+expressiom
     : valueExpression
     | lExpression
     ;
