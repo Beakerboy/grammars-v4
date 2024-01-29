@@ -206,6 +206,36 @@ additionExpression
     : expression WS? PLUS WS? expression
     ;
 
+// 5.6.13.1
+argumentList
+    : [positional-or-named-argument-list]
+    ;
+
+ positional-or-named-argument-list
+    : *(positional-argument ",") required-positional-argument 
+    | *(positional-argument ",") named-argument-list
+    ;
+
+ positional-argument
+    : [argumentExpression]
+    ;
+
+ required-positional-argument
+    : argumentExpression
+    ;
+
+ named-argument-list
+    : named-argument *("," named-argument)
+    ;
+
+ named-argument
+    : unrestricted-name ":""=" argumentExpression
+
+ argumentExpression
+    : ["byval"] expression
+    | addressof-expression
+    ;
+
 // 5.6.9.3
 arithmeticExpression
     : unaryMinusExpression
@@ -226,6 +256,11 @@ divisionExpression
 // 5.6.9.3.7
 exponentiationExpression
     : expression WS? POW WS? expression
+    ;
+
+// 5.6.13
+indexExpression
+    : lExpression WS? LPAREN WS? argumentList WS? RPAREN
     ;
 
 // 5.6.11
