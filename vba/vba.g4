@@ -701,11 +701,11 @@ variableSubStmt
     ;
 
 whileWendStmt
-    : WHILE WS valueStmt endOfStatement block? WEND
+    : WHILE WS expression endOfStatement block? WEND
     ;
 
 widthStmt
-    : WIDTH WS fileNumber WS? ',' WS? valueStmt
+    : WIDTH WS fileNumber WS? ',' WS? expression
     ;
 
 withStmt
@@ -717,7 +717,7 @@ writeStmt
     ;
 
 fileNumber
-    : '#'? valueStmt
+    : '#'? expression
     ;
 
 // complex call statements ----------------------------------
