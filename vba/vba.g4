@@ -502,6 +502,16 @@ openStmt
     )?
     ;
 
+// 5.6.9
+operatorExpression
+    : arithmeticExpression
+    | concatenationExpression
+    | relationalExpression
+    | likeExpression
+    | isExpression
+    | logicalExpression
+    ;
+
 outputList
     : outputList_Expression (WS? (';' | ',') WS? outputList_Expression?)*
     | outputList_Expression? (WS? (';' | ',') WS? outputList_Expression?)+
@@ -510,6 +520,11 @@ outputList
 outputList_Expression
     : expression
     | (SPC | TAB) (WS? LPAREN WS? argsCall WS? RPAREN)?
+    ;
+
+// 5.6.6
+parenthesizedExpression
+    : LPAREN WS? expression WS? RPAREN
     ;
 
 printStmt
@@ -638,6 +653,9 @@ typeOfIsEzpression
     : TYPEOF WS expression (WS IS WS type_)?
     ;
 
+// 5.6.9.3.1
+unaryMinusExpression
+    : "-" WS? expression
 unloadStmt
     : UNLOAD WS expression
     ;
@@ -646,12 +664,13 @@ unlockStmt
     : UNLOCK WS fileNumber (WS? ',' WS? expression (WS TO WS expression)?)?
     ;
 
-// operator precedence is represented by rule order
+// 5.6
 expressiom
     : valueExpression
     | lExpression
     ;
 
+// 5.6
 valueExpression
     : literalExpression
     | parenthesizedExpression
@@ -660,6 +679,7 @@ valueExpression
     | operatorExpression
     ;
 
+// 5.6
 lExpression
     : simpleNameExpression
     | instanceExpression
@@ -667,29 +687,6 @@ lExpression
     | indexExpression
     | dictionaryAccessExpression
     | withExpression
-    ;
-
-stmts
-    : literal                                                                    # vsLiteral
-    | implicitCallStmt_InStmt                                                    # vsICS
-    | LPAREN WS? expression (WS? ',' WS? expression)* RPAREN                     # vsStruct
-    | midStmt                                                                    # vsMid
-    | ADDRESSOF WS? expression                                                   # vsAddressOf
-    | implicitCallStmt_InStmt WS? ASSIGN WS? expression                          # vsAssign
-    | expression WS? POW WS? expression                                          # vsPow
-    | MINUS WS? expression                                                       # vsNegation
-    | PLUS WS? expression                                                        # vsPlus
-    | expression WS? (DIV | MULT) WS? expression                                 # vsDivMult
-    | expression WS? MOD WS? expression                                          # vsMod
-    | expression WS? (PLUS | MINUS) WS? expression                               # vsAddMinus
-    | expression WS? AMPERSAND WS? expression                                    # vsAmp
-    | expression WS? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) WS? expression # vsRelational
-    | NOT WS? expression                                                         # vsNot
-    | expression WS? AND WS? expression                                          # vsAnd
-    | expression WS? OR WS? expression                                           # vsOr
-    | expression WS? XOR WS? expression                                          # vsXor
-    | expression WS? EQV WS? expression                                          # vsEqv
-    | expression WS? IMP WS? expression                                          # vsImp
     ;
 
 variableStmt
@@ -893,6 +890,15 @@ lineLabel
     : ambiguousIdentifier ':'
     ;
 
+// 5.6.5
+literalExpression
+    : INTEGER
+    | FLOAT
+    | DATE
+    | STRING
+    | (literalIdentifier typeSuffix)
+    ;
+
 literal
     : HEXLITERAL
     | OCTLITERAL
@@ -911,13 +917,15 @@ type_
     : (baseType | complexType) (WS? LPAREN WS? RPAREN)?
     ;
 
-typeHint
+// 3.3.5.3
+typeSuffix
     : '&'
     | '%'
     | '#'
     | '!'
     | '@'
     | '$'
+    | '^'
     ;
 
 visibility
