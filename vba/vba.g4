@@ -630,7 +630,7 @@ printStmt
     ;
 
 propertyGetStmt
-    : (visibility WS)? (STATIC WS)? PROPERTY_GET WS ambiguousIdentifier typeHint? (WS? argList)? (
+    : (visibility WS)? (STATIC WS)? PROPERTY_GET WS ambiguousIdentifier typeSuffix? (WS? argList)? (
         WS asTypeClause
     )? endOfStatement block? END_PROPERTY
     ;
@@ -768,7 +768,7 @@ variableListStmt
     ;
 
 variableSubStmt
-    : ambiguousIdentifier (WS? LPAREN WS? (subscripts WS?)? RPAREN WS?)? typeHint? (
+    : ambiguousIdentifier (WS? LPAREN WS? (subscripts WS?)? RPAREN WS?)? typeSuffix? (
         WS asTypeClause
     )?
     ;
@@ -802,14 +802,14 @@ explicitCallStmt
 
 // parantheses are required in case of args -> empty parantheses are removed
 eCS_ProcedureCall
-    : CALL WS ambiguousIdentifier typeHint? (WS? LPAREN WS? argsCall WS? RPAREN)? (
+    : CALL WS ambiguousIdentifier typeSuffix? (WS? LPAREN WS? argsCall WS? RPAREN)? (
         WS? LPAREN subscripts RPAREN
     )*
     ;
 
 // parantheses are required in case of args -> empty parantheses are removed
 eCS_MemberProcedureCall
-    : CALL WS implicitCallStmt_InStmt? '.' ambiguousIdentifier typeHint? (
+    : CALL WS implicitCallStmt_InStmt? '.' ambiguousIdentifier typeSuffix? (
         WS? LPAREN WS? argsCall WS? RPAREN
     )? (WS? LPAREN subscripts RPAREN)*
     ;
@@ -841,11 +841,11 @@ implicitCallStmt_InStmt
     ;
 
 iCS_S_VariableOrProcedureCall
-    : ambiguousIdentifier typeHint? dictionaryCallStmt? (WS? LPAREN subscripts RPAREN)*
+    : ambiguousIdentifier typeSuffix? dictionaryCallStmt? (WS? LPAREN subscripts RPAREN)*
     ;
 
 iCS_S_ProcedureOrArrayCall
-    : (ambiguousIdentifier | baseType) typeHint? WS? LPAREN WS? (argsCall WS?)? RPAREN dictionaryCallStmt? (
+    : (ambiguousIdentifier | baseType) typeSuffix? WS? LPAREN WS? (argsCall WS?)? RPAREN dictionaryCallStmt? (
         WS? LPAREN subscripts RPAREN
     )*
     ;
