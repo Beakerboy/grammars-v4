@@ -158,6 +158,23 @@ blockStmt
     | implicitCallStmt_InStmt
     ;
 
+// module body -----
+// 5.1
+unrestrictedName
+    : name
+    | reservedIdentifier
+    ;
+
+name
+    : untypedName
+    | TYPEDNAME
+    ;
+
+untypedName
+    : IDENTIFIER
+    | FOREIGN_NAME
+    ;
+
 // expressions ----------------------------------
 // 5.6
 expressiom
@@ -211,6 +228,11 @@ exponentiationExpression
     : expression WS? POW WS? expression
     ;
 
+// 5.6.11
+instanceExpression
+    : ME
+    ;
+
 // 5.6.9.3.6
 integerDivisionExpression
     : expression WS? INTDIV WS? expression
@@ -223,6 +245,12 @@ literalExpression
     | DATE
     | STRING
     | (literalIdentifier typeSuffix)
+    ;
+
+// 5.6.12
+memberAccessExpression
+    : lExpression "." WS? unrestrictedName
+    | lExpression line-continuation "." WS? unrestrictedName
     ;
 
 // 5.6.9.3.6
@@ -248,6 +276,11 @@ operatorExpression
     | likeExpression
     | isExpression
     | logicalExpression
+    ;
+
+// 5.6.10
+simpleNameExpression
+    : IDENTIFIER
     ;
 
 // 5.6.9.3.3
@@ -1851,6 +1884,10 @@ fragment BLOCK
     : HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT
     ;
 
+TYPED_NAME
+    : IDENTIFIER ['%''$''^''!''#''@''$']
+    ;
+
 GUID
     : '{' BLOCK BLOCK MINUS BLOCK MINUS BLOCK MINUS BLOCK MINUS BLOCK BLOCK BLOCK '}'
     ;
@@ -1988,9 +2025,13 @@ WS
     ;
 
 // identifier
+// 3.3.5.3
+FOREIGN_NAME
+    : L_SQUARE_BRACKET (~[\]\r\n])+ R_SQUARE_BRACKET
+    ;
+
 IDENTIFIER
     : ~[\]()\r\n\t.,'"|!@#$%^&*\-+:=; ]+
-    | L_SQUARE_BRACKET (~[!\]\r\n])+ R_SQUARE_BRACKET
     ;
 
 // letters
