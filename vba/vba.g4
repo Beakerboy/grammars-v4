@@ -199,9 +199,10 @@ arithmeticExpression
     | integerDivisionExpression
     | moduloExpression
     | exponentiationExpression
+    ;
 
-    // 5.6.9.3.5
-    divisionExpression
+// 5.6.9.3.5
+divisionExpression
     : expression WS? DIV WS? expression
     ;
 
