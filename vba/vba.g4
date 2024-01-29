@@ -257,6 +257,17 @@ appactivateStmt
     : APPACTIVATE WS expression (WS? ',' WS? expression)?
     ;
 
+// 5.6.9.3
+arithmeticExpression
+    : unaryMinusExpression
+    | additionExpression
+    | subtractionExpression
+    | multiplicationExpression
+    | divisionExpression
+    | integerDivisionExpression
+    | moduloExpression
+    | exponentiationExpression
+
 beepStmt
     : BEEP
     ;
