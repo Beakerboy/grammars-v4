@@ -1885,7 +1885,7 @@ fragment BLOCK
     ;
 
 TYPED_NAME
-    : IDENTIFIER ['%''$''^''!''#''@''$']
+    : IDENTIFIER [%$^!#@$]
     ;
 
 GUID
