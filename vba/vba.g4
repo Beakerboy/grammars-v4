@@ -250,7 +250,7 @@ literalExpression
 // 5.6.12
 memberAccessExpression
     : lExpression "." WS? unrestrictedName
-    | lExpression line-continuation "." WS? unrestrictedName
+    | lExpression line -continuation "." WS? unrestrictedName
     ;
 
 // 5.6.9.3.6
