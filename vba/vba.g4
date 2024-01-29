@@ -788,7 +788,7 @@ arg
     ;
 
 argDefaultValue
-    : EQ WS? valueStmt
+    : EQ WS? expression
     ;
 
 subscripts
@@ -818,7 +818,7 @@ baseType
     | INTEGER
     | LONG
     | SINGLE
-    | STRING (WS? MULT WS? valueStmt)?
+    | STRING (WS? MULT WS? expression)?
     | VARIANT
     ;
 
