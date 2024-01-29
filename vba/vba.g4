@@ -200,8 +200,8 @@ arithmeticExpression
     | moduloExpression
     | exponentiationExpression
 
-    // 5.6.9.3.5
-    divisionExpression
+// 5.6.9.3.5
+divisionExpression
     : expression WS? DIV WS? expression
     ;
 
@@ -256,7 +256,7 @@ subtractionExpression
 
 // 5.6.9.3.1
 unaryMinusExpression
-    : "-" WS? expression
+    : MINUS WS? expression
     ;
 
 appactivateStmt
