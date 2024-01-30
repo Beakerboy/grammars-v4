@@ -311,7 +311,7 @@ indexExpression
     : lExpression WS? LPAREN WS? argumentList WS? RPAREN
     ;
 
-// 
+// 5.6.9.5.2
 inequalityOperatorExpression
     : expression WS? NEQ WS? expression
     ;
