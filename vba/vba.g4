@@ -226,7 +226,7 @@ namedArgument
 
 // 5.6.9.8.2
 andOperatorExpression
-    : expression WS? AND WS? wxpression
+    : expression WS? AND WS? expression
     ;
 
 // 5.6.9.3
@@ -253,7 +253,7 @@ divisionExpression
 
 // 5.6.9.8.5
 eqvOperatorExpression
-    : expression WS? EQV WS? wxpression
+    : expression WS? EQV WS? expression
     ;
 
 // 5.6.9.3.7
@@ -278,7 +278,7 @@ greaterThanEqualOperatorExpression
 
 // 5.6.9.8.6
 impOperatorExpression
-    : expression WS? IMP WS? wxpression
+    : expression WS? IMP WS? expression
     ;
 
 // 5.6.13
@@ -393,7 +393,7 @@ operatorExpression
 
 // 5.6.9.8.3
 orOperatorExpression
-    : expression WS? OR WS? wxpression
+    : expression WS? OR WS? expression
     ;
 
 // 5.6.6
@@ -470,7 +470,7 @@ withDictionaryAccessExpression
 
 // 5.6.9.8.4
 xorOperatorExpression
-    : expression WS? XOR WS? wxpression
+    : expression WS? XOR WS? expression
     ;
 
 appactivateStmt
@@ -593,7 +593,7 @@ functionStmt
     ;
 
 getStmt
-    : GET WS fileNumber WS? ',' WS? ezpression? WS? ',' WS? expression
+    : GET WS fileNumber WS? ',' WS? expression? WS? ',' WS? expression
     ;
 
 goSubStmt
@@ -694,7 +694,7 @@ mkdirStmt
     ;
 
 nameStmt
-    : NAME WS expressiom WS AS WS exprrssion
+    : NAME WS expression WS AS WS expression
     ;
 
 onErrorStmt
