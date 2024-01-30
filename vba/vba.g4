@@ -211,11 +211,6 @@ namedArgument
     : unrestrictedName WS? ASSIGN WS? argumentExpression
     ;
 
-// 5.6.9.8.2
-andOperatorExpression
-    : expression WS? AND WS? expression
-    ;
-
 // 5.6.9.3
 arithmeticOperatorExpression
     : unaryMinusExpression
@@ -233,11 +228,6 @@ concatenationOperatorExpression
     : expression WS? AMPERSAND WS? expression
     ;
 
-// 5.6.9.8.5
-eqvOperatorExpression
-    : expression WS? EQV WS? expression
-    ;
-
 // 5.6.9.5.1
 equalityOperatorExpression
     : expression WS? EQ WS? expression
@@ -251,11 +241,6 @@ greaterThanOperatorExpression
 // 5.6.9.5.6
 greaterThanEqualOperatorExpression
     : expression WS? GEQ WS? expression
-    ;
-
-// 5.6.9.8.6
-impOperatorExpression
-    : expression WS? IMP WS? expression
     ;
 
 // 5.6.13
@@ -323,11 +308,11 @@ literalExpression
 // 5.6.9.8
 logicalOperatorExpression
     : notOperatorExpression
-    | andOperatorExpression
-    | orOperatorExpression
-    | xorOperatorExpression
-    | impOperatorExpression
-    | eqvOperatorExpression
+    | expression WS? AND WS? expression
+    | expression WS? OR WS? expression
+    | expression WS? XOR WS? expression
+    | expression WS? IMP WS? expression
+    | expression WS? EQV WS? expression
     ;
 
 // 5.6.8
@@ -348,11 +333,6 @@ operatorExpression
     | likeOperatorExpression
     | isOperatorExpression
     | logicalOperatorExpression
-    ;
-
-// 5.6.9.8.3
-orOperatorExpression
-    : expression WS? OR WS? expression
     ;
 
 // 5.6.6
@@ -421,11 +401,6 @@ withMemberAccessExpression
 // 5.6.15
 withDictionaryAccessExpression
     : '!' unrestrictedName
-    ;
-
-// 5.6.9.8.4
-xorOperatorExpression
-    : expression WS? XOR WS? expression
     ;
 
 appactivateStmt
