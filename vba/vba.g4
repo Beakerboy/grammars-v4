@@ -369,7 +369,7 @@ forNextStmt
 functionStmt
     : (visibility WS)? (STATIC WS)? FUNCTION WS? ambiguousIdentifier typeHint? (WS? argList)? (
         WS? asTypeClause
-    )? endOfStatement block? END_FUNCTION
+    )? endOfStatement block? END wsc FUNCTION
     ;
 
 getStmt
@@ -386,7 +386,7 @@ goToStmt
 
 ifThenElseStmt
     : IF WS ifConditionStmt WS THEN WS blockStmt (WS ELSE WS blockStmt)? # inlineIfThenElse
-    | ifBlockStmt ifElseIfBlockStmt* ifElseBlockStmt? END_IF             # blockIfThenElse
+    | ifBlockStmt ifElseIfBlockStmt* ifElseBlockStmt? END wsc IF             # blockIfThenElse
     ;
 
 ifBlockStmt
@@ -514,7 +514,7 @@ printStmt
 propertyGetStmt
     : (visibility WS)? (STATIC WS)? PROPERTY_GET WS ambiguousIdentifier typeHint? (WS? argList)? (
         WS asTypeClause
-    )? endOfStatement block? END_PROPERTY
+    )? endOfStatement block? END wsc PROPERTY
     ;
 
 propertySetStmt
@@ -1254,18 +1254,6 @@ ELSEIF
 
 END_ENUM
     : 'END' WS 'ENUM'
-    ;
-
-END_FUNCTION
-    : 'END' WS 'FUNCTION'
-    ;
-
-END_IF
-    : 'END' WS 'IF'
-    ;
-
-END_PROPERTY
-    : 'END' WS 'PROPERTY'
     ;
 
 END_SELECT
