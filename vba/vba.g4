@@ -167,7 +167,7 @@ unrestrictedName
 
 name
     : untypedName
-    | TYPEDNAME
+    | TYPED_NAME
     ;
 
 untypedName
@@ -1111,7 +1111,7 @@ remKeyword
 // 3.3.5.2
 reservedForImplementationUse
     : ATTRIBUTE
-    | LINEINPUT
+    | LINE_INPUT
     | VB_BASE
     | VB_CONTROL
     | VB_CREATABLE
@@ -1751,6 +1751,10 @@ FALSE
 
 FILECOPY
     : 'FILECOPY'
+    ;
+
+FLOAT
+    : 'FLOAT'
     ;
 
 FRIEND
