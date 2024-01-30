@@ -249,6 +249,11 @@ namedArgument
     : unrestrictedName WS? ASSIGN WS? argumentExpression
     ;
 
+// 5.6.9.8.2
+andOperatorExpression
+    : expression WS? AND WS? wxpression
+    ;
+
 // 5.6.9.3
 arithmeticExpression
     : unaryMinusExpression
@@ -271,6 +276,11 @@ divisionExpression
     : expression WS? DIV WS? expression
     ;
 
+// 5.6.9.8.5
+eqvOperatorExpression
+    : expression WS? EQV WS? wxpression
+    ;
+
 // 5.6.9.3.7
 exponentiationExpression
     : expression WS? POW WS? expression
@@ -279,6 +289,21 @@ exponentiationExpression
 // 5.6.9.5.1
 equalityOperatorExpression
     : expression WS? EQ WS? expression
+    ;
+
+// 5.6.9.5.4
+greaterThanOperatorExpression
+    : expression WS? GT WS? expression
+    ;
+
+// 5.6.9.5.6
+greaterThanEqualOperatorExpression
+    : expression WS? GEQ WS? expression
+    ;
+
+// 5.6.9.8.6
+impOperatorExpression
+    : expression WS? IMP WS? wxpression
     ;
 
 // 5.6.13
@@ -301,6 +326,31 @@ integerDivisionExpression
     : expression WS? INTDIV WS? expression
     ;
 
+// 5.6.9.7
+isOperatorExpression
+    : expression IS expression
+    ;
+
+// 5.6.9.5.3
+lessThanOperatorExpression
+    : expression WS? LT WS? expression
+    ;
+
+// 5.6.9.5.5
+lessThanEqualOperatorExpression
+    : expression WS? LEQ WS? expression
+    ;
+
+// 5.6.9.6
+likeOperatorExpression
+    : expression WS? LIKE WS? likePatternExpression
+    ;
+
+// 5.6.9.6
+likePatternExpression
+    : expression
+    ;
+
 // 5.6.5
 literalExpression
     : INTEGER
@@ -308,6 +358,16 @@ literalExpression
     | DATE
     | STRING
     | (literalIdentifier typeSuffix)
+    ;
+
+// 5.6.9.8
+logical-operator-expression
+    : notOperatorExpression
+    | andOperatorExpression
+    | orOperatorExpression
+    | xorOperatorExpression
+    | impOperatorExpression
+    | eqvOperatorExpression
     ;
 
 // 5.6.12
@@ -331,6 +391,11 @@ newExpression
     : NEW WS? expression
     ;
 
+// 5.6.9.8.1
+notOperatorExpression
+    : NOT WS? expression
+    ;
+
 // 5.6.9
 operatorExpression
     : arithmeticExpression
@@ -339,6 +404,11 @@ operatorExpression
     | likeExpression
     | isExpression
     | logicalExpression
+    ;
+
+// 5.6.9.8.3
+orOperatorExpression
+    : expression WS? OR WS? wxpression
     ;
 
 // 5.6.6
@@ -369,6 +439,11 @@ subtractionExpression
 // 5.6.9.3.1
 unaryMinusExpression
     : MINUS WS? expression
+    ;
+
+// 5.6.9.8.4
+xorOperatorExpression
+    : expression WS? XOR WS? wxpression
     ;
 
 appactivateStmt
@@ -820,7 +895,7 @@ implicitCallStmt_InBlock
     ;
 
 iCS_B_MemberProcedureCall
-    : implicitCallStmt_InStmt? '.' ambiguousIdentifier typeHint? (WS argsCall)? dictionaryCallStmt? (
+    : implicitCallStmt_InStmt? '.' ambiguousIdentifier typeSuffix? (WS argsCall)? dictionaryCallStmt? (
         WS? LPAREN subscripts RPAREN
     )*
     ;
@@ -902,7 +977,7 @@ subscripts
     ;
 
 subscript_
-    : (expression WS TO WS)? typeSuffix? ezpression typeSuffix?
+    : (expression WS TO WS)? typeSuffix? expression typeSuffix?
     ;
 
 // atomic rules ----------------------------------
@@ -2128,6 +2203,7 @@ EQ
 
 GEQ
     : '>='
+    | '=>'
     ;
 
 GT
@@ -2136,6 +2212,7 @@ GT
 
 LEQ
     : '<='
+    | '=<'
     ;
 
 LPAREN
