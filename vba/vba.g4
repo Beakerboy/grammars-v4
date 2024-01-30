@@ -176,30 +176,6 @@ untypedName
     ;
 
 // expressions ----------------------------------
-// 5.6
-expressiom
-    : valueExpression
-    | lExpression
-    ;
-
-// 5.6
-valueExpression
-    : literalExpression
-    | parenthesizedExpression
-    | typeOfIsExpression
-    | newExpression
-    | operatorExpression
-    ;
-
-// 5.6
-lExpression
-    : simpleNameExpression
-    | instanceExpression
-    | memberAccessExpression
-    | indexExpression
-    | dictionaryAccessExpression
-    | withExpression
-    ;
 
 // 5.6.9.3.2
 additionExpression
@@ -222,19 +198,18 @@ argumentList
     : positionalOrNamedArgumentList?
     ;
 
-positionalOrNamedArgumentList
-    : (positionalArgument WS? ',')* requiredPositionalArgument
-    | (positionalArgument WS? ',')* namedArgumenList
+// 5.6.14
+// No whitespace allowed after
+dictionaryAccessExpression
+    : lExpression '!' unrestrictedName
+    | lExpression LINE_CONTINUATION WS? '!' unrestrictedName
+    | lExpression LINE_CONTINUATION WS? '!' LINE_CONTINUATION WS? unrestrictedName
     ;
 
-positionalArgument
-    : argumentExpression?
-    ;
-
-// 5.6.16.8
-procedurePointerExpression
-    : simpleNameExpression
-    | memberAccessExpression
+// 5.6
+expression
+    : valueExpression
+    | lExpression
     ;
 
 requiredPositionalArgument
@@ -341,6 +316,16 @@ lessThanEqualOperatorExpression
     : expression WS? LEQ WS? expression
     ;
 
+// 5.6
+lExpression
+    : simpleNameExpression
+    | instanceExpression
+    | memberAccessExpression
+    | indexExpression
+    | dictionaryAccessExpression
+    | withExpression
+    ;
+
 // 5.6.9.6
 likeOperatorExpression
     : expression WS? LIKE WS? likePatternExpression
@@ -416,6 +401,23 @@ parenthesizedExpression
     : LPAREN WS? expression WS? RPAREN
     ;
 
+// 5.6.13.1
+positionalOrNamedArgumentList
+    : (positionalArgument WS? ',')* requiredPositionalArgument
+    | (positionalArgument WS? ',')* namedArgumenList
+    ;
+
+// 5.6.13.1
+positionalArgument
+    : argumentExpression?
+    ;
+
+// 5.6.16.8
+procedurePointerExpression
+    : simpleNameExpression
+    | memberAccessExpression
+    ;
+
 // 5.6.9.5
 relationalOperatorExpression
     : equalityOperatorExpression
@@ -439,6 +441,15 @@ subtractionExpression
 // 5.6.9.3.1
 unaryMinusExpression
     : MINUS WS? expression
+    ;
+
+// 5.6
+valueExpression
+    : literalExpression
+    | parenthesizedExpression
+    | typeOfIsExpression
+    | newExpression
+    | operatorExpression
     ;
 
 // 5.6.15
