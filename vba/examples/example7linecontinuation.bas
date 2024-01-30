@@ -12,4 +12,5 @@ Sub TestLineContinuedMemberCalls()
     With A. _
         B
     End With
-End Sub
+End _
+    Sub
