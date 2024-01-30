@@ -765,7 +765,7 @@ iCS_S_MembersCall
     ;
 
 iCS_S_MemberCall
-    : LINE_CONTINUATION? ('.' | '!') LINE_CONTINUATION? (
+    : LINE_CONTINUATION? WS? ('.' | '!') LINE_CONTINUATION? WS? (
         iCS_S_VariableOrProcedureCall
         | iCS_S_ProcedureOrArrayCall
     )
