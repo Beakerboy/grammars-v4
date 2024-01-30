@@ -320,8 +320,8 @@ lessThanEqualOperatorExpression
 lExpression
     : simpleNameExpression
     | instanceExpression
-    | lExpression '.' WS? unrestrictedName                           # memberAccessExpression 5.6.12
-    | lExpression WS? LINE_CONTINUATION WS? '.' WS? unrestrictedName # memberAccessExpression 5.6.12
+    | lExpression '.' WS? unrestrictedName
+    | lExpression WS? LINE_CONTINUATION WS? '.' WS? unrestrictedName
     | indexExpression
     | dictionaryAccessExpression
     | withExpression
