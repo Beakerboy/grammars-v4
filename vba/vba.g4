@@ -195,7 +195,29 @@ argumentList
 
 // 5.6
 expression
-    : valueExpression
+    : literalExpression
+    | parenthesizedExpression
+    | typeOfIsExpression
+    | newExpression
+    | unaryMinusExpression
+    | expression WS? PLUS WS? expression
+    | expression WS? MINUS WS? expression
+    | expression WS? MULT WS? expression
+    | expression WS? DIV WS? expression
+    | expression WS? INTDIV WS? expression
+    | expression WS? MOD WS? expression
+    | expression WS? POW WS? expression
+    | expression WS? AMPERSAND WS? expression
+    | expression WS? EQ WS? expression
+    | expression WS? NEQ WS? expression
+    | expression WS? LT WS? expression
+    | expression WS? GT WS? expression
+    | expression WS? LEQ WS? expression
+    | expression WS? GEQ WS? expression
+    | expression WS? LIKE WS? expression
+    | expression WS? IS WS? expression
+    | notOperatorExpression
+    | expression WS? (AND | OR | XOR | IMP | EQV) WS? expression
     | lExpression
     ;
 
@@ -234,11 +256,6 @@ lExpression
     | withExpression
     ;
 
-// 5.6.9.6
-likeOperatorExpression
-    :
-    ;
-
 // 5.6.5
 literalExpression
     : INTEGER
@@ -256,29 +273,6 @@ newExpression
 // 5.6.9.8.1
 notOperatorExpression
     : NOT WS? expression
-    ;
-
-// 5.6.9
-operatorExpression
-    : unaryMinusExpression
-    | expression WS? PLUS WS? expression
-    | expression WS? MINUS WS? expression
-    | expression WS? MULT WS? expression
-    | expression WS? DIV WS? expression
-    | expression WS? INTDIV WS? expression
-    | expression WS? MOD WS? expression
-    | expression WS? POW WS? expression
-    | expression WS? AMPERSAND WS? expression
-    | expression WS? EQ WS? expression
-    | expression WS? NEQ WS? expression
-    | expression WS? LT WS? expression
-    | expression WS? GT WS? expression
-    | expression WS? LEQ WS? expression
-    | expression WS? GEQ WS? expression
-    | expression WS? LIKE WS? expression
-    | expression WS? IS WS? expression
-    | notOperatorExpression
-    | expression WS? (AND | OR | XOR | IMP | EQV) WS? expression
     ;
 
 // 5.6.6
@@ -312,15 +306,6 @@ simpleNameExpression
 // 5.6.9.3.1
 unaryMinusExpression
     : MINUS WS? expression
-    ;
-
-// 5.6
-valueExpression
-    : literalExpression
-    | parenthesizedExpression
-    | typeOfIsExpression
-    | newExpression
-    | operatorExpression
     ;
 
 // 5.6.15
