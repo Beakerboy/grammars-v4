@@ -198,14 +198,6 @@ argumentList
     : positionalOrNamedArgumentList?
     ;
 
-// 5.6.14
-// No whitespace allowed after
-dictionaryAccessExpression
-    : lExpression '!' unrestrictedName
-    | lExpression LINE_CONTINUATION WS? '!' unrestrictedName
-    | lExpression LINE_CONTINUATION WS? '!' LINE_CONTINUATION WS? unrestrictedName
-    ;
-
 // 5.6
 expression
     : valueExpression
@@ -322,8 +314,10 @@ lExpression
     | instanceExpression
     | lExpression '.' WS? unrestrictedName
     | lExpression WS? LINE_CONTINUATION WS? '.' WS? unrestrictedName
-    | indexExpression
-    | dictionaryAccessExpression
+    | lExpression WS? LPAREN WS? argumentList WS? RPAREN
+    | lExpression '!' unrestrictedName
+    | lExpression LINE_CONTINUATION WS? '!' unrestrictedName
+    | lExpression LINE_CONTINUATION WS? '!' LINE_CONTINUATION WS? unrestrictedName
     | withExpression
     ;
 
