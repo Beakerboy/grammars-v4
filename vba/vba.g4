@@ -410,7 +410,8 @@ positionalArgument
 // 5.6.16.8
 procedurePointerExpression
     : simpleNameExpression
-    | memberAccessExpression
+    | lExpression '.' WS? unrestrictedName
+    | lExpression WS? LINE_CONTINUATION WS? '.' WS? unrestrictedName
     ;
 
 // 5.6.9.5
