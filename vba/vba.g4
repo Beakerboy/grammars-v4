@@ -1958,7 +1958,7 @@ fragment AMPM
 
 // whitespace, line breaks, comments, ...
 LINE_CONTINUATION
-    : [ \t]+ UNDERSCORE '\r'? '\n' WS* -> skip
+    : [ \t] UNDERSCORE '\r'? '\n'
     ;
 
 NEWLINE
@@ -1986,7 +1986,7 @@ UNDERSCORE
     ;
 
 WS
-    : ([ \t] | LINE_CONTINUATION)+
+    : ([ \t])+
     ;
 
 // identifier
