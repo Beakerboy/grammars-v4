@@ -1252,9 +1252,6 @@ ELSEIF
     : 'ELSEIF'
     ;
 
-END
-    : 'END'
-    ;
 END_ENUM
     : 'END' WS 'ENUM'
     ;
