@@ -236,7 +236,7 @@ lExpression
 
 // 5.6.9.6
 likeOperatorExpression
-    : 
+    :
     ;
 
 // 5.6.5
