@@ -1066,6 +1066,9 @@ endOfStatement
     : (endOfLine | WS? COLON WS?)*
     ;
 
+wsc
+    : (WS | LINE_CONTINUATION)+
+    ;
 // lexer rules --------------------------------------------------------------------------------
 
 // keywords
