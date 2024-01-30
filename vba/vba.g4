@@ -400,7 +400,7 @@ notOperatorExpression
 operatorExpression
     : arithmeticOperatorExpression
     | concatenationOperatorExpression
-    | relationalOperatoeExpression
+    | relationalOperatorExpression
     | likeOperatorExpression
     | isOperatorExpression
     | logicalOperatorExpression
