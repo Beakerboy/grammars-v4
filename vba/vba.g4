@@ -233,11 +233,6 @@ namedArgument
     : unrestrictedName WS? ASSIGN WS? argumentExpression
     ;
 
-// 5.6.13
-indexExpression
-    : lExpression WS? LPAREN WS? argumentList WS? RPAREN
-    ;
-
 // 5.6.11
 instanceExpression
     : ME
@@ -249,6 +244,7 @@ lExpression
     | instanceExpression
     | lExpression '.' WS? unrestrictedName
     | lExpression WS? LINE_CONTINUATION WS? '.' WS? unrestrictedName
+    | lExpression WS? LPAREN WS? argumentList WS? RPAREN
     | lExpression WS? LPAREN WS? argumentList WS? RPAREN
     | lExpression '!' unrestrictedName
     | lExpression LINE_CONTINUATION WS? '!' unrestrictedName
