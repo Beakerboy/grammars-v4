@@ -255,7 +255,7 @@ andOperatorExpression
     ;
 
 // 5.6.9.3
-arithmeticExpression
+arithmeticOperatorExpression
     : unaryMinusExpression
     | additionExpression
     | subtractionExpression
@@ -398,12 +398,12 @@ notOperatorExpression
 
 // 5.6.9
 operatorExpression
-    : arithmeticExpression
-    | concatenationExpression
-    | relationalExpression
-    | likeExpression
-    | isExpression
-    | logicalExpression
+    : arithmeticOperatorExpression
+    | concatenationOperatorExpression
+    | relationalOperatoeExpression
+    | likeOperatorExpression
+    | isOperatorExpression
+    | logicalOperatorExpression
     ;
 
 // 5.6.9.8.3
