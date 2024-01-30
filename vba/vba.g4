@@ -441,6 +441,22 @@ unaryMinusExpression
     : MINUS WS? expression
     ;
 
+// 5.6.15
+withExpression
+    : withMemberAccessExpression
+    | withDictionaryAccessExpression
+    ;
+
+// 5.6.15
+withMemberAccessExpression
+    : '.' WS? unrestrictedName
+    ;
+
+// 5.6.15
+withDictionaryAccessExpression
+    : '!' unrestrictedName
+    ;
+
 // 5.6.9.8.4
 xorOperatorExpression
     : expression WS? XOR WS? wxpression
