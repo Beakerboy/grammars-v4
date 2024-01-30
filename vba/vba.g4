@@ -211,23 +211,6 @@ namedArgument
     : unrestrictedName WS? ASSIGN WS? argumentExpression
     ;
 
-// 5.6.9.3
-arithmeticOperatorExpression
-    : unaryMinusExpression
-    | expression WS? PLUS WS? expression
-    | expression WS? MINUS WS? expression
-    | expression WS? MULT WS? expression
-    | expression WS? DIV WS? expression
-    | expression WS? INTDIV WS? expression
-    | expression WS? MOD WS? expression
-    | expression WS? POW WS? expression
-    ;
-
-// 5.6.9.4
-concatenationOperatorExpression
-    : expression WS? AMPERSAND WS? expression
-    ;
-
 // 5.6.13
 indexExpression
     : lExpression WS? LPAREN WS? argumentList WS? RPAREN
@@ -236,11 +219,6 @@ indexExpression
 // 5.6.11
 instanceExpression
     : ME
-    ;
-
-// 5.6.9.7
-isOperatorExpression
-    : expression IS expression
     ;
 
 // 5.6
@@ -258,12 +236,7 @@ lExpression
 
 // 5.6.9.6
 likeOperatorExpression
-    : expression WS? LIKE WS? likePatternExpression
-    ;
-
-// 5.6.9.6
-likePatternExpression
-    : expression
+    : 
     ;
 
 // 5.6.5
@@ -273,16 +246,6 @@ literalExpression
     | DATE
     | STRING
     | (literalIdentifier typeSuffix)
-    ;
-
-// 5.6.9.8
-logicalOperatorExpression
-    : notOperatorExpression
-    | expression WS? AND WS? expression
-    | expression WS? OR WS? expression
-    | expression WS? XOR WS? expression
-    | expression WS? IMP WS? expression
-    | expression WS? EQV WS? expression
     ;
 
 // 5.6.8
@@ -297,12 +260,25 @@ notOperatorExpression
 
 // 5.6.9
 operatorExpression
-    : arithmeticOperatorExpression
-    | concatenationOperatorExpression
-    | relationalOperatorExpression
-    | likeOperatorExpression
-    | isOperatorExpression
-    | logicalOperatorExpression
+    : unaryMinusExpression
+    | expression WS? PLUS WS? expression
+    | expression WS? MINUS WS? expression
+    | expression WS? MULT WS? expression
+    | expression WS? DIV WS? expression
+    | expression WS? INTDIV WS? expression
+    | expression WS? MOD WS? expression
+    | expression WS? POW WS? expression
+    | expression WS? AMPERSAND WS? expression
+    | expression WS? EQ WS? expression
+    | expression WS? NEQ WS? expression
+    | expression WS? LT WS? expression
+    | expression WS? GT WS? expression
+    | expression WS? LEQ WS? expression
+    | expression WS? GEQ WS? expression
+    | expression WS? LIKE WS? expression
+    | expression WS? IS WS? expression
+    | notOperatorExpression
+    | expression WS? (AND | OR | XOR | IMP | EQV) WS? expression
     ;
 
 // 5.6.6
@@ -326,16 +302,6 @@ procedurePointerExpression
     : simpleNameExpression
     | lExpression '.' WS? unrestrictedName
     | lExpression WS? LINE_CONTINUATION WS? '.' WS? unrestrictedName
-    ;
-
-// 5.6.9.5
-relationalOperatorExpression
-    : expression WS? EQ WS? expression
-    | expression WS? NEQ WS? expression
-    | expression WS? LT WS? expression
-    | expression WS? GT WS? expression
-    | expression WS? LEQ WS? expression
-    | expression WS? GEQ WS? expression
     ;
 
 // 5.6.10
