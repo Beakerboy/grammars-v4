@@ -177,11 +177,6 @@ untypedName
 
 // expressions ----------------------------------
 
-// 5.6.9.3.2
-additionExpression
-    : expression WS? PLUS WS? expression
-    ;
-
 // 5.6.16.8
 addressofExpression
     : ADDRESSOF WS? procedurePointerExpression
@@ -224,13 +219,13 @@ andOperatorExpression
 // 5.6.9.3
 arithmeticOperatorExpression
     : unaryMinusExpression
-    | additionExpression
-    | subtractionExpression
-    | multiplicationExpression
-    | divisionExpression
-    | integerDivisionExpression
-    | moduloExpression
-    | exponentiationExpression
+    | expression WS? PLUS WS? expression
+    | expression WS? MINUS WS? expression
+    | expression WS? MULT WS? expression
+    | expression WS? DIV WS? expression
+    | expression WS? INTDIV WS? expression
+    | expression WS? MOD WS? expression
+    | expression WS? POW WS? expression
     ;
 
 // 5.6.9.4
@@ -238,19 +233,9 @@ concatenationOperatorExpression
     : expression WS? AMPERSAND WS? expression
     ;
 
-// 5.6.9.3.5
-divisionExpression
-    : expression WS? DIV WS? expression
-    ;
-
 // 5.6.9.8.5
 eqvOperatorExpression
     : expression WS? EQV WS? expression
-    ;
-
-// 5.6.9.3.7
-exponentiationExpression
-    : expression WS? POW WS? expression
     ;
 
 // 5.6.9.5.1
@@ -286,11 +271,6 @@ inequalityOperatorExpression
 // 5.6.11
 instanceExpression
     : ME
-    ;
-
-// 5.6.9.3.6
-integerDivisionExpression
-    : expression WS? INTDIV WS? expression
     ;
 
 // 5.6.9.7
@@ -348,16 +328,6 @@ logicalOperatorExpression
     | xorOperatorExpression
     | impOperatorExpression
     | eqvOperatorExpression
-    ;
-
-// 5.6.9.3.6
-moduloExpression
-    : expression WS? MOD WS? expression
-    ;
-
-// 5.6.9.3.4
-multiplicationExpression
-    : expression WS? MULT WS? expression
     ;
 
 // 5.6.8
@@ -421,11 +391,6 @@ relationalOperatorExpression
 // 5.6.10
 simpleNameExpression
     : IDENTIFIER
-    ;
-
-// 5.6.9.3.3
-subtractionExpression
-    : expression WS? MINUS WS? expression
     ;
 
 // 5.6.9.3.1
