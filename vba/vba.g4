@@ -228,29 +228,9 @@ concatenationOperatorExpression
     : expression WS? AMPERSAND WS? expression
     ;
 
-// 5.6.9.5.1
-equalityOperatorExpression
-    : expression WS? EQ WS? expression
-    ;
-
-// 5.6.9.5.4
-greaterThanOperatorExpression
-    : expression WS? GT WS? expression
-    ;
-
-// 5.6.9.5.6
-greaterThanEqualOperatorExpression
-    : expression WS? GEQ WS? expression
-    ;
-
 // 5.6.13
 indexExpression
     : lExpression WS? LPAREN WS? argumentList WS? RPAREN
-    ;
-
-// 5.6.9.5.2
-inequalityOperatorExpression
-    : expression WS? NEQ WS? expression
     ;
 
 // 5.6.11
@@ -261,16 +241,6 @@ instanceExpression
 // 5.6.9.7
 isOperatorExpression
     : expression IS expression
-    ;
-
-// 5.6.9.5.3
-lessThanOperatorExpression
-    : expression WS? LT WS? expression
-    ;
-
-// 5.6.9.5.5
-lessThanEqualOperatorExpression
-    : expression WS? LEQ WS? expression
     ;
 
 // 5.6
@@ -360,12 +330,12 @@ procedurePointerExpression
 
 // 5.6.9.5
 relationalOperatorExpression
-    : equalityOperatorExpression
-    | inequalityOperatorExpression
-    | lessThanOperatorExpression
-    | greaterThanOperatorExpression
-    | lessThanEqualOperatorExpression
-    | greaterThanEqualOperatorExpression
+    : expression WS? EQ WS? expression
+    | expression WS? NEQ WS? expression
+    | expression WS? LT WS? expression
+    | expression WS? GT WS? expression
+    | expression WS? LEQ WS? expression
+    | expression WS? GEQ WS? expression
     ;
 
 // 5.6.10
