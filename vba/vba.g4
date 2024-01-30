@@ -614,7 +614,7 @@ stopStmt
     ;
 
 subStmt
-    : (visibility WS)? (STATIC WS)? SUB WS? ambiguousIdentifier (WS? argList)? endOfStatement block? END_SUB
+    : (visibility WS)? (STATIC WS)? SUB WS? ambiguousIdentifier (WS? argList)? endOfStatement block? END wsc SUB
     ;
 
 timeStmt
@@ -1252,6 +1252,9 @@ ELSEIF
     : 'ELSEIF'
     ;
 
+END
+    : 'END'
+    ;
 END_ENUM
     : 'END' WS 'ENUM'
     ;
@@ -1270,10 +1273,6 @@ END_PROPERTY
 
 END_SELECT
     : 'END' WS 'SELECT'
-    ;
-
-END_SUB
-    : 'END' WS 'SUB'
     ;
 
 END_TYPE
