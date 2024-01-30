@@ -1190,7 +1190,7 @@ operatorIdentifier
 
 // 3.3.5.2
 reservedName
-    : Abs
+    : ABS
     | CBOOL
     | CBYTE
     | CCUR
