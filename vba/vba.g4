@@ -361,7 +361,7 @@ literalExpression
     ;
 
 // 5.6.9.8
-logical-operator-expression
+logical -operator -expression
     : notOperatorExpression
     | andOperatorExpression
     | orOperatorExpression
