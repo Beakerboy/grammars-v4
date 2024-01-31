@@ -657,9 +657,9 @@ valueStmt
     | valueStmt WS? (DIV | MULT) WS? valueStmt                                 # vsDivMult
     | valueStmt WS? MOD WS? valueStmt                                          # vsMod
     | valueStmt WS? (PLUS | MINUS) WS? valueStmt                               # vsAddMinus
-    | valueStmt WS? AMPERSAND WS? valueStmt                                    # vsAmp
-    | valueStmt WS? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) WS? valueStmt # vsRelational
-    | NOT WS? valueStmt                                                        # vsNot
+    | valueStmt wsc? AMPERSAND wsc? valueStmt                                    # vsAmp
+    | valueStmt wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) WS? valueStmt # vsRelational
+    | NOT wsc? valueStmt                                                        # vsNot
     | valueStmt WS? AND WS? valueStmt                                          # vsAnd
     | valueStmt WS? OR WS? valueStmt                                           # vsOr
     | valueStmt WS? XOR WS? valueStmt                                          # vsXor
