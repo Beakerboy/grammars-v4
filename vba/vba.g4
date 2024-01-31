@@ -18,54 +18,129 @@ startRule
     ;
 
 module
-    : WS? endOfLine* (moduleHeader endOfLine*)? moduleConfig? endOfLine* moduleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
-        endOfLine* WS?
+    : proceduralModule
+    | classModule
     ;
 
-moduleHeader
+// 4.2
+// Header should be required
+proceduralModule
+    : proceduralModuleHeader? endOfLine+ proceduralModuleBody
+    ;
+
+// Does not match official doc
+proceduralModuleHeader
+    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLine
+    ;
+
+// Header should be required
+classModule
+    : classModuleHeader? endOfLine+ classModuleBody
+    ;
+
+classModuleHeader
+    : classModuleConfig classAttr+ classModuleDeclarations
+    ;
+
+classModuleConfig
+    :  classModuleVersion endOfLine classModuleAttr endOfLine
+    ;
+
+classModuleVersion
     : VERSION WS DOUBLELITERAL (WS CLASS)?
     ;
 
-moduleConfig
-    : BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* moduleConfigElement+ END
+classModuleAttr
+    : BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* classModuleConfigElement+ END
     ;
 
-moduleConfigElement
+classModuleConfigElement
     : ambiguousIdentifier WS? EQ WS? literal (COLON literal)? endOfLine*
     ;
 
-moduleAttributes
-    : (attributeStmt endOfLine+)+
+classAttr
+    : proceduralModuleHeader
+    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE endOfLine
+    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? FALSE endOfLine
+    | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier endOfLine
+    | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier endOfLine
+    | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLine
     ;
 
-moduleDeclarations
-    : moduleDeclarationsElement (endOfLine+ moduleDeclarationsElement)* endOfLine*
+// 5.1
+proceduralModuleBody
+    : proceduralModuleDeclarations endOfLine proceduralModuleCode
     ;
 
-moduleOption
-    : OPTION_BASE WS SHORTLITERAL                  # optionBaseStmt
-    | OPTION_COMPARE WS (BINARY | TEXT | DATABASE) # optionCompareStmt
-    | OPTION_EXPLICIT                              # optionExplicitStmt
-    | OPTION_PRIVATE_MODULE                        # optionPrivateModuleStmt
+classModuleBody
+    : classModuleDeclarations endOfLine classModuleCode
     ;
 
-moduleDeclarationsElement
-    : comment
-    | declareStmt
-    | enumerationStmt
-    | eventStmt
-    | constStmt
-    | implementsStmt
-    | variableStmt
-    | moduleOption
-    | typeStmt
-    | deftypeStmt
-    | macroStmt
+// 5.2
+proceduralModuleDeclarations
+    :((proceduralModuleDirectiveElement endofLine)* defDirective)? (proceduralModualDeclarationElement endOfLine)*
     ;
 
-macroStmt
-    : macroConstStmt
-    | macroIfThenElseStmt
+proceduralModuleDirectiveElement
+    : commonOptionDirective
+    | optionPrivateDirective
+    | defDirective
+    ;
+
+proceduralModualDeclarationElement
+    : commonModuleDeclarationElement
+    | globalVariableDeclaration
+    | publicConstDeclaration
+    | publicTypeDeclaration
+    | publicExternalProcedureDeclaration
+    | globalEnumDeclaration
+    | commonOptionDirective
+    | optionPrivateDirective
+    ;
+
+classModuleDeclarations
+    : ((classModuleDirectiveElement endofLine)* defDirective)? (classModualDeclarationElement endOfLine)*
+    ;
+
+classModuleDirectiveElement
+    : commonOptionDirective
+    | defDirective
+    | implementsDirective
+    ;
+
+classModualDeclarationElement
+    : commonModuleDeclarationElement
+    | eventDeclaration
+    | commonOptionDirective
+    | implementsDirective
+    ;
+
+// 5.2.1
+commonOptionDirective
+    : optionCompareDirective
+    | optionBaseDirective
+    | optionExplicitDirective
+    | remStatement
+    ;
+
+// 5.2.1.1
+optionCompareDirective
+    : OPTION WS COMPARE WS (BINARY | TEXT)
+    ;
+
+// 5.2.1.2
+optionBaseDirective
+    : OPTION WS BASE WS INTEGER
+    ;
+
+// 5.2.1.3
+optionExplicitDirective
+    : OPTION WS EXPLICIT
+    ;
+
+// 5.2.1.4
+optionPrivateDirective
+    : OPTION WS PRIVATE WS MODULE
     ;
 
 moduleBody
@@ -1686,6 +1761,30 @@ UNLOCK
 
 UNTIL
     : 'UNTIL'
+    ;
+
+VB_CREATABLE
+    : 'VB_Creatable'
+    ;
+
+VB_CUSTOMIZABLE
+    : 'VB_Customizable'
+    ;
+
+VB_EXPOSED
+    : 'VB_Exposed'
+    ;
+
+VB_GLOBALNAMESPACE
+    : 'VB_GlobalNameSpace'
+    ;
+
+VB_NAME
+    : 'VB_Name'
+    ;
+
+VB_PREDECLAREDID
+    : 'VB_PredeclaredId'
     ;
 
 VARIANT
