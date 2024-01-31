@@ -514,15 +514,15 @@ printStmt
 propertyGetStmt
     : (visibility WS)? (STATIC WS)? PROPERTY_GET WS ambiguousIdentifier typeHint? (WS? argList)? (
         WS asTypeClause
-    )? endOfStatement block? END wsc PROPERTY
+    )? endOfStatement block? END_PROPERTY
     ;
 
 propertySetStmt
-    : (visibility WS)? (STATIC WS)? PROPERTY_SET WS ambiguousIdentifier (WS? argList)? endOfStatement block? END wsc PROPERTY
+    : (visibility WS)? (STATIC WS)? PROPERTY_SET WS ambiguousIdentifier (WS? argList)? endOfStatement block? END_PROPERTY
     ;
 
 propertyLetStmt
-    : (visibility WS)? (STATIC WS)? PROPERTY_LET WS ambiguousIdentifier (WS? argList)? endOfStatement block? END wsc PROPERTY
+    : (visibility WS)? (STATIC WS)? PROPERTY_LET WS ambiguousIdentifier (WS? argList)? endOfStatement block? END_PROPERTY
     ;
 
 putStmt
@@ -1256,6 +1256,8 @@ END_ENUM
     : 'END' WS 'ENUM'
     ;
 
+END_PROPERTY
+    : END WS PROPERTY
 END_SELECT
     : 'END' WS 'SELECT'
     ;
