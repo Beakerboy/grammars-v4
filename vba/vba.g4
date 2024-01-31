@@ -1,94 +1,11 @@
 /*
-* Copyright (C) 2014 Ulrich Wolffgang <u.wol@wwu.de>
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
-
-/*
-* Visual Basic 6.0 Grammar for ANTLR4
+* Visual Basic 7.1 Grammar for ANTLR4
 *
 * This is an approximate grammar for Visual Basic 6.0, derived
 * from the Visual Basic 6.0 language reference
 * http://msdn.microsoft.com/en-us/library/aa338033%28v=vs.60%29.aspx
 * and tested against MSDN VB6 statement examples as well as several Visual
 * Basic 6.0 code repositories.
-*
-* Characteristics:
-*
-* 1. This grammar is line-based and takes into account whitespace, so that
-*    member calls (e.g. "A.B") are distinguished from contextual object calls
-*    in WITH statements (e.g. "A .B").
-*
-* 2. Keywords can be used as identifiers depending on the context, enabling
-*    e.g. "A.Type", but not "Type.B".
-*
-*
-* Known limitations:
-*
-* 1. Preprocessor statements (#if, #else, ...) must not interfere with regular
-*    statements.
-*
-* Change log:
-*
-* v1.4 Rubberduck
-*   - renamed to VBA; goal is to support VBA, and a shorter name is more practical.
-*   - added moduleDeclarations rule, moved moduleOptions there; options can now be
-*     located anywhere in declarations section, without breaking the parser.
-*   - added support for Option Compare Database.
-*   - added support for VBA 7.0 PtrSafe attribute for Declare statements.
-*   - implemented a fileNumber rule to locate identifier usages in file numbers.
-*   - added support for anonymous declarations in With blocks (With New Something)
-*   - blockStmt rules being sorted alphabetically was wrong. moved implicit call statement last.
-*   - '!' in dictionary call statement rule gets picked up as a type hint; changed member call
-*     to accept '!' as well as '.', but this complicates resolving the '!' shorthand syntax.
-*   - added a subscripts rule in procedure calls, to avoid breaking the parser with
-*     a function call that returns an array that is immediately accessed.
-*   - added missing macroConstStmt (#CONST) rule.
-*   - amended selectCaseStmt rules to support all valid syntaxes.
-*   - blockStmt is now illegal in declarations section.
-*   - added ON_LOCAL_ERROR token, to support legacy ON LOCAL ERROR statements.
-*   - added additional typeHint? token to declareStmt, to support "Declare Function Foo$".
-*   - modified WS lexer rule to correctly account for line continuations;
-*   - modified multi-word lexer rules to use WS lexer token instead of ' '; this makes
-*     the grammar support "Option _\n Explicit" and other keywords being specified on multiple lines.
-*	- modified moduleOption rules to account for WS token in corresponding lexer rules.
-*   - modified NEWLINE lexer rule to properly support instructions separator (':').
-*   - tightened DATELITERAL lexer rule to the format enforced by the VBE, because "#fn: Close #"
-*     in "Dim fn: fn = FreeFile: Open "filename" For Output As #fn: Close #fn" was picked up as a date literal.
-*   - redefined IDENTIFIER lexer rule to support non-Latin characters (e.g. Japanese)
-*   - made seekStmt, lockStmt, unlockStmt, getStmt and widthStmt accept a fileNumber (needed to support '#')
-*   - fixed precompiler directives, which can now be nested. they still can't interfere with other blocks though.
-*   - optional parameters can be a expression.
-*   - added support for Octal and Currency literals.
-*   - implemented proper specs for DATELITERAL.
-*   - added comments to parse tree (removes known limitation #2).
-*   - macroConstStmt now allowed in blockStmt.
-*   - allow type hints for parameters.
-*
-*======================================================================================
-*
-* v1.3
-*	- call statement precedence
-*
-* v1.2
-*	- refined call statements
-*
-* v1.1
-*	- precedence of operators and of ELSE in select statements
-*	- optimized member calls
-*
-* v1.0 Initial revision
 */
 
 // $antlr-format alignTrailingComments true, columnLimit 150, minEmptyLines 1, maxEmptyLinesToKeep 1, reflowComments false, useTab false
@@ -641,26 +558,47 @@ unlockStmt
     : UNLOCK WS fileNumber (WS? ',' WS? expression (WS TO WS expression)?)?
     ;
 
-// operator precedence is represented by rule order
+// expressions----------------------------------
+// 5.6
+// Modifying the order will affect the order of operations
 expression
     : literal
     | implicitCallStmt_InStmt
-    | LPAREN WS? expression (WS? ',' WS? expression)* RPAREN
-    | NEW WS? expression
+    | parenthesizedExpression
+    | newExpression
     | typeOfStmt
     | midStmt
-    | ADDRESSOF WS? expression
-    | implicitCallStmt_InStmt WS? ASSIGN WS? expression
-    | expression WS? POW WS? expression
-    | MINUS WS? expression
-    | PLUS WS? expression
-    | expression WS? (DIV | MULT) WS? expression
-    | expression WS? MOD WS? expression
-    | expression WS? (PLUS | MINUS) WS? expression
+    | ADDRESSOF wsc? expression
+    | implicitCallStmt_InStmt wsc? ASSIGN wsc? expression
+    | expression wsc? POW wsc? expression
+    | unaryMinusExpression
+    | expression wsc? (DIV | MULT) wsc? expression
+    | expression wsc? MOD wsc? expression
+    | expression wsc? (PLUS | MINUS) wsc? expression
     | expression wsc? AMPERSAND wsc? expression
-    | expression wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) WS? expression
-    | NOT wsc? expression
-    | expression WS? (AND | OR | XOR | EQV | IMP) WS? expression
+    | expression wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) wsc? expression
+    | notOperatorExpression
+    | expression wsc? (AND | OR | XOR | EQV | IMP) wsc? expression
+    ;
+
+// 5.6.8
+newExpression
+    : NEW wsc? expression
+    ;
+
+// 5.6.9.8.1
+notOperatorExpression
+    : NOT wsc? expression
+    ;
+
+// 5.6.6
+parenthesizedExpression
+    : LPAREN wsc? expression wsc? RPAREN
+    ;
+
+// 5.6.9.3.1
+unaryMinusExpression
+    : MINUS wsc? expression
     ;
 
 variableStmt
