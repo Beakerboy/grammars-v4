@@ -1258,6 +1258,8 @@ END_ENUM
 
 END_PROPERTY
     : END WS PROPERTY
+    ;
+
 END_SELECT
     : 'END' WS 'SELECT'
     ;
