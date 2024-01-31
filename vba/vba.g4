@@ -546,10 +546,6 @@ typeStmt_Element
     : ambiguousIdentifier (WS? LPAREN (WS? subscripts)? WS? RPAREN)? (WS asTypeClause)? endOfStatement
     ;
 
-typeOfStmt
-    : TYPEOF WS expression (WS IS WS type_)?
-    ;
-
 unloadStmt
     : UNLOAD WS expression
     ;
@@ -562,14 +558,12 @@ unlockStmt
 // 5.6
 // Modifying the order will affect the order of operations
 expression
-    : literal
-    | implicitCallStmt_InStmt
+    : literalExpression
     | parenthesizedExpression
     | newExpress
-    | typeOfStmt
+    | typeOfIsExpression
     | midStmt
     | ADDRESSOF wsc? expression
-    | implicitCallStmt_InStmt wsc? ASSIGN wsc? expression
     | expression wsc? POW wsc? expression
     | unaryMinusExpression
     | expression wsc? (DIV | MULT) wsc? expression
@@ -579,6 +573,22 @@ expression
     | expression wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) wsc? expression
     | notOperatorExpression
     | expression wsc? (AND | OR | XOR | EQV | IMP) wsc? expression
+    | lExpression
+    ;
+
+lExpression
+    : implicitCallStmt_InStmt
+    | implicitCallStmt_InStmt wsc? ASSIGN wsc? expression
+    ;
+
+// 5.6.5
+// Need to rename LITERALS and typeHint 
+literalExpression
+    : INTEGERLITERAL
+    | DOUBLELITERAL
+    | DATELITERAL
+    | STRINGLITERAL
+    | (literalIdentifier typeHint)
     ;
 
 // 5.6.8
@@ -595,6 +605,12 @@ notOperatorExpression
 // 5.6.6
 parenthesizedExpression
     : LPAREN wsc? expression wsc? RPAREN
+    ;
+
+// 5.6.7
+// needs to be updated
+typeOfIsExpression
+    : TYPEOF wsc? expression wsc? IS wsc? type_
     ;
 
 // 5.6.9.3.1
@@ -803,18 +819,28 @@ lineLabel
     : ambiguousIdentifier ':'
     ;
 
-literal
-    : HEXLITERAL
-    | OCTLITERAL
-    | DATELITERAL
-    | DOUBLELITERAL
-    | INTEGERLITERAL
-    | SHORTLITERAL
-    | STRINGLITERAL
-    | TRUE
+// 3.3.5.2
+literalIdentifier
+    : booleanLiteralIdentifier
+    | objectLiteralIdentifier
+    | variantLiteralIdentifier
+    ;
+
+// 3.3.5.2
+booleanLiteralIdentifier
+    : TRUE
     | FALSE
-    | NOTHING
-    | NULL_
+    ;
+
+// 3.3.5.2
+objectLiteralIdentifier
+    : NOTHING
+    ;
+
+// 3.3.5.2
+variantLiteralIdentifier
+    : EMPTY
+    | NULL
     ;
 
 type_
