@@ -713,7 +713,7 @@ iCS_S_DictionaryCall
 // atomic call statements ----------------------------------
 
 argsCall
-    : (argCall? WS? (',' | ';') WS?)* argCall (WS? (',' | ';') WS? argCall?)*
+    : (argCall? wsc? (',' | ';') wsc?)* argCall (wsc? (',' | ';') wsc? argCall?)*
     ;
 
 argCall
