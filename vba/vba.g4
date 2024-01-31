@@ -31,7 +31,7 @@ moduleConfig
     ;
 
 moduleConfigElement
-    : ambiguousIdentifier WS? EQ WS? literal (COLON literal)? endOfLine*
+    : ambiguousIdentifier WS? EQ WS? literalExpression (COLON literalExpression)? endOfLine*
     ;
 
 moduleAttributes
@@ -84,7 +84,7 @@ moduleBodyElement
 // block ----------------------------------
 
 attributeStmt
-    : ATTRIBUTE WS implicitCallStmt_InStmt WS? EQ WS? literal (WS? ',' WS? literal)*
+    : ATTRIBUTE WS implicitCallStmt_InStmt WS? EQ WS? literalExpression (WS? ',' WS? literalExpression)*
     ;
 
 block
