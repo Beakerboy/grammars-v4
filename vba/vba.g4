@@ -69,7 +69,7 @@
 *   - redefined IDENTIFIER lexer rule to support non-Latin characters (e.g. Japanese)
 *   - made seekStmt, lockStmt, unlockStmt, getStmt and widthStmt accept a fileNumber (needed to support '#')
 *   - fixed precompiler directives, which can now be nested. they still can't interfere with other blocks though.
-*   - optional parameters can be a valueStmt.
+*   - optional parameters can be a expression.
 *   - added support for Octal and Currency literals.
 *   - implemented proper specs for DATELITERAL.
 *   - added comments to parse tree (removes known limitation #2).
@@ -254,7 +254,7 @@ blockStmt
 // statements ----------------------------------
 
 appactivateStmt
-    : APPACTIVATE WS valueStmt (WS? ',' WS? valueStmt)?
+    : APPACTIVATE WS expression (WS? ',' WS? expression)?
     ;
 
 beepStmt
@@ -262,11 +262,11 @@ beepStmt
     ;
 
 chdirStmt
-    : CHDIR WS valueStmt
+    : CHDIR WS expression
     ;
 
 chdriveStmt
-    : CHDRIVE WS valueStmt
+    : CHDRIVE WS expression
     ;
 
 closeStmt
@@ -278,11 +278,11 @@ constStmt
     ;
 
 constSubStmt
-    : ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? valueStmt
+    : ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? expression
     ;
 
 dateStmt
-    : DATE WS? EQ WS? valueStmt
+    : DATE WS? EQ WS? expression
     ;
 
 declareStmt
@@ -309,13 +309,13 @@ deftypeStmt
     ;
 
 deleteSettingStmt
-    : DELETESETTING WS valueStmt WS? ',' WS? valueStmt (WS? ',' WS? valueStmt)?
+    : DELETESETTING WS expression WS? ',' WS? expression (WS? ',' WS? expression)?
     ;
 
 doLoopStmt
     : DO endOfStatement block? LOOP
-    | DO WS (WHILE | UNTIL) WS valueStmt endOfStatement block? LOOP
-    | DO endOfStatement block LOOP WS (WHILE | UNTIL) WS valueStmt
+    | DO WS (WHILE | UNTIL) WS expression endOfStatement block? LOOP
+    | DO endOfStatement block LOOP WS (WHILE | UNTIL) WS expression
     ;
 
 endStmt
@@ -327,15 +327,15 @@ enumerationStmt
     ;
 
 enumerationStmt_Constant
-    : ambiguousIdentifier (WS? EQ WS? valueStmt)? endOfStatement
+    : ambiguousIdentifier (WS? EQ WS? expression)? endOfStatement
     ;
 
 eraseStmt
-    : ERASE WS valueStmt (',' WS? valueStmt)*?
+    : ERASE WS expression (',' WS? expression)*?
     ;
 
 errorStmt
-    : ERROR WS valueStmt
+    : ERROR WS expression
     ;
 
 eventStmt
@@ -351,18 +351,18 @@ exitStmt
     ;
 
 filecopyStmt
-    : FILECOPY WS valueStmt WS? ',' WS? valueStmt
+    : FILECOPY WS expression WS? ',' WS? expression
     ;
 
 forEachStmt
-    : FOR WS EACH WS ambiguousIdentifier typeHint? WS IN WS valueStmt endOfStatement block? NEXT (
+    : FOR WS EACH WS ambiguousIdentifier typeHint? WS IN WS expression endOfStatement block? NEXT (
         WS ambiguousIdentifier
     )?
     ;
 
 forNextStmt
-    : FOR WS ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? valueStmt WS TO WS valueStmt (
-        WS STEP WS valueStmt
+    : FOR WS ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? expression WS TO WS expression (
+        WS STEP WS expression
     )? endOfStatement block? NEXT (WS ambiguousIdentifier)?
     ;
 
@@ -373,15 +373,15 @@ functionStmt
     ;
 
 getStmt
-    : GET WS fileNumber WS? ',' WS? valueStmt? WS? ',' WS? valueStmt
+    : GET WS fileNumber WS? ',' WS? expression? WS? ',' WS? expression
     ;
 
 goSubStmt
-    : GOSUB WS valueStmt
+    : GOSUB WS expression
     ;
 
 goToStmt
-    : GOTO WS valueStmt
+    : GOTO WS expression
     ;
 
 ifThenElseStmt
@@ -394,7 +394,7 @@ ifBlockStmt
     ;
 
 ifConditionStmt
-    : valueStmt
+    : expression
     ;
 
 ifElseIfBlockStmt
@@ -410,19 +410,19 @@ implementsStmt
     ;
 
 inputStmt
-    : INPUT WS fileNumber (WS? ',' WS? valueStmt)+
+    : INPUT WS fileNumber (WS? ',' WS? expression)+
     ;
 
 killStmt
-    : KILL WS valueStmt
+    : KILL WS expression
     ;
 
 letStmt
-    : (LET WS)? implicitCallStmt_InStmt WS? (EQ | PLUS_EQ | MINUS_EQ) WS? typeHint? valueStmt typeHint?
+    : (LET WS)? implicitCallStmt_InStmt WS? (EQ | PLUS_EQ | MINUS_EQ) WS? typeHint? expression typeHint?
     ;
 
 lineInputStmt
-    : LINE_INPUT WS fileNumber WS? ',' WS? valueStmt
+    : LINE_INPUT WS fileNumber WS? ',' WS? expression
     ;
 
 lineNumber
@@ -430,19 +430,19 @@ lineNumber
     ;
 
 loadStmt
-    : LOAD WS valueStmt
+    : LOAD WS expression
     ;
 
 lockStmt
-    : LOCK WS valueStmt (WS? ',' WS? valueStmt (WS TO WS valueStmt)?)?
+    : LOCK WS expression (WS? ',' WS? expression (WS TO WS expression)?)?
     ;
 
 lsetStmt
-    : LSET WS implicitCallStmt_InStmt WS? EQ WS? valueStmt
+    : LSET WS implicitCallStmt_InStmt WS? EQ WS? expression
     ;
 
 macroConstStmt
-    : MACRO_CONST WS? ambiguousIdentifier WS? EQ WS? valueStmt
+    : MACRO_CONST WS? ambiguousIdentifier WS? EQ WS? expression
     ;
 
 macroIfThenElseStmt
@@ -470,30 +470,30 @@ midStmt
     ;
 
 mkdirStmt
-    : MKDIR WS valueStmt
+    : MKDIR WS expression
     ;
 
 nameStmt
-    : NAME WS valueStmt WS AS WS valueStmt
+    : NAME WS expression WS AS WS expression
     ;
 
 onErrorStmt
-    : (ON_ERROR | ON_LOCAL_ERROR) WS (GOTO WS valueStmt | RESUME WS NEXT)
+    : (ON_ERROR | ON_LOCAL_ERROR) WS (GOTO WS expression | RESUME WS NEXT)
     ;
 
 onGoToStmt
-    : ON WS valueStmt WS GOTO WS valueStmt (WS? ',' WS? valueStmt)*
+    : ON WS expression WS GOTO WS expression (WS? ',' WS? expression)*
     ;
 
 onGoSubStmt
-    : ON WS valueStmt WS GOSUB WS valueStmt (WS? ',' WS? valueStmt)*
+    : ON WS expression WS GOSUB WS expression (WS? ',' WS? expression)*
     ;
 
 openStmt
-    : OPEN WS valueStmt WS FOR WS (APPEND | BINARY | INPUT | OUTPUT | RANDOM) (
+    : OPEN WS expression WS FOR WS (APPEND | BINARY | INPUT | OUTPUT | RANDOM) (
         WS ACCESS WS (READ | WRITE | READ_WRITE)
     )? (WS (SHARED | LOCK_READ | LOCK_WRITE | LOCK_READ_WRITE))? WS AS WS fileNumber (
-        WS LEN WS? EQ WS? valueStmt
+        WS LEN WS? EQ WS? expression
     )?
     ;
 
@@ -503,7 +503,7 @@ outputList
     ;
 
 outputList_Expression
-    : valueStmt
+    : expression
     | (SPC | TAB) (WS? LPAREN WS? argsCall WS? RPAREN)?
     ;
 
@@ -526,7 +526,7 @@ propertyLetStmt
     ;
 
 putStmt
-    : PUT WS fileNumber WS? ',' WS? valueStmt? WS? ',' WS? valueStmt
+    : PUT WS fileNumber WS? ',' WS? expression? WS? ',' WS? expression
     ;
 
 raiseEventStmt
@@ -534,7 +534,7 @@ raiseEventStmt
     ;
 
 randomizeStmt
-    : RANDOMIZE (WS valueStmt)?
+    : RANDOMIZE (WS expression)?
     ;
 
 redimStmt
@@ -558,33 +558,33 @@ returnStmt
     ;
 
 rmdirStmt
-    : RMDIR WS valueStmt
+    : RMDIR WS expression
     ;
 
 rsetStmt
-    : RSET WS implicitCallStmt_InStmt WS? EQ WS? valueStmt
+    : RSET WS implicitCallStmt_InStmt WS? EQ WS? expression
     ;
 
 savepictureStmt
-    : SAVEPICTURE WS valueStmt WS? ',' WS? valueStmt
+    : SAVEPICTURE WS expression WS? ',' WS? expression
     ;
 
 saveSettingStmt
-    : SAVESETTING WS valueStmt WS? ',' WS? valueStmt WS? ',' WS? valueStmt WS? ',' WS? valueStmt
+    : SAVESETTING WS expression WS? ',' WS? expression WS? ',' WS? expression WS? ',' WS? expression
     ;
 
 seekStmt
-    : SEEK WS fileNumber WS? ',' WS? valueStmt
+    : SEEK WS fileNumber WS? ',' WS? expression
     ;
 
 selectCaseStmt
-    : SELECT WS CASE WS valueStmt endOfStatement sC_Case* END_SELECT
+    : SELECT WS CASE WS expression endOfStatement sC_Case* END_SELECT
     ;
 
 sC_Selection
-    : IS WS? comparisonOperator WS? valueStmt # caseCondIs
-    | valueStmt WS TO WS valueStmt            # caseCondTo
-    | valueStmt                               # caseCondValue
+    : IS WS? comparisonOperator WS? expression # caseCondIs
+    | expression WS TO WS expression            # caseCondTo
+    | expression                               # caseCondValue
     ;
 
 sC_Case
@@ -598,15 +598,15 @@ sC_Cond
     ;
 
 sendkeysStmt
-    : SENDKEYS WS valueStmt (WS? ',' WS? valueStmt)?
+    : SENDKEYS WS expression (WS? ',' WS? expression)?
     ;
 
 setattrStmt
-    : SETATTR WS valueStmt WS? ',' WS? valueStmt
+    : SETATTR WS expression WS? ',' WS? expression
     ;
 
 setStmt
-    : SET WS implicitCallStmt_InStmt WS? EQ WS? valueStmt
+    : SET WS implicitCallStmt_InStmt WS? EQ WS? expression
     ;
 
 stopStmt
@@ -618,7 +618,7 @@ subStmt
     ;
 
 timeStmt
-    : TIME WS? EQ WS? valueStmt
+    : TIME WS? EQ WS? expression
     ;
 
 typeStmt
@@ -630,41 +630,37 @@ typeStmt_Element
     ;
 
 typeOfStmt
-    : TYPEOF WS valueStmt (WS IS WS type_)?
+    : TYPEOF WS expression (WS IS WS type_)?
     ;
 
 unloadStmt
-    : UNLOAD WS valueStmt
+    : UNLOAD WS expression
     ;
 
 unlockStmt
-    : UNLOCK WS fileNumber (WS? ',' WS? valueStmt (WS TO WS valueStmt)?)?
+    : UNLOCK WS fileNumber (WS? ',' WS? expression (WS TO WS expression)?)?
     ;
 
 // operator precedence is represented by rule order
-valueStmt
-    : literal                                                                  # vsLiteral
-    | implicitCallStmt_InStmt                                                  # vsICS
-    | LPAREN WS? valueStmt (WS? ',' WS? valueStmt)* RPAREN                     # vsStruct
-    | NEW WS? valueStmt                                                        # vsNew
-    | typeOfStmt                                                               # vsTypeOf
-    | midStmt                                                                  # vsMid
-    | ADDRESSOF WS? valueStmt                                                  # vsAddressOf
-    | implicitCallStmt_InStmt WS? ASSIGN WS? valueStmt                         # vsAssign
-    | valueStmt WS? POW WS? valueStmt                                          # vsPow
-    | MINUS WS? valueStmt                                                      # vsNegation
-    | PLUS WS? valueStmt                                                       # vsPlus
-    | valueStmt WS? (DIV | MULT) WS? valueStmt                                 # vsDivMult
-    | valueStmt WS? MOD WS? valueStmt                                          # vsMod
-    | valueStmt WS? (PLUS | MINUS) WS? valueStmt                               # vsAddMinus
-    | valueStmt wsc? AMPERSAND wsc? valueStmt                                    # vsAmp
-    | valueStmt wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) WS? valueStmt # vsRelational
-    | NOT wsc? valueStmt                                                        # vsNot
-    | valueStmt WS? AND WS? valueStmt                                          # vsAnd
-    | valueStmt WS? OR WS? valueStmt                                           # vsOr
-    | valueStmt WS? XOR WS? valueStmt                                          # vsXor
-    | valueStmt WS? EQV WS? valueStmt                                          # vsEqv
-    | valueStmt WS? IMP WS? valueStmt                                          # vsImp
+expression
+    : literal
+    | implicitCallStmt_InStmt
+    | LPAREN WS? expression (WS? ',' WS? expression)* RPAREN
+    | NEW WS? expression
+    | typeOfStmt
+    | midStmt
+    | ADDRESSOF WS? expression
+    | implicitCallStmt_InStmt WS? ASSIGN WS? expression
+    | expression WS? POW WS? expression
+    | MINUS WS? expression
+    | PLUS WS? expression
+    | expression WS? (DIV | MULT) WS? expression
+    | expression WS? MOD WS? expression
+    | expression WS? (PLUS | MINUS) WS? expression
+    | expression wsc? AMPERSAND wsc? expression
+    | expression wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) WS? expression
+    | NOT wsc? expression
+    | expression WS? (AND | OR | XOR | EQV | IMP) WS? expression
     ;
 
 variableStmt
@@ -682,11 +678,11 @@ variableSubStmt
     ;
 
 whileWendStmt
-    : WHILE WS valueStmt endOfStatement block? WEND
+    : WHILE WS expression endOfStatement block? WEND
     ;
 
 widthStmt
-    : WIDTH WS fileNumber WS? ',' WS? valueStmt
+    : WIDTH WS fileNumber WS? ',' WS? expression
     ;
 
 withStmt
@@ -698,7 +694,7 @@ writeStmt
     ;
 
 fileNumber
-    : '#'? valueStmt
+    : '#'? expression
     ;
 
 // complex call statements ----------------------------------
@@ -782,7 +778,7 @@ argsCall
     ;
 
 argCall
-    : LPAREN? ((BYVAL | BYREF | PARAMARRAY) WS)? RPAREN? valueStmt
+    : LPAREN? ((BYVAL | BYREF | PARAMARRAY) WS)? RPAREN? expression
     ;
 
 dictionaryCallStmt
@@ -802,7 +798,7 @@ arg
     ;
 
 argDefaultValue
-    : EQ WS? valueStmt
+    : EQ WS? expression
     ;
 
 subscripts
@@ -810,7 +806,7 @@ subscripts
     ;
 
 subscript_
-    : (valueStmt WS TO WS)? typeHint? valueStmt typeHint?
+    : (expression WS TO WS)? typeHint? expression typeHint?
     ;
 
 // atomic rules ----------------------------------
@@ -832,7 +828,7 @@ baseType
     | INTEGER
     | LONG
     | SINGLE
-    | STRING (WS? MULT WS? valueStmt)?
+    | STRING (WS? MULT WS? expression)?
     | VARIANT
     ;
 
