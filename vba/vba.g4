@@ -1,11 +1,5 @@
 /*
 * Visual Basic 7.1 Grammar for ANTLR4
-*
-* This is an approximate grammar for Visual Basic 6.0, derived
-* from the Visual Basic 6.0 language reference
-* http://msdn.microsoft.com/en-us/library/aa338033%28v=vs.60%29.aspx
-* and tested against MSDN VB6 statement examples as well as several Visual
-* Basic 7.1 code repositories.
 */
 
 // $antlr-format alignTrailingComments true, columnLimit 150, minEmptyLines 1, maxEmptyLinesToKeep 1, reflowComments false, useTab false
