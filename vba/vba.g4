@@ -727,7 +727,7 @@ dictionaryCallStmt
 // atomic rules for statements
 
 argList
-    : LPAREN (WS? arg (WS? ',' WS? arg)*)? WS? RPAREN
+    : LPAREN (wsc? arg (wsc? ',' wsc? arg)*)? wsc? RPAREN
     ;
 
 arg
@@ -828,6 +828,7 @@ typeHint
     | '!'
     | '@'
     | '$'
+    | '^'
     ;
 
 visibility
