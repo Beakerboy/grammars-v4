@@ -565,7 +565,7 @@ expression
     : literal
     | implicitCallStmt_InStmt
     | parenthesizedExpression
-    | newExpression
+    | newExpress
     | typeOfStmt
     | midStmt
     | ADDRESSOF wsc? expression
@@ -582,7 +582,8 @@ expression
     ;
 
 // 5.6.8
-newExpression
+// The name 'newExpression' fails under the Go language
+newExpress
     : NEW wsc? expression
     ;
 
