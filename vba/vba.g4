@@ -207,7 +207,7 @@ expression
     | expression WS? INTDIV WS? expression
     | expression WS? MOD WS? expression
     | expression WS? POW WS? expression
-    | expression WS? AMPERSAND WS? expression
+    | expression wsc? AMPERSAND wsc? expression
     | expression WS? EQ WS? expression
     | expression WS? NEQ WS? expression
     | expression WS? LT WS? expression
