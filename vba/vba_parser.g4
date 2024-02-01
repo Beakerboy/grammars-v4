@@ -240,7 +240,7 @@ constStmt
     ;
 
 constSubStmt
-    : ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? expression
+    : ambiguousIdentifier typeSuffix? (WS asTypeClause)? WS? EQ WS? expression
     ;
 
 dateStmt
@@ -248,7 +248,7 @@ dateStmt
     ;
 
 declareStmt
-    : (visibility WS)? DECLARE WS (PTRSAFE WS)? ((FUNCTION typeHint?) | SUB) WS ambiguousIdentifier typeHint? WS LIB WS STRINGLITERAL (
+    : (visibility WS)? DECLARE WS (PTRSAFE WS)? ((FUNCTION typeSuffix?) | SUB) WS ambiguousIdentifier typeSuffix? WS LIB WS STRINGLITERAL (
         WS ALIAS WS STRINGLITERAL
     )? (WS? argList)? (WS asTypeClause)?
     ;
@@ -317,19 +317,19 @@ filecopyStmt
     ;
 
 forEachStmt
-    : FOR WS EACH WS ambiguousIdentifier typeHint? WS IN WS expression endOfStatement block? NEXT (
+    : FOR WS EACH WS ambiguousIdentifier typeSuffix? WS IN WS expression endOfStatement block? NEXT (
         WS ambiguousIdentifier
     )?
     ;
 
 forNextStmt
-    : FOR WS ambiguousIdentifier typeHint? (WS asTypeClause)? WS? EQ WS? expression WS TO WS expression (
+    : FOR WS ambiguousIdentifier typeSuffix? (WS asTypeClause)? WS? EQ WS? expression WS TO WS expression (
         WS STEP WS expression
     )? endOfStatement block? NEXT (WS ambiguousIdentifier)?
     ;
 
 functionStmt
-    : (visibility WS)? (STATIC WS)? FUNCTION WS? ambiguousIdentifier typeHint? (WS? argList)? (
+    : (visibility WS)? (STATIC WS)? FUNCTION WS? ambiguousIdentifier typeSuffix? (WS? argList)? (
         WS? asTypeClause
     )? endOfStatement block? END wsc FUNCTION
     ;
@@ -380,7 +380,7 @@ killStmt
     ;
 
 letStmt
-    : (LET WS)? implicitCallStmt_InStmt WS? (EQ | PLUS_EQ | MINUS_EQ) WS? typeHint? expression typeHint?
+    : (LET WS)? implicitCallStmt_InStmt WS? (EQ | PLUS_EQ | MINUS_EQ) WS? typeSuffix? expression typeSuffix?
     ;
 
 lineInputStmt
@@ -474,7 +474,7 @@ printStmt
     ;
 
 propertyGetStmt
-    : (visibility WS)? (STATIC WS)? PROPERTY_GET WS ambiguousIdentifier typeHint? (WS? argList)? (
+    : (visibility WS)? (STATIC WS)? PROPERTY_GET WS ambiguousIdentifier typeSuffix? (WS? argList)? (
         WS asTypeClause
     )? endOfStatement block? END_PROPERTY
     ;
@@ -656,7 +656,7 @@ variableListStmt
     ;
 
 variableSubStmt
-    : ambiguousIdentifier (WS? LPAREN WS? (subscripts WS?)? RPAREN WS?)? typeHint? (
+    : ambiguousIdentifier (WS? LPAREN WS? (subscripts WS?)? RPAREN WS?)? typeSuffix? (
         WS asTypeClause
     )?
     ;
@@ -690,14 +690,14 @@ explicitCallStmt
 
 // parantheses are required in case of args -> empty parantheses are removed
 eCS_ProcedureCall
-    : CALL WS ambiguousIdentifier typeHint? (WS? LPAREN WS? argsCall WS? RPAREN)? (
+    : CALL WS ambiguousIdentifier typeSuffix? (WS? LPAREN WS? argsCall WS? RPAREN)? (
         WS? LPAREN subscripts RPAREN
     )*
     ;
 
 // parantheses are required in case of args -> empty parantheses are removed
 eCS_MemberProcedureCall
-    : CALL WS implicitCallStmt_InStmt? '.' ambiguousIdentifier typeHint? (
+    : CALL WS implicitCallStmt_InStmt? '.' ambiguousIdentifier typeSuffix? (
         WS? LPAREN WS? argsCall WS? RPAREN
     )? (WS? LPAREN subscripts RPAREN)*
     ;
@@ -708,7 +708,7 @@ implicitCallStmt_InBlock
     ;
 
 iCS_B_MemberProcedureCall
-    : implicitCallStmt_InStmt? '.' ambiguousIdentifier typeHint? (WS argsCall)? dictionaryCallStmt? (
+    : implicitCallStmt_InStmt? '.' ambiguousIdentifier typeSuffix? (WS argsCall)? dictionaryCallStmt? (
         WS? LPAREN subscripts RPAREN
     )*
     ;
@@ -729,11 +729,11 @@ implicitCallStmt_InStmt
     ;
 
 iCS_S_VariableOrProcedureCall
-    : ambiguousIdentifier typeHint? dictionaryCallStmt? (WS? LPAREN subscripts RPAREN)*
+    : ambiguousIdentifier typeSuffix? dictionaryCallStmt? (WS? LPAREN subscripts RPAREN)*
     ;
 
 iCS_S_ProcedureOrArrayCall
-    : (ambiguousIdentifier | reservedTypeIdentifier) typeHint? WS? LPAREN WS? (argsCall WS?)? RPAREN dictionaryCallStmt? (
+    : (ambiguousIdentifier | reservedTypeIdentifier) typeSuffix? WS? LPAREN WS? (argsCall WS?)? RPAREN dictionaryCallStmt? (
         WS? LPAREN subscripts RPAREN
     )*
     ;
@@ -766,7 +766,7 @@ argCall
     ;
 
 dictionaryCallStmt
-    : '!' ambiguousIdentifier typeHint?
+    : '!' ambiguousIdentifier typeSuffix?
     ;
 
 // atomic rules for statements
@@ -776,7 +776,7 @@ argList
     ;
 
 arg
-    : (OPTIONAL WS)? ((BYVAL | BYREF) WS)? (PARAMARRAY WS)? ambiguousIdentifier typeHint? (
+    : (OPTIONAL WS)? ((BYVAL | BYREF) WS)? (PARAMARRAY WS)? ambiguousIdentifier typeSuffix? (
         WS? LPAREN WS? RPAREN
     )? (WS? asTypeClause)? (WS? argDefaultValue)?
     ;
@@ -790,7 +790,7 @@ subscripts
     ;
 
 subscript_
-    : (expression WS TO WS)? typeHint? expression typeHint?
+    : (expression WS TO WS)? typeSuffix? expression typeSuffix?
     ;
 
 // atomic rules ----------------------------------
@@ -1028,7 +1028,7 @@ type_
     : (reservedTypeIdentifier | complexType) (WS? LPAREN WS? RPAREN)?
     ;
 
-typeHint
+typeSuffix
     : '&'
     | '%'
     | '#'
