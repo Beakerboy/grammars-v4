@@ -961,7 +961,6 @@ ambiguousKeyword
     | ERASE
     | ERROR
     | EVENT
-    | FALSE
     | FILECOPY
     | FRIEND
     | FOR
@@ -992,8 +991,6 @@ ambiguousKeyword
     | NEXT
     | NEW
     | NOT
-    | NOTHING
-    | NULL_
     | ON
     | OPEN
     | OPTIONAL
@@ -1034,7 +1031,6 @@ ambiguousKeyword
     | THEN
     | TIME
     | TO
-    | TRUE
     | TYPE
     | TYPEOF
     | UNLOAD
@@ -1048,6 +1044,7 @@ ambiguousKeyword
     | WITHEVENTS
     | WRITE
     | XOR
+    | literalIdentifier
     | reservedTypeIdentifier
     | specialForm
     ;
