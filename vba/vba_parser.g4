@@ -982,6 +982,13 @@ visibility
     | GLOBAL
     ;
 
+reservedIdentifier
+    : statementKeyword
+    | specialForm
+    | literalIdentifier
+    | remKeyword
+    ;
+
 // ambiguous keywords
 ambiguousKeyword
     : ACCESS
@@ -1031,7 +1038,6 @@ ambiguousKeyword
     | RANDOM
     | RANDOMIZE
     | READ
-    | remKeyword
     | RESET
     | RMDIR
     | SAVEPICTURE
@@ -1053,10 +1059,6 @@ ambiguousKeyword
     | WIDTH
     | WITHEVENTS
     | XOR
-    | statementKeyword
-    | specialForm
-    | literalIdentifier
-    | reservedTypeIdentifier
     ;
 
 remKeyword
