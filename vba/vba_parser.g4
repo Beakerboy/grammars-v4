@@ -886,6 +886,76 @@ specialForm
     | UBOUND
     ;
 
+statementKeyword
+    : CALL
+    | CASE
+    | CLOSE
+    | CONST
+    | DECLARE
+    | DEFBOOL
+    | DEFBYTE
+    | DEFCUR
+    | DEFDATE
+    | DEFDBL
+    | DEFINT
+    | DEFLNG
+    | DEFLNGLNG
+    | DEFLNGPTR
+    | DEFOBJ
+    | DEFSNG
+    | DEFSTR
+    | DEFVAR
+    | DIM
+    | DO
+    | ELSE
+    | ELSEIF
+    | END
+    | ENDIF
+    | ENUM
+    | ERASE
+    | EVENT
+    | EXIT
+    | FOR
+    | FRIEND
+    | FUNCTION
+    | GET
+    | GLOBAL
+    | GOSUB
+    | GOTO
+    | IF
+    | IMPLEMENTS
+    | INPUT
+    | LET
+    | LOCK
+    | LOOP
+    | LSET
+    | NEXT
+    | ON
+    | OPEN
+    | OPTION
+    | PRINT
+    | PRIVATE
+    | PUBLIC
+    | PUT
+    | RAISEEVENT
+    | REDIM
+    | RESUME
+    | RETURN
+    | RSET
+    | SEEK
+    | SELECT
+    | SET
+    | STATIC
+    | STOP
+    | SUB
+    | TYPE
+    | UNLOCK
+    | WEND
+    | WHILE
+    | WITH
+    | WRITE
+    ;
+
 type_
     : (reservedTypeIdentifier | complexType) (WS? LPAREN WS? RPAREN)?
     ;
@@ -927,126 +997,66 @@ ambiguousKeyword
     | BINARY
     | BYVAL
     | BYREF
-    | CALL
-    | CASE
     | CLASS
-    | CLOSE
     | CHDIR
     | CHDRIVE
     | COLLECTION
-    | CONST
     | DATABASE
-    | DECLARE
-    | DEFBOOL
-    | DEFBYTE
-    | DEFCUR
-    | DEFDBL
-    | DEFDATE
     | DEFDEC
-    | DEFINT
-    | DEFLNG
-    | DEFOBJ
-    | DEFSNG
-    | DEFSTR
-    | DEFVAR
     | DELETESETTING
-    | DIM
-    | DO
     | EACH
-    | ELSE
-    | ELSEIF
-    | END
-    | ENUM
     | EQV
-    | ERASE
     | ERROR
-    | EVENT
     | FILECOPY
-    | FRIEND
-    | FOR
-    | FUNCTION
-    | GET
-    | GLOBAL
-    | GOSUB
-    | GOTO
-    | IF
     | IMP
-    | IMPLEMENTS
     | IN
     | IS
     | KILL
     | LOAD
-    | LOCK
-    | LOOP
     | LEN
-    | LET
     | LIB
     | LIKE
-    | LSET
     | ME
     | MID
     | MKDIR
     | MOD
     | NAME
-    | NEXT
     | NEW
     | NOT
-    | ON
-    | OPEN
     | OPTIONAL
     | OR
     | OUTPUT
     | PARAMARRAY
     | PRESERVE
-    | PRINT
-    | PRIVATE
-    | PUBLIC
-    | PUT
     | RANDOM
     | RANDOMIZE
-    | RAISEEVENT
     | READ
-    | REDIM
     | remKeyword
     | RESET
-    | RESUME
-    | RETURN
     | RMDIR
-    | RSET
     | SAVEPICTURE
     | SAVESETTING
-    | SEEK
-    | SELECT
     | SENDKEYS
-    | SET
     | SETATTR
     | SHARED
     | SPC
-    | STATIC
     | STEP
-    | STOP
-    | SUB
     | TAB
     | TEXT
     | THEN
     | TIME
     | TO
-    | TYPE
     | TYPEOF
     | UNLOAD
-    | UNLOCK
     | UNTIL
     | VERSION
-    | WEND
-    | WHILE
     | WIDTH
-    | WITH
     | WITHEVENTS
-    | WRITE
     | XOR
+    | statementKeyword
+    | specialForm
     | literalIdentifier
     | reservedTypeIdentifier
-    | specialForm
     ;
 
 remKeyword
