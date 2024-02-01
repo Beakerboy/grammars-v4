@@ -481,6 +481,10 @@ LIKE
     : 'LIKE'
     ;
 
+LINEINPUT
+    : 'LINEINPUT'
+    ;
+
 LINE_INPUT
     : 'LINE' WS 'INPUT'
     ;
@@ -817,28 +821,92 @@ UNTIL
     : 'UNTIL'
     ;
 
-VB_CREATABLE
-    : 'VB_Creatable'
+VB_BASE
+    : 'VB_BASE'
     ;
 
-VB_CUSTOMIZABLE
-    : 'VB_Customizable'
+VB_CONTROL
+    : 'VB_CONTROL'
+    ;
+
+VB_DESCRIPTION
+    : 'VB_DESCRIPTION'
     ;
 
 VB_EXPOSED
-    : 'VB_Exposed'
+    : 'VB_EXPOSED'
+    ;
+
+VB_EXT_KEY 
+    : 'VB_EXT_KEY '
     ;
 
 VB_GLOBALNAMESPACE
-    : 'VB_GlobalNameSpace'
+    : 'VB_GLOBALNAMESPACE'
+    ;
+
+VB_HELPID
+    : 'VB_HELPID'
+    ;
+
+VB_INVOKE_FUNC
+    : 'VB_INVOKE_FUNC'
+    ;
+
+VB_INVOKE_PROPERTY 
+    : 'VB_INVOKE_PROPERTY '
+    ;
+
+VB_INVOKE_PROPERTYPUT
+    : 'VB_INVOKE_PROPERTYPUT'
+    ;
+
+VB_INVOKE_PROPERTYPUTREF
+    : 'VB_INVOKE_PROPERTYPUTREF'
+    ;
+
+VB_MEMBERFLAGS
+    : 'VB_MEMBERFLAGS'
     ;
 
 VB_NAME
-    : 'VB_Name'
+    : 'VB_NAME'
     ;
 
 VB_PREDECLAREDID
-    : 'VB_PredeclaredId'
+    : 'VB_PREDECLAREDID'
+    ;
+
+VB_PROCDATA
+    : 'VB_PROCDATA'
+    ;
+
+VB_TEMPLATEDERIVED
+    : 'VB_TEMPLATEDERIVED'
+    ;
+
+VB_USERMEMID
+    : 'VB_USERMEMID'
+    ;
+
+VB_VARDESCRIPTION
+    : 'VB_VARDESCRIPTION'
+    ;
+
+VB_VARHELPID
+    : 'VB_VARHELPID'
+    ;
+
+VB_VARMEMBERFLAGS
+    : 'VB_VARMEMBERFLAGS'
+    ;
+
+VB_VARPROCDATA 
+    : 'VB_VARPROCDATA '
+    ;
+
+VB_VARUSERMEMID
+    : 'VB_VARUSERMEMID'
     ;
 
 VARIANT
