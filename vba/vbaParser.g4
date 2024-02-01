@@ -198,10 +198,6 @@ definedTypeExpression
     | memberAccessExpression
     ;
 
-memberAccessExpression
-    : lExpression '.' WS unrestrictedName
-    ;
-
 asType
     : AS WS typeSpec
     ;
@@ -262,7 +258,6 @@ statementLabelDefinition
 lineNumberLabel
     : (INTEGERLITERAL | SHORTLITERAL)
     ;
-
 
 identifierStatementLabel
     : ambiguousIdentifier
@@ -799,20 +794,15 @@ expression
     ;
 
 // Several of the lExpression rules are rolled up due to Mutual Left Recursion
-// Many are also listed separately due to their specifi use elsewhere.
+// Many are also listed separately due to their specific use elsewhere.
 lExpression
     : simpleNameExpression
     | instanceExpression
-    | lExpression '.' unrestrictedName
+// memberAccessExpression
+    | lExpression '.' WS? unrestrictedName
+    | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
+//
     | lExpression WS? '(' WS? argumentList WS ')'
-    ;
-
-simpleNameExpression
-    : name
-    ;
-
-instanceExpression
-    : ME
     ;
     
 // 5.6.5
@@ -828,6 +818,46 @@ literalExpression
     | STRINGLITERAL
     | literalIdentifier typeSuffix?
     ;
+
+// 5.6.6
+parenthesizedExpression
+    : LPAREN wsc? expression wsc? RPAREN
+    ;
+
+// 5.6.8
+// The name 'newExpression' fails under the Go language
+newExpress
+    : NEW wsc? expression
+    ;
+
+// 5.6.9.8.1
+notOperatorExpression
+    : NOT wsc? expression
+    ;
+
+// 5.6.9.3.1
+unaryMinusExpression
+    : MINUS wsc? expression
+    ;
+
+// 5.6.10
+simpleNameExpression
+    : name
+    ;
+
+// 5.6.11
+instanceExpression
+    : ME
+    ;
+
+// 5.6.12
+// This expression is also rolled into lExpression
+// changes here must be duplicated there
+memberAccessExpression
+    : lExpression '.' WS? unrestrictedName
+    | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
+    ;
+
 // 5.6.13
 indexExpression
     : lExpression WS? '(' WS? argumentList WS ')'
@@ -876,27 +906,6 @@ addressofExpression
 procedurePointerExpression
     : simpleNameExpression
     | memberAccessExpression
-    ;
-    
-// 5.6.8
-// The name 'newExpression' fails under the Go language
-newExpress
-    : NEW wsc? expression
-    ;
-
-// 5.6.9.8.1
-notOperatorExpression
-    : NOT wsc? expression
-    ;
-
-// 5.6.6
-parenthesizedExpression
-    : LPAREN wsc? expression wsc? RPAREN
-    ;
-
-// 5.6.9.3.1
-unaryMinusExpression
-    : MINUS wsc? expression
     ;
 
 variableStmt
