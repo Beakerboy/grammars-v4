@@ -6109,8 +6109,8 @@
  },
  {
   "name": "vba",
-  "lexer": "",
-  "parser": "https://raw.githubusercontent.com/antlr/grammars-v4/master/vba/vba.g4",
+  "lexer": "https://raw.githubusercontent.com/antlr/grammars-v4/master/vba/vbaLexer.g4",
+  "parser": "https://raw.githubusercontent.com/antlr/grammars-v4/master/vba/vbaParser.g4",
   "start": "startRule",
   "example": [
    "example1.bas",
