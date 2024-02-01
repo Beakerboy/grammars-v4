@@ -418,7 +418,7 @@ macroIfBlockStmt
 macroElseIfBlockStmt
     : MACRO_ELSEIF WS? ifConditionStmt WS THEN endOfStatement (
         moduleDeclarations
-        | moduleBody
+        | proceduralModuleBody | classModuleBody
         | block
     )*
     ;
