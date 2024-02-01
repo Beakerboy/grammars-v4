@@ -25,6 +25,10 @@ AND
     : 'AND'
     ;
 
+ANY
+    : 'ANY'
+    ;
+
 ATTRIBUTE
     : 'ATTRIBUTE'
     ;
