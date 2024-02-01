@@ -33,6 +33,10 @@ APPEND
     : 'APPEND'
     ;
 
+ARRAY
+    : 'ARRAY'
+    ;
+
 AS
     : 'AS'
     ;
@@ -79,6 +83,10 @@ CHDIR
 
 CHDRIVE
     : 'CHDRIVE'
+    ;
+
+CIRCLE
+    : 'CIRCLE'
     ;
 
 CLASS
@@ -309,6 +317,10 @@ INPUT
     : 'INPUT'
     ;
 
+INPUTB
+    : 'INPUTB'
+    ;
+
 IS
     : 'IS'
     ;
@@ -319,6 +331,10 @@ INTEGER
 
 KILL
     : 'KILL'
+    ;
+
+LBOUND
+    : 'LBOUND'
     ;
 
 LOAD
@@ -581,6 +597,10 @@ SAVESETTING
     : 'SAVESETTING'
     ;
 
+SCALE
+    : 'SCALE'
+    ;
+
 SEEK
     : 'SEEK'
     ;
@@ -663,6 +683,10 @@ TYPE
 
 TYPEOF
     : 'TYPEOF'
+    ;
+
+UBOUND
+    : 'UBOUND'
     ;
 
 UNLOAD
