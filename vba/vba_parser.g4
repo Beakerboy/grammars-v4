@@ -36,7 +36,7 @@ proceduralModule
 
 // Does not match official doc
 proceduralModuleHeader
-    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
+    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLine
     ;
 
 classModule
