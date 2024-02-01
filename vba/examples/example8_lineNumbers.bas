@@ -1,3 +1,5 @@
+Attribute VB_Name = "LineNumber"
+
 Sub GotoStatementDemo() 
 Dim Number, MyString 
  Number = 1
