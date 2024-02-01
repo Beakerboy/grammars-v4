@@ -775,6 +775,11 @@ asTypeClause
     : AS WS? (NEW WS)? type_ (WS? fieldLength)?
     ;
 
+booleanLiteralIdentifier
+    : TRUE
+    | FALSE
+    ;
+
 baseType
     : BOOLEAN
     | BYTE
@@ -828,8 +833,7 @@ literal
     | INTEGERLITERAL
     | SHORTLITERAL
     | STRINGLITERAL
-    | TRUE
-    | FALSE
+    | booleanLiteralIdentifier
     | NOTHING
     | NULL_
     ;
