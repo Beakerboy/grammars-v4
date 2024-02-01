@@ -1038,6 +1038,10 @@ RPAREN
     : ')'
     ;
 
+SEMICOLON
+    : ';'
+    ;
+
 L_SQUARE_BRACKET
     : '['
     ;
