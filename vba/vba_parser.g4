@@ -13,8 +13,9 @@
 
 parser grammar vba_parser;
 
+
 options {
-    caseInsensitive = true;
+    tokenVocab = vba_lexer;
 }
 
 // module ----------------------------------
