@@ -129,6 +129,10 @@ DEFBYTE
     : 'DEFBYTE'
     ;
 
+DEFCUR
+    : 'DEFCUR'
+    ;
+
 DEFDATE
     : 'DEFDATE'
     ;
@@ -141,16 +145,20 @@ DEFDEC
     : 'DEFDEC'
     ;
 
-DEFCUR
-    : 'DEFCUR'
-    ;
-
 DEFINT
     : 'DEFINT'
     ;
 
 DEFLNG
     : 'DEFLNG'
+    ;
+
+DEFLNGLNG
+    : 'DEFLNGLNG'
+    ;
+
+DEFLNGPTR
+    : 'DEFLNGPTR'
     ;
 
 DEFOBJ
