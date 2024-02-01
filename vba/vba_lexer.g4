@@ -441,6 +441,26 @@ LENB
     : 'LENB'
     ;
 
+LET
+    : 'LET'
+    ;
+
+LIB
+    : 'LIB'
+    ;
+
+LIKE
+    : 'LIKE'
+    ;
+
+LINEINPUT
+    : 'LINEINPUT'
+    ;
+
+LINE_INPUT
+    : 'LINE' WS 'INPUT'
+    ;
+
 LOAD
     : 'LOAD'
     ;
@@ -463,30 +483,6 @@ LONGPTR
 
 LOOP
     : 'LOOP'
-    ;
-
-LEN
-    : 'LEN'
-    ;
-
-LET
-    : 'LET'
-    ;
-
-LIB
-    : 'LIB'
-    ;
-
-LIKE
-    : 'LIKE'
-    ;
-
-LINEINPUT
-    : 'LINEINPUT'
-    ;
-
-LINE_INPUT
-    : 'LINE' WS 'INPUT'
     ;
 
 LOCK_READ
