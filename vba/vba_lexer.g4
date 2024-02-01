@@ -665,6 +665,30 @@ UNTIL
     : 'UNTIL'
     ;
 
+VB_CREATABLE
+    : 'VB_Creatable'
+    ;
+
+VB_CUSTOMIZABLE
+    : 'VB_Customizable'
+    ;
+
+VB_EXPOSED
+    : 'VB_Exposed'
+    ;
+
+VB_GLOBALNAMESPACE
+    : 'VB_GlobalNameSpace'
+    ;
+
+VB_NAME
+    : 'VB_Name'
+    ;
+
+VB_PREDECLAREDID
+    : 'VB_PredeclaredId'
+    ;
+
 VARIANT
     : 'VARIANT'
     ;
