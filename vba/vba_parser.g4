@@ -934,6 +934,7 @@ reservedForImplementationUse
     | VB_VARMEMBERFLAGS
     | VB_VARPROCDATA 
     | VB_VARUSERMEMID
+    ;
 
 reservedName
     : ABS
