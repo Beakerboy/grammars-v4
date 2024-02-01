@@ -1,3 +1,5 @@
+Attribute VB_Name = "typeHints"
+
 Sub TypehintsDemo() 
 Dim Number
  Number = #1
