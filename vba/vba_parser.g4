@@ -32,7 +32,7 @@ module
     ;
 
 proceduralModule
-    : proceduralModuleHeader endOfLine* moduleDeclarations? endOfLine* moduleBody?
+    : proceduralModuleHeader endOfLine* moduleBody?
     ;
 
 // Does not match official doc
@@ -41,7 +41,7 @@ proceduralModuleHeader
     ;
 
 classModule
-    : classModuleHeader endOfLine* classModuleConfig? endOfLine* classAttr+ endOfLine* moduleDeclarations? endOfLine* moduleBody?
+    : classModuleHeader endOfLine* classModuleConfig? endOfLine* classAttr+ endOfLine* moduleBody?
     ;
 
 classModuleHeader
@@ -64,6 +64,8 @@ classAttr
     | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier endOfLine
     | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLine
     ;
+
+// body ------------------------------
 
 moduleDeclarations
     : moduleDeclarationsElement (endOfLine+ moduleDeclarationsElement)* endOfLine*
@@ -96,6 +98,10 @@ macroStmt
     ;
 
 moduleBody
+    : moduleDeclarations moduleCode
+    ;
+
+moduleCode
     : moduleBodyElement (endOfLine+ moduleBodyElement)* endOfLine*
     ;
 
