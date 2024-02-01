@@ -5,6 +5,10 @@ options {
 }
 
 // keywords
+ABS
+    : 'ABS'
+    ;
+
 ACCESS
     : 'ACCESS'
     ;
@@ -77,6 +81,29 @@ CASE
     : 'CASE'
     ;
 
+CBOOL
+    : 'CBOOL'
+    ;
+
+CBYTE
+    : 'CBYTE'
+    ;
+CCUR
+    : 'CCUR'
+    ;
+
+CDATE
+    : 'CDATE'
+    ;
+
+CDBL
+    : 'CDBL'
+    ;
+
+CDEC
+    : 'CDEC'
+    ;
+
 CHDIR
     : 'CHDIR'
     ;
@@ -85,12 +112,28 @@ CHDRIVE
     : 'CHDRIVE'
     ;
 
+CINT
+    : 'CINT'
+    ;
+
 CIRCLE
     : 'CIRCLE'
     ;
 
 CLASS
     : 'CLASS'
+    ;
+
+CLNG
+    : 'CLNG'
+    ;
+
+CLNGLNG
+    : 'CLNGLNG'
+    ;
+
+CLNGPTR
+    : 'CLNGPTR'
     ;
 
 CLOSE
@@ -104,6 +147,20 @@ COLLECTION
 CONST
     : 'CONST'
     ;
+CSNG
+    : 'CSNG'
+    ;
+
+CSTR
+    : 'CSTR'
+    ;
+
+CVAR
+    : 'CVAR'
+    ;
+CVERR
+    : 'CVERR'
+    ;
 
 CURRENCY
     : 'CURRENCY'
@@ -115,6 +172,10 @@ DATABASE
 
 DATE
     : 'DATE'
+    ;
+
+DEBUG
+    : 'DEBUG'
     ;
 
 DECLARE
@@ -187,6 +248,10 @@ DIM
 
 DO
     : 'DO'
+    ;
+
+DOEVENTS
+    : 'DOEVENTS'
     ;
 
 DOUBLE
@@ -285,6 +350,10 @@ FILECOPY
     : 'FILECOPY'
     ;
 
+FIX
+    : 'FIX'
+    ;
+
 FRIEND
     : 'FRIEND'
     ;
@@ -337,6 +406,10 @@ INPUTB
     : 'INPUTB'
     ;
 
+INT
+    : 'INT'
+    ;
+
 IS
     : 'IS'
     ;
@@ -351,6 +424,14 @@ KILL
 
 LBOUND
     : 'LBOUND'
+    ;
+
+LEN
+    : 'LEN'
+    ;
+
+LENB
+    : 'LENB'
     ;
 
 LOAD
@@ -549,6 +630,10 @@ PROPERTY_SET
     : 'PROPERTY' WS 'SET'
     ;
 
+PSET
+    : 'PSET'
+    ;
+
 PTRSAFE
     : 'PTRSAFE'
     ;
@@ -639,6 +724,10 @@ SET
 
 SETATTR
     : 'SETATTR'
+    ;
+
+SGN
+    : 'SGN'
     ;
 
 SHARED
