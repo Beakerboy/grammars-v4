@@ -834,7 +834,7 @@ objectLiteralIdentifier
 // 3.3.5.2
 variantLiteralIdentifier
     : EMPTY
-    | NULL
+    | NULL_
     ;
 
 type_
@@ -1206,6 +1206,9 @@ ELSE
 
 ELSEIF
     : 'ELSEIF'
+    ;
+EMPTY
+    : 'EMPTY'
     ;
 
 END_ENUM
