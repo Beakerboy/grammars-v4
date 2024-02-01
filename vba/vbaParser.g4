@@ -1155,6 +1155,7 @@ ambiguousKeyword
     | MID
     | MKDIR
     | NAME
+    | OBJECT
     | OUTPUT
     | RANDOM
     | RANDOMIZE
