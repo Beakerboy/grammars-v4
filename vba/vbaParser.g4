@@ -637,6 +637,7 @@ simpleNameExpression
 
 instanceExpression
     : ME
+    ;
 
 // 5.6.8
 // The name 'newExpression' fails under the Go language
