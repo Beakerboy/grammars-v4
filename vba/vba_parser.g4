@@ -905,6 +905,34 @@ operatorIdentifier
     | XOR
     ;
 
+reservedForImplementationUse
+    : ATTRIBUTE
+    | LINEINPUT
+    | VB_BASE
+    | VB_CONTROL
+    | VB_CREATABLE
+    | VB_CUSTOMIZABLE
+    | VB_DESCRIPTION
+    | VB_EXPOSED
+    | VB_EXT_KEY 
+    | VB_GLOBALNAMESPACE
+    | VB_HELPID
+    | VB_INVOKE_FUNC
+    | VB_INVOKE_PROPERTY 
+    | VB_INVOKE_PROPERTYPUT
+    | VB_INVOKE_PROPERTY
+    | VB_MEMBERFLAGS
+    | VB_NAME
+    | VB_PREDECLAREDID
+    | VB_PROCDATA
+    | VB_TEMPLATEDERIVED
+    | VB_USERMEMID
+    | VB_VARDESCRIPTION
+    | VB_VARHELPID
+    | VB_VARMEMBERFLAGS
+    | VB_VARPROCDATA 
+    | VB_VARUSERMEMID
+
 reservedName
     : ABS
     | CBOOL
@@ -1071,7 +1099,6 @@ reservedIdentifier
 ambiguousKeyword
     : ACCESS
     | ALIAS
-    | ATTRIBUTE
     | APPACTIVATE
     | APPEND
     | BEEP
