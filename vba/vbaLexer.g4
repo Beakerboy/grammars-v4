@@ -193,6 +193,10 @@ DECLARE
     : 'DECLARE'
     ;
 
+DECIMAL
+    : 'DECIMAL'
+    ;
+
 DEFBOOL
     : 'DEFBOOL'
     ;
@@ -279,6 +283,10 @@ ELSE
 
 ELSEIF
     : 'ELSEIF'
+    ;
+
+EMPTY
+    : 'EMPTY'
     ;
 
 END_ENUM
