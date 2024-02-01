@@ -1,3 +1,5 @@
+Attribute VB_Name = "operators"
+
 Public Sub Module()
     X = 0
     Y = 1
