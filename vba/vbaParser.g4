@@ -777,12 +777,8 @@ unlockStmt
 // expressions----------------------------------
 // 5.6
 // Modifying the order will affect the order of operations
+// valueExpression must be rolled up into expression due to mutual left recursion
 expression
-    : valueExpression
-    | lExpression
-    ;
-
-valueExpression
     : literalExpression
     | parenthesizedExpression
     | typeOfStmt
@@ -799,15 +795,17 @@ valueExpression
     | expression wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) wsc? expression
     | notOperatorExpression
     | expression wsc? (AND | OR | XOR | EQV | IMP) wsc? expression
+    | lExpression
     ;
 
+// Several of the lExpression rules are rolled up due to Mutual Left Recursion
+// Many are also listed separately due to their specifi use elsewhere.
 lExpression
     : simpleNameExpression
     | instanceExpression
     | lExpression '.' unrestrictedName
     | lExpression WS? '(' WS? argumentList WS ')'
     ;
-
 
 simpleNameExpression
     : name
