@@ -127,22 +127,65 @@ classModuleCodeElement
     | implementsDirective
     ;
 
-
+// 5.3
 commonModuleCodeElement
+    : remStatement
+    | procedureDeclaration
+    ;
+
+procedureDeclaration
     : functionStmt
     | propertyGetStmt
     | propertySetStmt
     | propertyLetStmt
-    | subStmt
+    | subroutineDeclaration
     | macroStmt
     ;
-
-// 5.2.3.1.4
+// 5.2.3.1
+variableDeclarationList
+    : variableDcl wsc (wsc? ',' wsc? variableDcl)*
+    ;
+// 5.2.3.1.1
+variableDcl
+    : typedVariableDcl
+    | untypedVariableDcl
+    ;
+typedVariableDcl
+    :typedName arrayDim?
+    ;
+untypedVariableDcl
+    : ambiguousIdentifier (arrayClause | asClause)?
+    ;
+arrayClause
+    : arrayDim wsc? asClause
+    ;
 asClause
     : asAutoObject
     | asType
     ;
-    
+
+// 5.2.3.1.3
+arrayDim
+    : '(' wsc? boundsList? wsc? ')'
+    ;
+
+boundsList
+    : dimSpec (wsc',' wsc dimSpec)*
+    ;
+
+dimSpec
+    : lowerBound? wsc? upperBound
+    ;
+
+lowerBound
+    : constantExpression TO
+    ;
+
+upperBound
+    : constantExpression
+    ;
+
+// 5.2.3.1.4
 asAutoObject
     : AS WS NEW WS classTypeName
     ;
@@ -187,13 +230,75 @@ constantName
     ;
 // block ----------------------------------
 
+// 5.4
+procedureBody
+    : statementBlock
+    ;
+
+statementBlock
+    : (blockStmt endOfStatement)*
+    ;
 block
     : blockStmt (endOfStatement blockStmt)* endOfStatement
     ;
 
 blockStmt
-    : lineLabel
-    | appactivateStmt
+    : statementLabelDefinition
+    | remStatement
+    | statement
+    ;
+
+statement
+    : controlStatement
+    | dataManipulationStatement
+    | errorHandingStatement
+    | fileStatement
+    ;
+    
+// 5.4.1.1
+statementLabelDefinition
+    : (identifierStatementLabel | lineNumberLabel) ':'
+    ;
+
+lineNumberLabel
+    : (INTEGERLITERAL | SHORTLITERAL)
+    ;
+
+
+identifierStatementLabel
+    : ambiguousIdentifier
+    ;
+    
+// 5.4.2
+controlStatement
+    : ifThenElseStmt
+    | controlStatementExceptMultilineIf
+    ;
+
+controlStatementExceptMultilineIf
+    : callStatement
+    | whileStatement
+    | forStatement
+    | exitForStatement
+    | doStatement
+    | exitDoStatement
+    | singleLineIfStatement
+    | selectCaseStatement
+    | stopStatement
+    | gotoStatement
+    | onGotoStatement
+    | gosubStatement
+    | returnStatement
+    | onGosubStatement
+    | forEachStatement
+    | exitSubStatement
+    | exitFunctionStatement
+    | exitPropertyStatement
+    | raiseeventStatement
+    | withStatement
+    ;
+extra
+    : appactivateStmt
     | beepStmt
     | chdirStmt
     | chdriveStmt
@@ -201,65 +306,78 @@ blockStmt
     | constStmt
     | dateStmt
     | deleteSettingStmt
-    | doLoopStmt
     | endStmt
     | eraseStmt
     | errorStmt
-    | exitStmt
     | explicitCallStmt
     | filecopyStmt
-    | forEachStmt
     | forNextStmt
     | getStmt
-    | goSubStmt
-    | goToStmt
-    | ifThenElseStmt
     | implementsStmt
     | inputStmt
     | killStmt
-    | letStmt
     | lineInputStmt
-    | lineNumber
     | loadStmt
     | lockStmt
-    | lsetStmt
     | macroStmt
-    | midStmt
     | mkdirStmt
     | nameStmt
     | onErrorStmt
-    | onGoToStmt
-    | onGoSubStmt
     | openStmt
     | printStmt
     | putStmt
-    | raiseEventStmt
     | randomizeStmt
     | redimStmt
     | resetStmt
     | resumeStmt
-    | returnStmt
     | rmdirStmt
-    | rsetStmt
     | savepictureStmt
     | saveSettingStmt
     | seekStmt
-    | selectCaseStmt
     | sendkeysStmt
     | setattrStmt
-    | setStmt
-    | stopStmt
     | timeStmt
     | unloadStmt
     | unlockStmt
     | variableStmt
-    | whileWendStmt
     | widthStmt
-    | withStmt
     | writeStmt
     | expression
     ;
 
+
+// 5.4.2.1
+callStatement
+    : CALL WS (simpleNameExpression
+        | memberAccessExpression
+        | indexExpression
+        | withExpression)
+    | (simpleNameExpression
+        | memberAccessExpression
+        | withExpression) argumentList
+    ;
+
+// 5.4.3
+dataManipulationStatement
+    : localVariableDeclaration
+    | staticVariableDeclaration
+    | localConstDeclaration
+    | redimStatement
+    | midStatement
+    | rsetStatement
+    | lsetStatement
+    | letStatement
+    | setStatement
+    ;
+
+// 5.4.3.1
+localVariableDeclaration
+    : DIM wsc? SHARED? wsc? variableDeclarationList
+    ;
+
+staticVariableDeclaration
+    : STATIC wsc variableDeclarationList
+    ;
 // statements ----------------------------------
 
 appactivateStmt
@@ -434,9 +552,6 @@ lineInputStmt
     : LINE_INPUT WS fileNumber WS? ',' WS? expression
     ;
 
-lineNumber
-    : (INTEGERLITERAL | SHORTLITERAL) NEWLINE? ':'? NEWLINE? WS?
-    ;
 
 loadStmt
     : LOAD WS expression
@@ -622,10 +737,15 @@ stopStmt
     : STOP
     ;
 
-subStmt
-    : (visibility WS)? (STATIC WS)? SUB WS? ambiguousIdentifier (WS? argList)? endOfStatement block? END wsc SUB
+subroutineDeclaration
+    : (visibility WS)? (STATIC WS)? SUB WS? ambiguousIdentifier (WS? argList)? endOfStatement block? END wsc SUB procedureTail?
     ;
 
+procedureTail
+    : WS? NEWLINE
+    | COMMENT
+    | REMCOMMENT
+    ;
 timeStmt
     : TIME WS? EQ WS? expression
     ;
@@ -677,6 +797,7 @@ lExpression
     : simpleNameExpression
     | instanceExpression
     | lExpression '.' unrestrictedName
+    | lExpression WS? '(' WS? argumentList WS ')'
     ;
 
 
@@ -687,6 +808,57 @@ simpleNameExpression
 instanceExpression
     : ME
     ;
+
+// 5.6.13
+indexExpression
+    : lExpression WS? '(' WS? argumentList WS ')'
+    ;
+
+argumentList
+    : positionalOrNamedArgumentList?
+    ;
+
+positionalOrNamedArgumentList
+    : (positionalArgument WS? ',')* requiredPositionalArgument
+    | (positionalArgument WS? ',')* namedArgumentList
+    ;
+
+positionalArgument
+    : argumentExpression?
+    ;
+
+requiredPositionalArgument
+    : argumentExpression
+    ;
+
+namedArgumentList
+    : namedArgument (wsc? ',' wsc? namedArgument)*
+    ;
+
+namedArgument
+    : unrestrictedName wsc? ASSIGN wsc? argumentExpression
+    ;
+
+argumentExpression
+    : BYVAL? wsc? expression
+    | addressofExpression
+    ;
+// 5.6.16.1
+// This could be made more complicated for accuracy
+constantExpression
+    : expression
+    ;
+
+// 5.6.16.8
+addressofExpression
+    : ADDRESSOF procedurePointerExpression
+    ;
+
+procedurePointerExpression
+    : simpleNameExpression
+    | memberAccessExpression
+    ;
+    
 // 5.6.8
 // The name 'newExpression' fails under the Go language
 newExpress
@@ -923,10 +1095,6 @@ futureReserved
 
 letterrange
     : certainIdentifier (WS? MINUS WS? certainIdentifier)?
-    ;
-
-lineLabel
-    : ambiguousIdentifier ':'
     ;
 
 literal
@@ -1228,7 +1396,7 @@ remKeyword
     : REM
     ;
 
-remComment
+remStatement
     : REMCOMMENT
     ;
 
@@ -1237,7 +1405,7 @@ comment
     ;
 
 endOfLine
-    : WS? (NEWLINE | comment | remComment) WS?
+    : WS? (NEWLINE | comment | remStatement) WS?
     ;
 
 endOfStatement
