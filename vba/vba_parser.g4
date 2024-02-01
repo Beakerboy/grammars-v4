@@ -41,14 +41,14 @@ proceduralModuleHeader
     ;
 
 classModule
-    : classModuleHeader endOfLine* moduleConfig? endOfLine* moduleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
+    : classModuleHeader endOfLine* classModuleConfig? endOfLine* classModuleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
     ;
 
 classModuleHeader
     : VERSION WS DOUBLELITERAL (WS CLASS)?
     ;
 
-moduleConfig
+classModuleConfig
     : BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* moduleConfigElement+ END
     ;
 
@@ -56,7 +56,7 @@ moduleConfigElement
     : ambiguousIdentifier WS? EQ WS? literal (COLON literal)? endOfLine*
     ;
 
-moduleAttributes
+classModuleAttributes
     : (attributeStmt endOfLine+)+
     ;
 
