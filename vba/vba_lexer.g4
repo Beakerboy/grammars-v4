@@ -489,6 +489,10 @@ OPEN
     : 'OPEN'
     ;
 
+OPTION
+    : 'OPTION'
+    ;
+
 OPTIONAL
     : 'OPTIONAL'
     ;
