@@ -20,7 +20,6 @@ options {
 }
 
 // module ----------------------------------
-
 startRule
     : module EOF
     ;
@@ -54,7 +53,7 @@ classModuleConfig
     ;
 
 moduleConfigElement
-    : ambiguousIdentifier WS? EQ WS? literal (COLON literal)? endOfLine*
+    : ambiguousIdentifier WS? EQ WS? literalExpression (COLON literalExpression)? endOfLine*
     ;
 
 classAttr
@@ -308,7 +307,6 @@ extra
     | deleteSettingStmt
     | endStmt
     | eraseStmt
-    | errorStmt
     | explicitCallStmt
     | filecopyStmt
     | forNextStmt
@@ -327,8 +325,6 @@ extra
     | printStmt
     | putStmt
     | randomizeStmt
-    | redimStmt
-    | resetStmt
     | resumeStmt
     | rmdirStmt
     | savepictureStmt
@@ -439,7 +435,7 @@ deleteSettingStmt
     : DELETESETTING WS expression WS? ',' WS? expression (WS? ',' WS? expression)?
     ;
 
-doLoopStmt
+doStatement
     : DO endOfStatement block? LOOP
     | DO WS (WHILE | UNTIL) WS expression endOfStatement block? LOOP
     | DO endOfStatement block LOOP WS (WHILE | UNTIL) WS expression
@@ -461,7 +457,7 @@ eraseStmt
     : ERASE WS expression (',' WS? expression)*?
     ;
 
-errorStmt
+errorHandingStatement
     : ERROR WS expression
     ;
 
@@ -469,19 +465,27 @@ eventStmt
     : (visibility WS)? EVENT WS ambiguousIdentifier WS? argList
     ;
 
-exitStmt
-    : EXIT_DO
-    | EXIT_FOR
-    | EXIT_FUNCTION
-    | EXIT_PROPERTY
-    | EXIT_SUB
+exitDoStatement
+    : EXIT wsc DO
+    ;
+exitForStatement
+    : EXIT wsc FOR
+    ;
+exitSubStatement
+    : EXIT wsc SUB
+    ;
+exitPropertyStatement
+    : EXIT wsc PROPERTY
+    ;
+exitFunctionStatement
+    : EXIT wsc FUNCTION
     ;
 
 filecopyStmt
     : FILECOPY WS expression WS? ',' WS? expression
     ;
 
-forEachStmt
+forEachStatement
     : FOR WS EACH WS ambiguousIdentifier typeSuffix? WS IN WS expression endOfStatement block? NEXT (
         WS ambiguousIdentifier
     )?
@@ -503,11 +507,11 @@ getStmt
     : GET WS fileNumber WS? ',' WS? expression? WS? ',' WS? expression
     ;
 
-goSubStmt
+gosubStatement
     : GOSUB WS expression
     ;
 
-goToStmt
+gotoStatement
     : GOTO WS expression
     ;
 
@@ -544,7 +548,7 @@ killStmt
     : KILL WS expression
     ;
 
-letStmt
+letStatement
     : (LET WS)? implicitCallStmt_InStmt WS? (EQ | PLUS_EQ | MINUS_EQ) WS? typeSuffix? expression typeSuffix?
     ;
 
@@ -561,7 +565,7 @@ lockStmt
     : LOCK WS expression (WS? ',' WS? expression (WS TO WS expression)?)?
     ;
 
-lsetStmt
+lsetStatement
     : LSET WS implicitCallStmt_InStmt WS? EQ WS? expression
     ;
 
@@ -589,7 +593,7 @@ macroElseBlockStmt
     : MACRO_ELSE endOfStatement (moduleDeclarations | proceduralModuleBody | classModuleBody | block)*
     ;
 
-midStmt
+midStatement
     : MID WS? LPAREN WS? argsCall WS? RPAREN
     ;
 
@@ -605,11 +609,11 @@ onErrorStmt
     : (ON_ERROR | ON_LOCAL_ERROR) WS (GOTO WS expression | RESUME WS NEXT)
     ;
 
-onGoToStmt
+onGotoStatement
     : ON WS expression WS GOTO WS expression (WS? ',' WS? expression)*
     ;
 
-onGoSubStmt
+onGosubStatement
     : ON WS expression WS GOSUB WS expression (WS? ',' WS? expression)*
     ;
 
@@ -661,7 +665,7 @@ randomizeStmt
     : RANDOMIZE (WS expression)?
     ;
 
-redimStmt
+redimStatement
     : REDIM WS (PRESERVE WS)? redimSubStmt (WS? ',' WS? redimSubStmt)*
     ;
 
@@ -669,7 +673,7 @@ redimSubStmt
     : implicitCallStmt_InStmt WS? LPAREN WS? subscripts WS? RPAREN (WS asType)?
     ;
 
-resetStmt
+resetStatement
     : RESET
     ;
 
@@ -685,7 +689,7 @@ rmdirStmt
     : RMDIR WS expression
     ;
 
-rsetStmt
+rsetStatement
     : RSET WS implicitCallStmt_InStmt WS? EQ WS? expression
     ;
 
@@ -701,7 +705,7 @@ seekStmt
     : SEEK WS fileNumber WS? ',' WS? expression
     ;
 
-selectCaseStmt
+selectCaseStatement
     : SELECT WS CASE WS expression endOfStatement sC_Case* END_SELECT
     ;
 
@@ -729,11 +733,11 @@ setattrStmt
     : SETATTR WS expression WS? ',' WS? expression
     ;
 
-setStmt
+setStatement
     : SET WS implicitCallStmt_InStmt WS? EQ WS? expression
     ;
 
-stopStmt
+stopStatement
     : STOP
     ;
 
@@ -774,12 +778,16 @@ unlockStmt
 // 5.6
 // Modifying the order will affect the order of operations
 expression
-    : literal
+    : valueExpression
     | lExpression
+    ;
+
+valueExpression
+    : literalExpression
     | parenthesizedExpression
-    | newExpress
     | typeOfStmt
-    | midStmt
+    | newExpress
+    | midStatement
     | ADDRESSOF wsc? expression
     | implicitCallStmt_InStmt wsc? ASSIGN wsc? expression
     | expression wsc? POW wsc? expression
@@ -808,7 +816,20 @@ simpleNameExpression
 instanceExpression
     : ME
     ;
-
+    
+// 5.6.5
+// check on hex and oct
+// check definition of integer and float
+literalExpression
+    : HEXLITERAL
+    | OCTLITERAL
+    | DATELITERAL
+    | DOUBLELITERAL
+    | INTEGERLITERAL
+    | SHORTLITERAL
+    | STRINGLITERAL
+    | literalIdentifier typeSuffix?
+    ;
 // 5.6.13
 indexExpression
     : lExpression WS? '(' WS? argumentList WS ')'
@@ -1097,16 +1118,6 @@ letterrange
     : certainIdentifier (WS? MINUS WS? certainIdentifier)?
     ;
 
-literal
-    : HEXLITERAL
-    | OCTLITERAL
-    | DATELITERAL
-    | DOUBLELITERAL
-    | INTEGERLITERAL
-    | SHORTLITERAL
-    | STRINGLITERAL
-    | literalIdentifier
-    ;
 
 literalIdentifier
     : booleanLiteralIdentifier
