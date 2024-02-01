@@ -733,7 +733,7 @@ iCS_S_VariableOrProcedureCall
     ;
 
 iCS_S_ProcedureOrArrayCall
-    : (ambiguousIdentifier | baseType) typeHint? WS? LPAREN WS? (argsCall WS?)? RPAREN dictionaryCallStmt? (
+    : (ambiguousIdentifier | reservedTypeIdentifier) typeHint? WS? LPAREN WS? (argsCall WS?)? RPAREN dictionaryCallStmt? (
         WS? LPAREN subscripts RPAREN
     )*
     ;
@@ -808,19 +808,6 @@ booleanLiteralIdentifier
     | FALSE
     ;
 
-baseType
-    : BOOLEAN
-    | BYTE
-    | COLLECTION
-    | DATE
-    | DOUBLE
-    | INTEGER
-    | LONG
-    | SINGLE
-    | STRING (WS? MULT WS? expression)?
-    | VARIANT
-    ;
-
 certainIdentifier
     : IDENTIFIER (ambiguousKeyword | IDENTIFIER)*
     | ambiguousKeyword (ambiguousKeyword | IDENTIFIER)+
@@ -861,13 +848,46 @@ literal
     | INTEGERLITERAL
     | SHORTLITERAL
     | STRINGLITERAL
-    | booleanLiteralIdentifier
-    | NOTHING
-    | NULL_
+    | literalIdentifier
+    ;
+
+literalIdentifier
+    : booleanLiteralIdentifier
+    | objectLiteralIdentifier
+    | variantLiteralIdentifier
+    ;
+
+objectLiteralIdentifier
+    : NOTHING
+    ;
+
+reservedTypeIdentifier
+    : BOOLEAN
+    | BYTE
+    | CURRENCY
+    | DATE
+    | DOUBLE
+    | INTEGER
+    | LONG
+    | LONGLONG
+    | LONGPTR
+    | SINGLE
+    | STRING
+    | VARIANT
+    ;
+
+specialForm
+    : ARRAY
+    | CIRCLE
+    | INPUT
+    | INPUTB
+    | LBOUND
+    | SCALE
+    | UBOUND
     ;
 
 type_
-    : (baseType | complexType) (WS? LPAREN WS? RPAREN)?
+    : (reservedTypeIdentifier | complexType) (WS? LPAREN WS? RPAREN)?
     ;
 
 typeHint
@@ -878,6 +898,11 @@ typeHint
     | '@'
     | '$'
     | '^'
+    ;
+
+variantLiteralIdentifier
+    : EMPTY
+    | NULL_
     ;
 
 visibility
@@ -900,10 +925,8 @@ ambiguousKeyword
     | BEEP
     | BEGIN
     | BINARY
-    | BOOLEAN
     | BYVAL
     | BYREF
-    | BYTE
     | CALL
     | CASE
     | CLASS
@@ -913,7 +936,6 @@ ambiguousKeyword
     | COLLECTION
     | CONST
     | DATABASE
-    | DATE
     | DECLARE
     | DEFBOOL
     | DEFBYTE
@@ -930,7 +952,6 @@ ambiguousKeyword
     | DELETESETTING
     | DIM
     | DO
-    | DOUBLE
     | EACH
     | ELSE
     | ELSEIF
@@ -953,13 +974,10 @@ ambiguousKeyword
     | IMP
     | IMPLEMENTS
     | IN
-    | INPUT
     | IS
-    | INTEGER
     | KILL
     | LOAD
     | LOCK
-    | LONG
     | LOOP
     | LEN
     | LET
@@ -992,7 +1010,7 @@ ambiguousKeyword
     | RAISEEVENT
     | READ
     | REDIM
-    | REM
+    | remKeyword
     | RESET
     | RESUME
     | RETURN
@@ -1006,12 +1024,10 @@ ambiguousKeyword
     | SET
     | SETATTR
     | SHARED
-    | SINGLE
     | SPC
     | STATIC
     | STEP
     | STOP
-    | STRING
     | SUB
     | TAB
     | TEXT
@@ -1024,7 +1040,6 @@ ambiguousKeyword
     | UNLOAD
     | UNLOCK
     | UNTIL
-    | VARIANT
     | VERSION
     | WEND
     | WHILE
@@ -1033,6 +1048,12 @@ ambiguousKeyword
     | WITHEVENTS
     | WRITE
     | XOR
+    | reservedTypeIdentifier
+    | specialForm
+    ;
+
+remKeyword
+    : REM
     ;
 
 remComment
