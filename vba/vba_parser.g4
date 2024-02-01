@@ -30,8 +30,13 @@ module
     ;
 
 proceduralModule
-    : WS? endOfLine* moduleConfig? endOfLine* moduleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
+    : WS? endOfLine* proceduralModuleHeader endOfLine* moduleDeclarations? endOfLine* moduleBody?
         endOfLine* WS?
+    ;
+
+// Does not match official doc
+proceduralModuleHeader
+    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
     ;
 
 classModule
