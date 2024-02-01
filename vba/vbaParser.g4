@@ -296,7 +296,6 @@ extra
     | beepStmt
     | chdirStmt
     | chdriveStmt
-    | closeStmt
     | constStmt
     | dateStmt
     | deleteSettingStmt
@@ -305,34 +304,24 @@ extra
     | explicitCallStmt
     | filecopyStmt
     | forNextStmt
-    | getStmt
     | implementsStmt
-    | inputStmt
     | killStmt
-    | lineInputStmt
     | loadStmt
-    | lockStmt
     | macroStmt
     | mkdirStmt
     | nameStmt
     | onErrorStmt
-    | openStmt
     | printStmt
-    | putStmt
     | randomizeStmt
     | resumeStmt
     | rmdirStmt
     | savepictureStmt
     | saveSettingStmt
-    | seekStmt
     | sendkeysStmt
     | setattrStmt
     | timeStmt
     | unloadStmt
-    | unlockStmt
     | variableStmt
-    | widthStmt
-    | writeStmt
     | expression
     ;
 
@@ -368,6 +357,111 @@ localVariableDeclaration
 
 staticVariableDeclaration
     : STATIC wsc variableDeclarationList
+    ;
+
+// 5.4.5
+fileStatement
+    : openStatement
+    | close Statement
+    | seekStatement
+    | lockStatement
+    | unlockStatement
+    | lineInputStatement
+    | widthStatement
+    | writeStatement
+    | inputStatement
+    | putStatement
+    | getStatement
+    ;
+
+// 5.4.5.1
+openStatement
+    : OPEN wcs? pathName wsc? modeClause? wsc? accessClause? wsc? lock? wsc? AS wsc? fileNumber wsc? lenClause?
+    ;
+
+pathName: expression;
+modeClause: FOR wsc? mode;
+mode
+    : APPEND
+    | BINARY
+    | INPUT
+    | OUTPUT
+    | RANDOM
+    ;
+accessClause: ACCESS access;
+access
+    : READ
+    | WRITE
+    | READ wsc WRITE
+    ;
+lock
+    : SHARED
+    | LOCK wsc READ
+    | LOCK wsc WRITE
+    | LOCK wsc READ wsc WRITE
+    ;
+
+lenClause: LEN wsc EQ wsc recLength;
+
+recLength: expression;
+
+// 5.4.5.1.1
+fileNumber
+    : markedFileNumber
+    | unmarkedFileNumber
+    ;
+
+markedFileNumber: '#' expression;
+unmarkedFileNumber: expression;
+
+// 5.4.5.2
+close Statement
+    : RESET
+    | CLOSE wsc? fileNumberList?
+    ;
+
+fileNumberList: fileNumber (wsc? ',' wsc? fileNumber)*;
+
+// 5.4.5.3
+seekStatement: SEEK wsc fileNumber wsc? ',' wsc? position;
+position: expression;
+
+// 5.4.5.4
+lockStatement: LOCK wsc fileNumber (wsc? ',' wsc? recordRange);
+recordRange
+    : startRecordNumber
+    | startRecordNumber? wsc TO wsc endRecordNumber
+    ;
+startRecordNumber: expression;
+endRecordNumber: expression;
+
+// 5.4.5.5
+unlockStatement: UNLOCK wsc fileNumber (wsc? ',' wsc? recordRange)?;
+
+// 5.4.5.6
+lineInputStatement: LINE wsc INPUT wsc markedFileNumber wsc? ',' wsc? variableName;
+variableName: variableExpression;
+
+// 5.4.5.7
+widthStatement: WIDTH wsc markedFileNumber wsc? ',' wsc? lineWidth;
+lineWidth: expression;
+
+// 5.4.5.8
+printStatement
+    :
+    ;
+
+// 5.4.5.9
+writeStatement: ;
+
+inputStatement
+    :
+    ;
+putStatement
+    :
+    ;
+getStatement
+    :
     ;
 // statements ----------------------------------
 
@@ -696,10 +790,6 @@ saveSettingStmt
     : SAVESETTING WS expression WS? ',' WS? expression WS? ',' WS? expression WS? ',' WS? expression
     ;
 
-seekStmt
-    : SEEK WS fileNumber WS? ',' WS? expression
-    ;
-
 selectCaseStatement
     : SELECT WS CASE WS expression endOfStatement sC_Case* END_SELECT
     ;
@@ -932,14 +1022,6 @@ widthStmt
 
 withStmt
     : WITH WS (implicitCallStmt_InStmt | (NEW WS type_)) endOfStatement block? END_WITH
-    ;
-
-writeStmt
-    : WRITE WS fileNumber WS? ',' (WS? outputList)?
-    ;
-
-fileNumber
-    : '#'? expression
     ;
 
 // complex call statements ----------------------------------
