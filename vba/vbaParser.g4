@@ -173,7 +173,72 @@ commonModuleDeclarationElement
 // 5.2.3.1
 globalVariableDeclaration: GLOBAL WS variableDeclarationList;
 publicVariableDecalation: PUBLIC (WS SHARED)? WS moduleVariableDeclarationList;
-variableDeclarationList: variableDcl (WS? ',' WS? variabledDcl)*;
+privateVariableDeclaration: (PRIVATE | DIM) (wsc SHARED)? moduleVariableDeclarationList;
+moduleVariableDeclarationList: (witheventsVariableDcl | variableDcl) (wsc? ',' wsc? (witheventsVariableDcl | variableDcl))*;
+variableDeclarationList
+    : variableDcl wsc (wsc? ',' wsc? variableDcl)*
+    ;
+// 5.2.3.1.1
+variableDcl
+    : typedVariableDcl
+    | untypedVariableDcl
+    ;
+typedVariableDcl
+    :typedName arrayDim?
+    ;
+untypedVariableDcl
+    : ambiguousIdentifier (arrayClause | asClause)?
+    ;
+arrayClause
+    : arrayDim wsc? asClause
+    ;
+asClause
+    : asAutoObject
+    | asType
+    ;
+
+// 5.2.3.1.2
+classTypeName: definedTypeExpression;
+
+// 5.2.3.1.3
+arrayDim: '(' wsc? boundsList? wsc? ')';
+boundsList: dimSpec (wsc',' wsc dimSpec)*;
+dimSpec: lowerBound? wsc? upperBound;
+lowerBound: constantExpression TO;
+upperBound: constantExpression;
+
+// 5.2.3.1.4
+asAutoObject: AS WS NEW WS classTypeName;
+asType: AS WS typeSpec;
+typeSpec
+    : fixedLengthStringSpec
+    | typeExpression
+    ;
+fixedLengthStringSpe: STRING WS '*' WS stringLength;
+stringLength
+    : SHORTLITERAL
+    | constantName
+    ;
+constantName: simpleNameExpression;
+
+// 5.2.3.2
+
+// 5.3
+commonModuleCodeElement
+    : remStatement
+    | procedureDeclaration
+    ;
+
+procedureDeclaration
+    : functionStmt
+    | propertyGetStmt
+    | propertySetStmt
+    | propertyLetStmt
+    | subroutineDeclaration
+    | macroStmt
+    ;
+// block ----------------------------------
+variabledDcl)*;
 // body ------------------------------
 
 implementsDirective
@@ -217,105 +282,6 @@ classModuleCodeElement
     : commonModuleCodeElement
     | implementsDirective
     ;
-
-// 5.3
-commonModuleCodeElement
-    : remStatement
-    | procedureDeclaration
-    ;
-
-procedureDeclaration
-    : functionStmt
-    | propertyGetStmt
-    | propertySetStmt
-    | propertyLetStmt
-    | subroutineDeclaration
-    | macroStmt
-    ;
-// 5.2.3.1
-variableDeclarationList
-    : variableDcl wsc (wsc? ',' wsc? variableDcl)*
-    ;
-// 5.2.3.1.1
-variableDcl
-    : typedVariableDcl
-    | untypedVariableDcl
-    ;
-typedVariableDcl
-    :typedName arrayDim?
-    ;
-untypedVariableDcl
-    : ambiguousIdentifier (arrayClause | asClause)?
-    ;
-arrayClause
-    : arrayDim wsc? asClause
-    ;
-asClause
-    : asAutoObject
-    | asType
-    ;
-
-// 5.2.3.1.3
-arrayDim
-    : '(' wsc? boundsList? wsc? ')'
-    ;
-
-boundsList
-    : dimSpec (wsc',' wsc dimSpec)*
-    ;
-
-dimSpec
-    : lowerBound? wsc? upperBound
-    ;
-
-lowerBound
-    : constantExpression TO
-    ;
-
-upperBound
-    : constantExpression
-    ;
-
-// 5.2.3.1.4
-asAutoObject
-    : AS WS NEW WS classTypeName
-    ;
-
-classTypeName
-    : definedTypeExpression
-    ;
-    
-definedTypeExpression
-    : simpleNameExpression
-    | memberAccessExpression
-    ;
-
-asType
-    : AS WS typeSpec
-    ;
-
-typeSpec
-    : fixedLengthStringSpec
-    | typeExpression
-    ;
-
-typeExpression
-    : builtinType
-    | definedTypeExpression
-    ;
-fixedLengthStringSpec
-    : STRING WS '*' WS stringLength
-    ;
-
-stringLength
-    : SHORTLITERAL
-    | constantName
-    ;
-
-constantName
-    : simpleNameExpression
-    ;
-// block ----------------------------------
 
 // 5.4
 procedureBody
@@ -692,6 +658,16 @@ variableExpression: lExpression;
 
 // 5.6.16.6
 boundVariableExpression: lExpression;
+
+// 5.6.16.7
+typeExpression
+    : builtinType
+    | definedTypeExpression
+    ;
+definedTypeExpression
+    : simpleNameExpression
+    | memberAccessExpression
+    ;
 
 // 5.6.16.8
 addressofExpression
