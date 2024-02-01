@@ -102,11 +102,11 @@ macroStmt
     ;
 
 proceduralModuleBody
-    : moduleDeclarations proceduralModuleCode
+    : moduleDeclarations? proceduralModuleCode
     ;
 
 classModuleBody
-    : moduleDeclarations classModuleCode
+    : moduleDeclarations? classModuleCode
     ;
 
 proceduralModuleCode
