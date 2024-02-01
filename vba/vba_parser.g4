@@ -41,7 +41,7 @@ proceduralModuleHeader
     ;
 
 classModule
-    : classModuleHeader endOfLine* classModuleConfig? endOfLine* classModuleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
+    : classModuleHeader endOfLine* classModuleConfig? endOfLine* classAttr+ endOfLine* moduleDeclarations? endOfLine* moduleBody?
     ;
 
 classModuleHeader
@@ -56,8 +56,13 @@ moduleConfigElement
     : ambiguousIdentifier WS? EQ WS? literal (COLON literal)? endOfLine*
     ;
 
-classModuleAttributes
-    : (attributeStmt endOfLine+)+
+classAttr
+    : proceduralModuleHeader
+    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE endOfLine
+    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? FALSE endOfLine
+    | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier endOfLine
+    | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier endOfLine
+    | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLine
     ;
 
 moduleDeclarations
@@ -104,10 +109,6 @@ moduleBodyElement
     ;
 
 // block ----------------------------------
-
-attributeStmt
-    : ATTRIBUTE WS implicitCallStmt_InStmt WS? EQ WS? literal (WS? ',' WS? literal)*
-    ;
 
 block
     : blockStmt (endOfStatement blockStmt)* endOfStatement
