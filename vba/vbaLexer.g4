@@ -575,7 +575,9 @@ NOTHING
 NULL_
     : 'NULL'
     ;
-
+OBJECT
+    : 'OBJECT'
+    ;
 ON
     : 'ON'
     ;
