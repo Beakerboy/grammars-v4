@@ -19,7 +19,7 @@ options {
     tokenVocab = vbaLexer;
 }
 
-// module ----------------------------------
+// Contexts not listed in the specification
 startRule
     : module EOF
     ;
@@ -27,37 +27,41 @@ startRule
 module
     : WS? endOfLine* (
           proceduralModule
-        | classModule
+        | classBegin endOfLine+ classModule
       ) endOfLine* WS?
     ;
 
-proceduralModule
-    : proceduralModuleHeader endOfLine* proceduralModuleBody?
+classBegin
+    : classVersionIdentification endOfLine+ classBeginBlock endOfLine+
     ;
 
-// Does not match official doc
-proceduralModuleHeader
-    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLine
-    ;
-
-classModule
-    : classModuleHeader endOfLine* classModuleConfig? endOfLine* classAttr+ endOfLine* classModuleBody?
-    ;
-
-classModuleHeader
+classVersionIdentification
     : VERSION WS DOUBLELITERAL (WS CLASS)?
     ;
 
-classModuleConfig
-    : BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* moduleConfigElement+ END
+classBeginBlock
+    : BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* beginBlockConfigElement+ END
     ;
 
-moduleConfigElement
+beginBlockConfigElementt
     : ambiguousIdentifier WS? EQ WS? literalExpression (COLON literalExpression)? endOfLine*
     ;
 
+// 4.2
+proceduralModule
+    : proceduralModuleHeader endOfLine* proceduralModuleBody
+    ;
+classModule
+    : classModuleHeader endOfLine* classModuleBody
+    ;
+
+// Compare STRINGLITERAL to quoted-identifier
+proceduralModuleHeader
+    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLine
+    ;
+classModuleHeader: classAttr+;
 classAttr
-    : proceduralModuleHeader
+    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLine
     | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE endOfLine
     | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? FALSE endOfLine
     | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier endOfLine
@@ -65,21 +69,104 @@ classAttr
     | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLine
     ;
 
+// 5.1
+proceduralModuleBody: moduleDeclarations? proceduralModuleCode;
+classModuleBody: moduleDeclarations? classModuleCode;
+
+// 5.2
+proceduralModuleDeclarationSection
+    : ((proceduralModuleDirectiveElement endOfLine+)* defDirective)? (proceduralModuleDeclarationElement endOfLine)*
+    ;
+classModuleDeclarationSection
+    : ((classModuleDirectiveElement endOfLine+)* defDirective)? (classModuleDeclarationElement endOfLine)*
+    ;
+proceduralModuleDirectiveElement
+    : commonOptionDirective
+    | optionPrivateDirective
+    | defDirective
+    ;
+proceduralModuleDeclarationElement
+    : commonModuleDeclarationElement
+    | globalVariableDeclaration
+    | publicConstDeclaration
+    | publicTypeDeclaration
+    | publicExternalProcedureDeclaration
+    | globalEnumDeclaration
+    | commonOptionDirective
+    | optionPrivateDirective
+    ;
+classModuleDirectiveElement
+    : commonOptionDirective
+    | defDirective
+    | implementsDirective
+    ;
+classModuleDeclarationElement
+    : commonModuleDeclarationElement
+    | eventDeclaration
+    | commonoptionDirective
+    | implementsDirective
+    ;
+
+5.2.1
+commonOptionDirective
+    : optionCompareDirective
+    | optionBaseDirective
+    | optionExplicitDirective
+    | remStatement
+    ;
+
+// 5.2.1.1
+optionCompareDirective: OPTION WS COMPARE WS? (BINARY | TEXT)
+
+// 5.2.1.2
+// INTEGER or SHORT?
+optionBaseDirective: OPTION WS BASE WS SHORTLITERAL
+
+// 5.2.1.3
+optionExplicitDirective: OPTION WS EXPLICIT
+
+// 5.2.1.4
+optionPrivateDirective: OPTION WS PRIVATE WS MODULE
+
+// 5.2.2
+defDirective
+    : defType WS letterSpec (WS ',' WS letterSpec)*
+    ;
+letterSpec
+    : singleLetter
+    | universalLetterRange
+    | letterRange
+    ;
+singleLetter: ambiguousIdentifier;
+universalLetterRange: upperCaseA WS '-' WS upperCaseZ
+upperCaseA: ambiguousIdentifier;
+upperCaseZ: ambiguousIdentifier;
+letterRange: firstLetter WS '-' WS lastLetter
+firstLetter: ambiguousIdentifier;
+lastLetter: ambiguousIdentifier;
+defType
+    : DEFBOOL
+    | DEFBYTE
+    | DEFCUR
+    | DEFDATE
+    | DEFDBL
+    | DEFINT
+    | DEFINT
+    | DEFLNG
+    | DEFLNGLNG
+    | DEGLNGPTR
+    | DEFOBJ
+    | DEFSNG
+    | DEFSTR
+    | DEFVAR
+    ;
+
+// 5.2.3
+
 // body ------------------------------
 
 implementsDirective
     : IMPLEMENTS WS ambiguousIdentifier
-    ;
-
-moduleDeclarations
-    : moduleDeclarationsElement (endOfLine+ moduleDeclarationsElement)* endOfLine*
-    ;
-
-moduleOption
-    : OPTION_BASE WS SHORTLITERAL                  # optionBaseStmt
-    | OPTION_COMPARE WS (BINARY | TEXT | DATABASE) # optionCompareStmt
-    | OPTION_EXPLICIT                              # optionExplicitStmt
-    | OPTION_PRIVATE_MODULE                        # optionPrivateModuleStmt
     ;
 
 moduleDeclarationsElement
@@ -101,13 +188,7 @@ macroStmt
     | macroIfThenElseStmt
     ;
 
-proceduralModuleBody
-    : moduleDeclarations? proceduralModuleCode
-    ;
 
-classModuleBody
-    : moduleDeclarations? classModuleCode
-    ;
 
 proceduralModuleCode
     : proceduralModuleCodeElement (endOfLine+ proceduralModuleCodeElement)* endOfLine*
@@ -311,7 +392,6 @@ extra
     | mkdirStmt
     | nameStmt
     | onErrorStmt
-    | printStmt
     | randomizeStmt
     | resumeStmt
     | rmdirStmt
@@ -351,13 +431,8 @@ dataManipulationStatement
     ;
 
 // 5.4.3.1
-localVariableDeclaration
-    : DIM wsc? SHARED? wsc? variableDeclarationList
-    ;
-
-staticVariableDeclaration
-    : STATIC wsc variableDeclarationList
-    ;
+localVariableDeclaration: DIM wsc? SHARED? wsc? variableDeclarationList;
+staticVariableDeclaration: STATIC wsc variableDeclarationList;
 
 // 5.4.5
 fileStatement
@@ -378,7 +453,6 @@ fileStatement
 openStatement
     : OPEN wcs? pathName wsc? modeClause? wsc? accessClause? wsc? lock? wsc? AS wsc? fileNumber wsc? lenClause?
     ;
-
 pathName: expression;
 modeClause: FOR wsc? mode;
 mode
@@ -400,9 +474,7 @@ lock
     | LOCK wsc WRITE
     | LOCK wsc READ wsc WRITE
     ;
-
 lenClause: LEN wsc EQ wsc recLength;
-
 recLength: expression;
 
 // 5.4.5.1.1
@@ -410,7 +482,6 @@ fileNumber
     : markedFileNumber
     | unmarkedFileNumber
     ;
-
 markedFileNumber: '#' expression;
 unmarkedFileNumber: expression;
 
@@ -419,7 +490,6 @@ close Statement
     : RESET
     | CLOSE wsc? fileNumberList?
     ;
-
 fileNumberList: fileNumber (wsc? ',' wsc? fileNumber)*;
 
 // 5.4.5.3
@@ -447,22 +517,207 @@ widthStatement: WIDTH wsc markedFileNumber wsc? ',' wsc? lineWidth;
 lineWidth: expression;
 
 // 5.4.5.8
-printStatement
-    :
-    ;
+printStatement: PRINT wsc markedFileNumber wsc? ',' wsc? outputList?;
+
+// 5.4.5.8.1
+outputList: outputItem*;
+outputItem: outputClause? charPosition?;
+outputClause: spcClause | tabClause| outputExpression;
+charPosition: ';' | ',';
+outputExpression: expression;
+spcClause: SPC wsc '(' wsc? spcNumber wsc? ')';
+spcNumber: expression;
+tabClause: TAB wsc '(' wsc? tabNumber wsc? ')';
+tabNumbeer: expression;
 
 // 5.4.5.9
-writeStatement: ;
+writeStatement: WRITE wsc markedFileNumber wsc? ',' wsc? outputList?;
 
-inputStatement
-    :
+// 5.4.5.10
+inputStatement: INPUT wsc markedFileNumber wsc? ',' wsc? inputList;
+inputList: inputVariable (wsc? ',' wsc? inputVariable)*
+inputVariable: boundVariableExpression;
+
+//5.4.5.11
+putStatement: PUT wsc fileNumber wsc? ',' wsc?recordNumber? wsc? ',' data;
+recordNumber: expression;
+data: expression;
+
+// 5.4.5.12
+getStatement: GET wsc fileNumber wsc? ',' wsc? recordNumber? wsc? ',' ws? variable;
+variable: variableExpression;
+
+// expressions----------------------------------
+// 5.6
+// Modifying the order will affect the order of operations
+// valueExpression must be rolled up into expression due to mutual left recursion
+expression
+    : literalExpression
+    | parenthesizedExpression
+    | typeOfStmt
+    | newExpress
+    | midStatement
+    | ADDRESSOF wsc? expression
+    | implicitCallStmt_InStmt wsc? ASSIGN wsc? expression
+    | expression wsc? POW wsc? expression
+    | unaryMinusExpression
+    | expression wsc? (DIV | MULT) wsc? expression
+    | expression wsc? MOD wsc? expression
+    | expression wsc? (PLUS | MINUS) wsc? expression
+    | expression wsc? AMPERSAND wsc? expression
+    | expression wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) wsc? expression
+    | notOperatorExpression
+    | expression wsc? (AND | OR | XOR | EQV | IMP) wsc? expression
+    | lExpression
     ;
-putStatement
-    :
+
+// Several of the lExpression rules are rolled up due to Mutual Left Recursion
+// Many are also listed separately due to their specific use elsewhere.
+lExpression
+    : simpleNameExpression
+    | instanceExpression
+// memberAccessExpression
+    | lExpression '.' WS? unrestrictedName
+    | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
+//
+    | lExpression WS? '(' WS? argumentList WS ')'
     ;
-getStatement
-    :
+    
+// 5.6.5
+// check on hex and oct
+// check definition of integer and float
+literalExpression
+    : HEXLITERAL
+    | OCTLITERAL
+    | DATELITERAL
+    | DOUBLELITERAL
+    | INTEGERLITERAL
+    | SHORTLITERAL
+    | STRINGLITERAL
+    | literalIdentifier typeSuffix?
     ;
+
+// 5.6.6
+parenthesizedExpression
+    : LPAREN wsc? expression wsc? RPAREN
+    ;
+
+// 5.6.8
+// The name 'newExpression' fails under the Go language
+newExpress
+    : NEW wsc? expression
+    ;
+
+// 5.6.9.8.1
+notOperatorExpression
+    : NOT wsc? expression
+    ;
+
+// 5.6.9.3.1
+unaryMinusExpression
+    : MINUS wsc? expression
+    ;
+
+// 5.6.10
+simpleNameExpression
+    : name
+    ;
+
+// 5.6.11
+instanceExpression
+    : ME
+    ;
+
+// 5.6.12
+// This expression is also rolled into lExpression
+// changes here must be duplicated there
+memberAccessExpression
+    : lExpression '.' WS? unrestrictedName
+    | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
+    ;
+
+// 5.6.13
+indexExpression
+    : lExpression WS? '(' WS? argumentList WS ')'
+    ;
+
+argumentList
+    : positionalOrNamedArgumentList?
+    ;
+
+positionalOrNamedArgumentList
+    : (positionalArgument WS? ',')* requiredPositionalArgument
+    | (positionalArgument WS? ',')* namedArgumentList
+    ;
+
+positionalArgument
+    : argumentExpression?
+    ;
+
+requiredPositionalArgument
+    : argumentExpression
+    ;
+
+namedArgumentList
+    : namedArgument (wsc? ',' wsc? namedArgument)*
+    ;
+
+namedArgument
+    : unrestrictedName wsc? ASSIGN wsc? argumentExpression
+    ;
+
+argumentExpression
+    : BYVAL? wsc? expression
+    | addressofExpression
+    ;
+// 5.6.16.1
+// This could be made more complicated for accuracy
+constantExpression
+    : expression
+    ;
+
+// 5.6.16.5
+variableExpression: lExpression;
+
+// 5.6.16.6
+boundVariableExpression: lExpression;
+
+// 5.6.16.8
+addressofExpression
+    : ADDRESSOF procedurePointerExpression
+    ;
+
+procedurePointerExpression
+    : simpleNameExpression
+    | memberAccessExpression
+    ;
+
+variableStmt
+    : (DIM | STATIC | visibility) WS (WITHEVENTS WS)? variableListStmt
+    ;
+
+variableListStmt
+    : variableSubStmt (WS? ',' WS? variableSubStmt)*
+    ;
+
+variableSubStmt
+    : ambiguousIdentifier (WS? LPAREN WS? (subscripts WS?)? RPAREN WS?)? typeSuffix? (
+        WS asType
+    )?
+    ;
+
+whileWendStmt
+    : WHILE WS expression endOfStatement block? WEND
+    ;
+
+widthStmt
+    : WIDTH WS fileNumber WS? ',' WS? expression
+    ;
+
+withStmt
+    : WITH WS (implicitCallStmt_InStmt | (NEW WS type_)) endOfStatement block? END_WITH
+    ;
+
 // statements ----------------------------------
 
 appactivateStmt
@@ -590,10 +845,6 @@ functionStmt
     : (visibility WS)? (STATIC WS)? FUNCTION WS? ambiguousIdentifier typeSuffix? (WS? argList)? (
         WS? asType
     )? endOfStatement block? END wsc FUNCTION
-    ;
-
-getStmt
-    : GET WS fileNumber WS? ',' WS? expression? WS? ',' WS? expression
     ;
 
 gosubStatement
@@ -859,170 +1110,6 @@ unlockStmt
     : UNLOCK WS fileNumber (WS? ',' WS? expression (WS TO WS expression)?)?
     ;
 
-// expressions----------------------------------
-// 5.6
-// Modifying the order will affect the order of operations
-// valueExpression must be rolled up into expression due to mutual left recursion
-expression
-    : literalExpression
-    | parenthesizedExpression
-    | typeOfStmt
-    | newExpress
-    | midStatement
-    | ADDRESSOF wsc? expression
-    | implicitCallStmt_InStmt wsc? ASSIGN wsc? expression
-    | expression wsc? POW wsc? expression
-    | unaryMinusExpression
-    | expression wsc? (DIV | MULT) wsc? expression
-    | expression wsc? MOD wsc? expression
-    | expression wsc? (PLUS | MINUS) wsc? expression
-    | expression wsc? AMPERSAND wsc? expression
-    | expression wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) wsc? expression
-    | notOperatorExpression
-    | expression wsc? (AND | OR | XOR | EQV | IMP) wsc? expression
-    | lExpression
-    ;
-
-// Several of the lExpression rules are rolled up due to Mutual Left Recursion
-// Many are also listed separately due to their specific use elsewhere.
-lExpression
-    : simpleNameExpression
-    | instanceExpression
-// memberAccessExpression
-    | lExpression '.' WS? unrestrictedName
-    | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
-//
-    | lExpression WS? '(' WS? argumentList WS ')'
-    ;
-    
-// 5.6.5
-// check on hex and oct
-// check definition of integer and float
-literalExpression
-    : HEXLITERAL
-    | OCTLITERAL
-    | DATELITERAL
-    | DOUBLELITERAL
-    | INTEGERLITERAL
-    | SHORTLITERAL
-    | STRINGLITERAL
-    | literalIdentifier typeSuffix?
-    ;
-
-// 5.6.6
-parenthesizedExpression
-    : LPAREN wsc? expression wsc? RPAREN
-    ;
-
-// 5.6.8
-// The name 'newExpression' fails under the Go language
-newExpress
-    : NEW wsc? expression
-    ;
-
-// 5.6.9.8.1
-notOperatorExpression
-    : NOT wsc? expression
-    ;
-
-// 5.6.9.3.1
-unaryMinusExpression
-    : MINUS wsc? expression
-    ;
-
-// 5.6.10
-simpleNameExpression
-    : name
-    ;
-
-// 5.6.11
-instanceExpression
-    : ME
-    ;
-
-// 5.6.12
-// This expression is also rolled into lExpression
-// changes here must be duplicated there
-memberAccessExpression
-    : lExpression '.' WS? unrestrictedName
-    | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
-    ;
-
-// 5.6.13
-indexExpression
-    : lExpression WS? '(' WS? argumentList WS ')'
-    ;
-
-argumentList
-    : positionalOrNamedArgumentList?
-    ;
-
-positionalOrNamedArgumentList
-    : (positionalArgument WS? ',')* requiredPositionalArgument
-    | (positionalArgument WS? ',')* namedArgumentList
-    ;
-
-positionalArgument
-    : argumentExpression?
-    ;
-
-requiredPositionalArgument
-    : argumentExpression
-    ;
-
-namedArgumentList
-    : namedArgument (wsc? ',' wsc? namedArgument)*
-    ;
-
-namedArgument
-    : unrestrictedName wsc? ASSIGN wsc? argumentExpression
-    ;
-
-argumentExpression
-    : BYVAL? wsc? expression
-    | addressofExpression
-    ;
-// 5.6.16.1
-// This could be made more complicated for accuracy
-constantExpression
-    : expression
-    ;
-
-// 5.6.16.8
-addressofExpression
-    : ADDRESSOF procedurePointerExpression
-    ;
-
-procedurePointerExpression
-    : simpleNameExpression
-    | memberAccessExpression
-    ;
-
-variableStmt
-    : (DIM | STATIC | visibility) WS (WITHEVENTS WS)? variableListStmt
-    ;
-
-variableListStmt
-    : variableSubStmt (WS? ',' WS? variableSubStmt)*
-    ;
-
-variableSubStmt
-    : ambiguousIdentifier (WS? LPAREN WS? (subscripts WS?)? RPAREN WS?)? typeSuffix? (
-        WS asType
-    )?
-    ;
-
-whileWendStmt
-    : WHILE WS expression endOfStatement block? WEND
-    ;
-
-widthStmt
-    : WIDTH WS fileNumber WS? ',' WS? expression
-    ;
-
-withStmt
-    : WITH WS (implicitCallStmt_InStmt | (NEW WS type_)) endOfStatement block? END_WITH
-    ;
 
 // complex call statements ----------------------------------
 
