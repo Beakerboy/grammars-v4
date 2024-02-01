@@ -969,6 +969,10 @@ AMPERSAND
     : '&'
     ;
 
+ASPERAND
+    : '@'
+    ;
+
 ASSIGN
     : ':='
     ;
@@ -1027,6 +1031,10 @@ MULT
 
 NEQ
     : '<>'
+    ;
+
+PERCENT
+    : '%'
     ;
 
 PERIOD
