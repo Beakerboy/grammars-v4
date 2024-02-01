@@ -25,11 +25,21 @@ startRule
     ;
 
 module
-    : WS? endOfLine* (moduleHeader endOfLine*)? moduleConfig? endOfLine* moduleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
+    : proceduralModule
+    | classModule
+    ;
+
+proceduralModule
+    : WS? endOfLine* moduleConfig? endOfLine* moduleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
         endOfLine* WS?
     ;
 
-moduleHeader
+classModule
+    : WS? endOfLine* classModuleHeader endOfLine* moduleConfig? endOfLine* moduleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
+        endOfLine* WS?
+    ;
+
+classModuleHeader
     : VERSION WS DOUBLELITERAL (WS CLASS)?
     ;
 
