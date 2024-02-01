@@ -857,6 +857,29 @@ literalIdentifier
     | variantLiteralIdentifier
     ;
 
+markerKeyword
+    : ANY
+    | AS
+    | BYREF
+    | BYVAL 
+    | CASE
+    | EACH
+    | ELSE
+    | IN 
+    | NEW
+    | SHARED
+    | UNTIL
+    | WITHEVENTS
+    | WRITE
+    | OPTIONAL
+    | PARAMARRAY
+    | PRESERVE
+    | SPC
+    | TAB
+    | THEN
+    | TO
+    ;
+
 objectLiteralIdentifier
     : NOTHING
     ;
@@ -984,6 +1007,7 @@ visibility
 
 reservedIdentifier
     : statementKeyword
+    | markerKeyword
     | specialForm
     | literalIdentifier
     | remKeyword
@@ -998,12 +1022,9 @@ ambiguousKeyword
     | ATTRIBUTE
     | APPACTIVATE
     | APPEND
-    | AS
     | BEEP
     | BEGIN
     | BINARY
-    | BYVAL
-    | BYREF
     | CLASS
     | CHDIR
     | CHDRIVE
@@ -1011,12 +1032,10 @@ ambiguousKeyword
     | DATABASE
     | DEFDEC
     | DELETESETTING
-    | EACH
     | EQV
     | ERROR
     | FILECOPY
     | IMP
-    | IN
     | IS
     | KILL
     | LOAD
@@ -1028,13 +1047,9 @@ ambiguousKeyword
     | MKDIR
     | MOD
     | NAME
-    | NEW
     | NOT
-    | OPTIONAL
     | OR
     | OUTPUT
-    | PARAMARRAY
-    | PRESERVE
     | RANDOM
     | RANDOMIZE
     | READ
@@ -1044,20 +1059,13 @@ ambiguousKeyword
     | SAVESETTING
     | SENDKEYS
     | SETATTR
-    | SHARED
-    | SPC
     | STEP
-    | TAB
     | TEXT
-    | THEN
     | TIME
-    | TO
     | TYPEOF
     | UNLOAD
-    | UNTIL
     | VERSION
     | WIDTH
-    | WITHEVENTS
     | XOR
     ;
 
