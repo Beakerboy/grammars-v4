@@ -253,6 +253,10 @@ EVENT
     : 'EVENT'
     ;
 
+EXIT
+    : 'EXIT'
+    ;
+
 EXIT_DO
     : 'EXIT' WS 'DO'
     ;
