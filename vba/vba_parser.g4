@@ -899,6 +899,36 @@ operatorIdentifier
     | XOR
     ;
 
+reservedName
+    : ABS
+    | CBOOL
+    | CBYTE
+    | CCUR
+    | CDATE
+    | CDBL
+    | CDEC
+    | CINT
+    | CLNG
+    | CLNGLNG
+    | CLNGPTR
+    | CSNG
+    | CSTR
+    | CVAR
+    | CVERR
+    | DATE
+    | DEBUG
+    | DOEVENTS
+    | FIX
+    | INT
+    | LEN
+    | LENB
+    | ME
+    | PSET
+    | SCALE
+    | SGN
+    | STRING
+    ;
+
 reservedTypeIdentifier
     : BOOLEAN
     | BYTE
@@ -1025,6 +1055,7 @@ reservedIdentifier
     | markerKeyword
     | operatorIdentifier
     | specialForm
+    | reservedName
     | literalIdentifier
     | remKeyword
     ;
@@ -1050,9 +1081,7 @@ ambiguousKeyword
     | FILECOPY
     | KILL
     | LOAD
-    | LEN
     | LIB
-    | ME
     | MID
     | MKDIR
     | NAME
