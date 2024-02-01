@@ -97,6 +97,10 @@ CONST
     : 'CONST'
     ;
 
+CURRENCY
+    : 'CURRENCY'
+    ;
+
 DATABASE
     : 'DATABASE'
     ;
@@ -327,6 +331,14 @@ LOCK
 
 LONG
     : 'LONG'
+    ;
+
+LONGLONG
+    : 'LONGLONG'
+    ;
+
+LONGPTR
+    : 'LONGPTR'
     ;
 
 LOOP
