@@ -832,6 +832,12 @@ fieldLength
     : MULT WS? (INTEGERLITERAL | ambiguousIdentifier)
     ;
 
+futureReserved
+    : CDECL
+    | DECIMAL
+    | DEFDEC
+    ;
+
 letterrange
     : certainIdentifier (WS? MINUS WS? certainIdentifier)?
     ;
@@ -1058,9 +1064,10 @@ reservedIdentifier
     | reservedName
     | literalIdentifier
     | remKeyword
+    | futureReserved
     ;
 
-// ambiguous keywords
+// keywords not in the reservedIdentifier set
 ambiguousKeyword
     : ACCESS
     | ALIAS
@@ -1075,7 +1082,6 @@ ambiguousKeyword
     | CHDRIVE
     | COLLECTION
     | DATABASE
-    | DEFDEC
     | DELETESETTING
     | ERROR
     | FILECOPY
