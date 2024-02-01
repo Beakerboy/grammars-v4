@@ -25,13 +25,14 @@ startRule
     ;
 
 module
-    : proceduralModule
-    | classModule
+    : WS? endOfLine* (
+          proceduralModule
+        | classModule
+      ) endOfLine* WS?
     ;
 
 proceduralModule
-    : WS? endOfLine* proceduralModuleHeader endOfLine* moduleDeclarations? endOfLine* moduleBody?
-        endOfLine* WS?
+    : proceduralModuleHeader endOfLine* moduleDeclarations? endOfLine* moduleBody?
     ;
 
 // Does not match official doc
@@ -40,8 +41,7 @@ proceduralModuleHeader
     ;
 
 classModule
-    : WS? endOfLine* classModuleHeader endOfLine* moduleConfig? endOfLine* moduleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
-        endOfLine* WS?
+    : classModuleHeader endOfLine* moduleConfig? endOfLine* moduleAttributes? endOfLine* moduleDeclarations? endOfLine* moduleBody?
     ;
 
 classModuleHeader
