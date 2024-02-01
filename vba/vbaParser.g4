@@ -137,6 +137,54 @@ commonModuleCodeElement
     | macroStmt
     ;
 
+// 5.2.3.1.4
+asClause
+    : asAutoObject
+    | asType
+    ;
+    
+asAutoObject
+    : AS WS NEW WS classTypeName
+    ;
+
+classTypeName
+    : definedTypeExpression
+    ;
+    
+definedTypeExpression
+    : simpleNameExpression
+    | memberAccessExpression
+    ;
+
+memberAccessExpression
+    : lExpression '.' WS unrestrictedName
+    ;
+
+asType
+    : AS WS typeSpec
+    ;
+
+typeSpec
+    : fixedLengthStringSpec
+    | typeExpression
+    ;
+
+typeExpression
+    : builtinType
+    | definedTypeExpression
+    ;
+fixedLengthStringSpec
+    : STRING WS '*' WS stringLength
+    ;
+
+stringLength
+    : SHORTLITERAL
+    | constantName
+    ;
+
+constantName
+    : simpleNameExpression
+    ;
 // block ----------------------------------
 
 block
@@ -239,7 +287,7 @@ constStmt
     ;
 
 constSubStmt
-    : ambiguousIdentifier typeSuffix? (WS asTypeClause)? WS? EQ WS? expression
+    : ambiguousIdentifier typeSuffix? (WS asType)? WS? EQ WS? expression
     ;
 
 dateStmt
@@ -249,7 +297,7 @@ dateStmt
 declareStmt
     : (visibility WS)? DECLARE WS (PTRSAFE WS)? ((FUNCTION typeSuffix?) | SUB) WS ambiguousIdentifier typeSuffix? WS LIB WS STRINGLITERAL (
         WS ALIAS WS STRINGLITERAL
-    )? (WS? argList)? (WS asTypeClause)?
+    )? (WS? argList)? (WS asType)?
     ;
 
 deftypeStmt
@@ -322,14 +370,14 @@ forEachStmt
     ;
 
 forNextStmt
-    : FOR WS ambiguousIdentifier typeSuffix? (WS asTypeClause)? WS? EQ WS? expression WS TO WS expression (
+    : FOR WS ambiguousIdentifier typeSuffix? (WS asType)? WS? EQ WS? expression WS TO WS expression (
         WS STEP WS expression
     )? endOfStatement block? NEXT (WS ambiguousIdentifier)?
     ;
 
 functionStmt
     : (visibility WS)? (STATIC WS)? FUNCTION WS? ambiguousIdentifier typeSuffix? (WS? argList)? (
-        WS? asTypeClause
+        WS? asType
     )? endOfStatement block? END wsc FUNCTION
     ;
 
@@ -474,7 +522,7 @@ printStmt
 
 propertyGetStmt
     : (visibility WS)? (STATIC WS)? PROPERTY_GET WS ambiguousIdentifier typeSuffix? (WS? argList)? (
-        WS asTypeClause
+        WS asType
     )? endOfStatement block? END_PROPERTY
     ;
 
@@ -503,7 +551,7 @@ redimStmt
     ;
 
 redimSubStmt
-    : implicitCallStmt_InStmt WS? LPAREN WS? subscripts WS? RPAREN (WS asTypeClause)?
+    : implicitCallStmt_InStmt WS? LPAREN WS? subscripts WS? RPAREN (WS asType)?
     ;
 
 resetStmt
@@ -587,7 +635,7 @@ typeStmt
     ;
 
 typeStmt_Element
-    : ambiguousIdentifier (WS? LPAREN (WS? subscripts)? WS? RPAREN)? (WS asTypeClause)? endOfStatement
+    : ambiguousIdentifier (WS? LPAREN (WS? subscripts)? WS? RPAREN)? (WS asType)? endOfStatement
     ;
 
 typeOfStmt
@@ -631,6 +679,7 @@ lExpression
     | lExpression '.' unrestrictedName
     ;
 
+
 simpleNameExpression
     : name
     ;
@@ -638,7 +687,6 @@ simpleNameExpression
 instanceExpression
     : ME
     ;
-
 // 5.6.8
 // The name 'newExpression' fails under the Go language
 newExpress
@@ -670,7 +718,7 @@ variableListStmt
 
 variableSubStmt
     : ambiguousIdentifier (WS? LPAREN WS? (subscripts WS?)? RPAREN WS?)? typeSuffix? (
-        WS asTypeClause
+        WS asType
     )?
     ;
 
@@ -791,7 +839,7 @@ argList
 arg
     : (OPTIONAL WS)? ((BYVAL | BYREF) WS)? (PARAMARRAY WS)? ambiguousIdentifier typeSuffix? (
         WS? LPAREN WS? RPAREN
-    )? (WS? asTypeClause)? (WS? argDefaultValue)?
+    )? (WS? asType)? (WS? argDefaultValue)?
     ;
 
 argDefaultValue
@@ -812,13 +860,18 @@ unrestrictedName
     : reservedIdentifier
     | ambiguousIdentifier
     ;
-
 // Known as IDENTIFIER in MS-VBAL
 ambiguousIdentifier
     : IDENTIFIER
     | ambiguousKeyword
     ;
 
+builtinType
+    : reservedTypeIdentifier
+    | '[' reservedTypeIdentifier ']'
+    | OBJECT
+    | '[' OBJECT ']'
+    ;
 name
     : untypedName
     | typedName
@@ -831,10 +884,7 @@ untypedName
 typedName
     : ambiguousIdentifier typeSuffix
     ;
-
-asTypeClause
-    : AS WS? (NEW WS)? type_ (WS? fieldLength)?
-    ;
+    
 
 booleanLiteralIdentifier
     : TRUE
