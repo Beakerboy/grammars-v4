@@ -32,7 +32,7 @@ module
     ;
 
 proceduralModule
-    : proceduralModuleHeader endOfLine* moduleBody?
+    : proceduralModuleHeader endOfLine* proceduralModuleBody?
     ;
 
 // Does not match official doc
@@ -41,7 +41,7 @@ proceduralModuleHeader
     ;
 
 classModule
-    : classModuleHeader endOfLine* classModuleConfig? endOfLine* classAttr+ endOfLine* moduleBody?
+    : classModuleHeader endOfLine* classModuleConfig? endOfLine* classAttr+ endOfLine* classModuleBody?
     ;
 
 classModuleHeader
@@ -66,6 +66,10 @@ classAttr
     ;
 
 // body ------------------------------
+
+implementsDirective
+    : IMPLEMENTS WS ambiguousIdentifier
+    ;
 
 moduleDeclarations
     : moduleDeclarationsElement (endOfLine+ moduleDeclarationsElement)* endOfLine*
@@ -97,15 +101,33 @@ macroStmt
     | macroIfThenElseStmt
     ;
 
-moduleBody
-    : moduleDeclarations moduleCode
+proceduralmoduleBody
+    : moduleDeclarations proceduralmoduleCode
     ;
 
-moduleCode
-    : moduleBodyElement (endOfLine+ moduleBodyElement)* endOfLine*
+classmoduleBody
+    : moduleDeclarations classmoduleCode
     ;
 
-moduleBodyElement
+proceduralModuleCode
+    : proceduralModuleCodeElement (endOfLine+ proceduralModuleCodeElement)* endOfLine*
+    ;
+
+classModuleCode
+    : classModuleCodeElement (endOfLine+ classModuleCodeElement)* endOfLine*
+    ;
+
+proceduralModuleCodeElement
+    : commonModuleCodeElement
+    ;
+
+classModuleCodeElement
+    : commonModuleCodeElement
+    | implementsDirective
+    ;
+
+
+commonModuleCodeElement
     : functionStmt
     | propertyGetStmt
     | propertySetStmt
