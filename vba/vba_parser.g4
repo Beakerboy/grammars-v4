@@ -795,8 +795,10 @@ subscript_
 
 // atomic rules ----------------------------------
 
+// Known as IDENTIFIER in MS-VBAL
 ambiguousIdentifier
-    : (IDENTIFIER | ambiguousKeyword)+
+    : IDENTIFIER
+    | ambiguousKeyword
     ;
 
 asTypeClause
@@ -1084,6 +1086,7 @@ visibility
     | GLOBAL
     ;
 
+// should this include reservedTypeIdentifier?
 reservedIdentifier
     : statementKeyword
     | markerKeyword
@@ -1096,7 +1099,8 @@ reservedIdentifier
     | futureReserved
     ;
 
-// keywords not in the reservedIdentifier set
+// lexer keywords not in the reservedIdentifier set
+// should this include reservedTypeIdentifier?
 ambiguousKeyword
     : ACCESS
     | ALIAS
