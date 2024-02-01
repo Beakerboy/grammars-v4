@@ -1,3 +1,5 @@
+Attribute VB_Name = "LineContinuation"
+
 Sub TestLineContinuedMemberCalls(foo, _
         bar)
 '   Valid line continuation syntax with
