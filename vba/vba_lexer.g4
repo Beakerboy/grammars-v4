@@ -92,6 +92,7 @@ CBOOL
 CBYTE
     : 'CBYTE'
     ;
+
 CCUR
     : 'CCUR'
     ;
@@ -151,6 +152,7 @@ COLLECTION
 CONST
     : 'CONST'
     ;
+
 CSNG
     : 'CSNG'
     ;
@@ -162,6 +164,7 @@ CSTR
 CVAR
     : 'CVAR'
     ;
+
 CVERR
     : 'CVERR'
     ;
