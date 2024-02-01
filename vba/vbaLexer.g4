@@ -109,6 +109,10 @@ CDEC
     : 'CDEC'
     ;
 
+CDECL
+    : 'CDECL'
+    ;
+
 CHDIR
     : 'CHDIR'
     ;
