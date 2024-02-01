@@ -209,6 +209,10 @@ END_ENUM
     : 'END' WS 'ENUM'
     ;
 
+ENDIF
+    : 'ENDIF'
+    ;
+
 END_PROPERTY
     : 'END' WS 'PROPERTY'
     ;
