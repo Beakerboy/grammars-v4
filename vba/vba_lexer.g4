@@ -1,4 +1,9 @@
 lexer grammar vba_lexer;
+
+options {
+    caseInsensitive = true;
+}
+
 // keywords
 ACCESS
     : 'ACCESS'
