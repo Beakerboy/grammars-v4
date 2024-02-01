@@ -162,7 +162,18 @@ defType
     ;
 
 // 5.2.3
+commonModuleDeclarationElement
+    : moduleVariableDeclaration
+    | privateConstDeclaration
+    | privateTypeDeclaration
+    | enumDeclaration
+    | privateExternalProcedureDeclaration
+    ;
 
+// 5.2.3.1
+globalVariableDeclaration: GLOBAL WS variableDeclarationList;
+publicVariableDecalation: PUBLIC (WS SHARED)? WS moduleVariableDeclarationList;
+variableDeclarationList: variableDcl (WS? ',' WS? variabledDcl)*;
 // body ------------------------------
 
 implementsDirective
