@@ -884,6 +884,21 @@ objectLiteralIdentifier
     : NOTHING
     ;
 
+operatorIdentifier
+    : ADDRESSOF
+    | AND
+    | EQV
+    | IMP
+    | IS
+    | LIKE
+    | NEW
+    | MOD
+    | NOT
+    | OR
+    | TYPEOF
+    | XOR
+    ;
+
 reservedTypeIdentifier
     : BOOLEAN
     | BYTE
@@ -1008,6 +1023,7 @@ visibility
 reservedIdentifier
     : statementKeyword
     | markerKeyword
+    | operatorIdentifier
     | specialForm
     | literalIdentifier
     | remKeyword
@@ -1016,9 +1032,7 @@ reservedIdentifier
 // ambiguous keywords
 ambiguousKeyword
     : ACCESS
-    | ADDRESSOF
     | ALIAS
-    | AND
     | ATTRIBUTE
     | APPACTIVATE
     | APPEND
@@ -1032,23 +1046,16 @@ ambiguousKeyword
     | DATABASE
     | DEFDEC
     | DELETESETTING
-    | EQV
     | ERROR
     | FILECOPY
-    | IMP
-    | IS
     | KILL
     | LOAD
     | LEN
     | LIB
-    | LIKE
     | ME
     | MID
     | MKDIR
-    | MOD
     | NAME
-    | NOT
-    | OR
     | OUTPUT
     | RANDOM
     | RANDOMIZE
@@ -1062,11 +1069,9 @@ ambiguousKeyword
     | STEP
     | TEXT
     | TIME
-    | TYPEOF
     | UNLOAD
     | VERSION
     | WIDTH
-    | XOR
     ;
 
 remKeyword
