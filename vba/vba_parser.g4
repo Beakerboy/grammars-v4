@@ -101,12 +101,12 @@ macroStmt
     | macroIfThenElseStmt
     ;
 
-proceduralmoduleBody
-    : moduleDeclarations proceduralmoduleCode
+proceduralModuleBody
+    : moduleDeclarations proceduralModuleCode
     ;
 
-classmoduleBody
-    : moduleDeclarations classmoduleCode
+classModuleBody
+    : moduleDeclarations classModuleCode
     ;
 
 proceduralModuleCode
@@ -145,7 +145,6 @@ block
 blockStmt
     : lineLabel
     | appactivateStmt
-    | attributeStmt
     | beepStmt
     | chdirStmt
     | chdriveStmt
@@ -412,7 +411,7 @@ macroIfThenElseStmt
     ;
 
 macroIfBlockStmt
-    : MACRO_IF WS? ifConditionStmt WS THEN endOfStatement (moduleDeclarations | moduleBody | block)*
+    : MACRO_IF WS? ifConditionStmt WS THEN endOfStatement (moduleDeclarations | proceduralModuleBody | classModuleBody | block)*
     ;
 
 macroElseIfBlockStmt
@@ -424,7 +423,7 @@ macroElseIfBlockStmt
     ;
 
 macroElseBlockStmt
-    : MACRO_ELSE endOfStatement (moduleDeclarations | moduleBody | block)*
+    : MACRO_ELSE endOfStatement (moduleDeclarations | proceduralModuleBody | classModuleBody | block)*
     ;
 
 midStmt
