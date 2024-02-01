@@ -209,8 +209,7 @@ blockStmt
     | widthStmt
     | withStmt
     | writeStmt
-    | implicitCallStmt_InBlock
-    | implicitCallStmt_InStmt
+    | expression
     ;
 
 // statements ----------------------------------
@@ -608,7 +607,7 @@ unlockStmt
 // Modifying the order will affect the order of operations
 expression
     : literal
-    | implicitCallStmt_InStmt
+    | lExpression
     | parenthesizedExpression
     | newExpress
     | typeOfStmt
@@ -625,6 +624,19 @@ expression
     | notOperatorExpression
     | expression wsc? (AND | OR | XOR | EQV | IMP) wsc? expression
     ;
+
+lExpression
+    : simpleNameExpression
+    | instanceExpression
+    | lExpression '.' unrestrictedName
+    ;
+
+simpleNameExpression
+    : name
+    ;
+
+instanceExpression
+    : ME
 
 // 5.6.8
 // The name 'newExpression' fails under the Go language
@@ -795,10 +807,28 @@ subscript_
 
 // atomic rules ----------------------------------
 
+unrestrictedName
+    : reservedIdentifier
+    | ambiguousIdentifier
+    ;
+
 // Known as IDENTIFIER in MS-VBAL
 ambiguousIdentifier
     : IDENTIFIER
     | ambiguousKeyword
+    ;
+
+name
+    : untypedName
+    | typedName
+    ;
+
+untypedName
+    : ambiguousIdentifier
+    ;
+
+typedName
+    : ambiguousIdentifier typeSuffix
     ;
 
 asTypeClause
