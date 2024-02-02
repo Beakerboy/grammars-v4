@@ -27,11 +27,11 @@ startRule
 module
     : WS? endOfLine* (
           proceduralModule
-        | classBegin endOfLine+ classModule
+        | classFileHeader endOfLine+ classModule
       ) endOfLine* WS?
     ;
 
-classBegin
+classFileHeader
     : classVersionIdentification endOfLine+ classBeginBlock endOfLine+
     ;
 
@@ -43,7 +43,7 @@ classBeginBlock
     : BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* beginBlockConfigElement+ END
     ;
 
-beginBlockConfigElementt
+beginBlockConfigElement
     : ambiguousIdentifier WS? EQ WS? literalExpression (COLON literalExpression)? endOfLine*
     ;
 
@@ -70,8 +70,8 @@ classAttr
     ;
 
 // 5.1
-proceduralModuleBody: moduleDeclarations? proceduralModuleCode;
-classModuleBody: moduleDeclarations? classModuleCode;
+proceduralModuleBody: proceduralModuleDeclarationSection? proceduralModuleCode;
+classModuleBody: classModuleDeclarationSection? classModuleCode;
 
 // 5.2
 proceduralModuleDeclarationSection
@@ -222,6 +222,11 @@ stringLength
 constantName: simpleNameExpression;
 
 // 5.2.3.2
+publicConstDeclaration: (GLOBAL | PUBLIC) wsc module_const_declaration;
+privateConstDeclaration: PRIVATE wsc module_const_declaration;
+moduleConstDeclaration: constDeclaration;
+constDeclaration: CONST constItemList;
+
 
 // 5.3
 commonModuleCodeElement
