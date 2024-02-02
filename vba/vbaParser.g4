@@ -225,7 +225,43 @@ constantName: simpleNameExpression;
 publicConstDeclaration: (GLOBAL | PUBLIC) wsc module_const_declaration;
 privateConstDeclaration: PRIVATE wsc module_const_declaration;
 moduleConstDeclaration: constDeclaration;
-constDeclaration: CONST constItemList;
+constDeclaration: CONST wsc constItemList;
+constItemList: constItem (wsc? ',' wsc? constItem)*;
+constItem
+    : typedNameConstItem
+    | untypedNameConstItem
+    ;
+typedNameConstItem: typedName wsc? EQ wsc? constantExpression;
+untypedNameConstItem: ambiguousIdentifier (wsc constAsClause)? wsc? EQ wsc? constantExpression;
+constAsClause: builtinType;
+
+// 5.2.3.3
+publicTypeDeclaration: (GLOBAL | PUBLIC) wsc udrDeclaration;
+privateTypeDeclaration: PRIVATE wsc udtDeclaration;
+udtDeclaration: TYPE wsc untypedName endOfStatement+ udtMemberList endOfStatement+ END wsc TYPE
+udtMemberList: udtElement wsc (endOfStatement udtElement)*
+udtElement
+    : remStatement
+    | udtMember
+    ;
+udtMember:
+    : reservedNameMemberDcl
+    | untypedNameMemberDcl
+    ;
+untypedNameMemberDcl: ambiguousIdentifier optionalArrayClause;
+reservedNameMemberDcl: reservedMemberName wsc asClause;
+reservedMemberName
+    : statementKeyword
+    | markerKeyword
+    | operatorIdentifier
+    | specialForm
+    | reservedName
+    | literalIdentifier
+    | reservedForImplementationUse
+    | futureReserved
+    ;
+
+// 5.2.3.4
 
 
 // 5.3
@@ -652,11 +688,10 @@ argumentExpression
     : BYVAL? wsc? expression
     | addressofExpression
     ;
+
 // 5.6.16.1
 // This could be made more complicated for accuracy
-constantExpression
-    : expression
-    ;
+constantExpression: expression;
 
 // 5.6.16.5
 variableExpression: lExpression;
