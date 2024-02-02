@@ -107,7 +107,7 @@ classModuleDeclarationElement
     | implementsDirective
     ;
 
-5.2.1
+// 5.2.1
 commonOptionDirective
     : optionCompareDirective
     | optionBaseDirective
