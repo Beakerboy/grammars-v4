@@ -3,7 +3,7 @@
 *
 * This is an approximate grammar for Visual Basic 6.0, derived
 * from the Visual Basic 6.0 language reference
-* http://msdn.microsoft.com/en-us/library/aa338033%28v=vs.60%29.aspx
+* https://msopenspecs.azureedge.net/files/MS-VBAL/%5bMS-VBAL%5d.pdf
 * and tested against MSDN VB6 statement examples as well as several Visual
 * Basic 6.0 code repositories.
 */
