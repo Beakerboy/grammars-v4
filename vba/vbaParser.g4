@@ -116,17 +116,17 @@ commonOptionDirective
     ;
 
 // 5.2.1.1
-optionCompareDirective: OPTION WS COMPARE WS? (BINARY | TEXT)
+optionCompareDirective: OPTION WS COMPARE WS? (BINARY | TEXT);
 
 // 5.2.1.2
 // INTEGER or SHORT?
-optionBaseDirective: OPTION WS BASE WS SHORTLITERAL
+optionBaseDirective: OPTION WS BASE WS SHORTLITERAL;
 
 // 5.2.1.3
-optionExplicitDirective: OPTION WS EXPLICIT
+optionExplicitDirective: OPTION WS EXPLICIT;
 
 // 5.2.1.4
-optionPrivateDirective: OPTION WS PRIVATE WS MODULE
+optionPrivateDirective: OPTION WS PRIVATE WS MODULE;
 
 // 5.2.2
 defDirective
@@ -138,10 +138,10 @@ letterSpec
     | letterRange
     ;
 singleLetter: ambiguousIdentifier;
-universalLetterRange: upperCaseA WS '-' WS upperCaseZ
+universalLetterRange: upperCaseA WS '-' WS upperCaseZ;
 upperCaseA: ambiguousIdentifier;
 upperCaseZ: ambiguousIdentifier;
-letterRange: firstLetter WS '-' WS lastLetter
+letterRange: firstLetter WS '-' WS lastLetter;
 firstLetter: ambiguousIdentifier;
 lastLetter: ambiguousIdentifier;
 defType
