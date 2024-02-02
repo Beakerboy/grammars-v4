@@ -20,6 +20,7 @@ options {
 }
 
 // Contexts not listed in the specification
+// Everything until section 5.1 is typically machine generated code.
 startRule
     : module EOF
     ;
@@ -47,7 +48,7 @@ beginBlockConfigElement
     : ambiguousIdentifier WS? EQ WS? literalExpression (COLON literalExpression)? endOfLine*
     ;
 
-// 4.2
+// 4.2 Modules
 proceduralModule
     : proceduralModuleHeader endOfLine* proceduralModuleBody
     ;
@@ -69,11 +70,12 @@ classAttr
     | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLine
     ;
 
-// 5.1
+// 5.1 Module Body Structure
+// Everthing from here down is user generated code.
 proceduralModuleBody: proceduralModuleDeclarationSection? proceduralModuleCode;
 classModuleBody: classModuleDeclarationSection? classModuleCode;
 
-// 5.2
+// 5.2 Module Declaration Section Structure
 proceduralModuleDeclarationSection
     : ((proceduralModuleDirectiveElement endOfLine+)* defDirective)? (proceduralModuleDeclarationElement endOfLine)*
     ;
@@ -107,7 +109,7 @@ classModuleDeclarationElement
     | implementsDirective
     ;
 
-// 5.2.1
+// 5.2.1 Option Directives
 commonOptionDirective
     : optionCompareDirective
     | optionBaseDirective
@@ -115,23 +117,21 @@ commonOptionDirective
     | remStatement
     ;
 
-// 5.2.1.1
-optionCompareDirective: OPTION WS COMPARE WS? (BINARY | TEXT);
+// 5.2.1.1 Option Compare Directive
+optionCompareDirective: OPTION wsc COMPARE wsc (BINARY | TEXT);
 
-// 5.2.1.2
+// 5.2.1.2 Option Base Directive
 // INTEGER or SHORT?
-optionBaseDirective: OPTION WS BASE WS SHORTLITERAL;
+optionBaseDirective: OPTION wsc BASE wsc SHORTLITERAL;
 
-// 5.2.1.3
-optionExplicitDirective: OPTION WS EXPLICIT;
+// 5.2.1.3 Option Explicit Directive
+optionExplicitDirective: OPTION wsc EXPLICIT;
 
-// 5.2.1.4
-optionPrivateDirective: OPTION WS PRIVATE WS MODULE;
+// 5.2.1.4 Option Private Directive
+optionPrivateDirective: OPTION wsc PRIVATE wsc MODULE;
 
-// 5.2.2
-defDirective
-    : defType WS letterSpec (WS ',' WS letterSpec)*
-    ;
+// 5.2.2 Implicit Definition Directives
+defDirective: defType WS letterSpec (WS ',' WS letterSpec)*;
 letterSpec
     : singleLetter
     | universalLetterRange
@@ -161,7 +161,7 @@ defType
     | DEFVAR
     ;
 
-// 5.2.3
+// 5.2.3 Module Declarations
 commonModuleDeclarationElement
     : moduleVariableDeclaration
     | privateConstDeclaration
@@ -170,44 +170,38 @@ commonModuleDeclarationElement
     | privateExternalProcedureDeclaration
     ;
 
-// 5.2.3.1
+// 5.2.3.1 Module Variable Declaration Lists
 globalVariableDeclaration: GLOBAL WS variableDeclarationList;
 publicVariableDecalation: PUBLIC (WS SHARED)? WS moduleVariableDeclarationList;
 privateVariableDeclaration: (PRIVATE | DIM) (wsc SHARED)? moduleVariableDeclarationList;
 moduleVariableDeclarationList: (witheventsVariableDcl | variableDcl) (wsc? ',' wsc? (witheventsVariableDcl | variableDcl))*;
-variableDeclarationList
-    : variableDcl wsc (wsc? ',' wsc? variableDcl)*
-    ;
-// 5.2.3.1.1
+variableDeclarationList: variableDcl wsc (wsc? ',' wsc? variableDcl)*;
+
+// 5.2.3.1.1 Variable Declarations
 variableDcl
     : typedVariableDcl
     | untypedVariableDcl
     ;
-typedVariableDcl
-    :typedName arrayDim?
-    ;
-untypedVariableDcl
-    : ambiguousIdentifier (arrayClause | asClause)?
-    ;
-arrayClause
-    : arrayDim wsc? asClause
-    ;
+typedVariableDcl: typedName arrayDim?;
+untypedVariableDcl: ambiguousIdentifier (arrayClause | asClause)?;
+arrayClause: arrayDim wsc? asClause;
 asClause
     : asAutoObject
     | asType
     ;
 
-// 5.2.3.1.2
+// 5.2.3.1.2 WithEvents Variable Declarations
+witheventsVariableDcl: WITHEVENTS wsc ambiguousIdentifier wsc AS wsc? classTypeName;
 classTypeName: definedTypeExpression;
 
-// 5.2.3.1.3
+// 5.2.3.1.3 Array Dimensions and Bounds
 arrayDim: '(' wsc? boundsList? wsc? ')';
 boundsList: dimSpec (wsc',' wsc dimSpec)*;
 dimSpec: lowerBound? wsc? upperBound;
 lowerBound: constantExpression TO;
 upperBound: constantExpression;
 
-// 5.2.3.1.4
+// 5.2.3.1.4 Variable Type Declarations
 asAutoObject: AS WS NEW WS classTypeName;
 asType: AS WS typeSpec;
 typeSpec
@@ -221,7 +215,7 @@ stringLength
     ;
 constantName: simpleNameExpression;
 
-// 5.2.3.2
+// 5.2.3.2 Const Declarations
 publicConstDeclaration: (GLOBAL | PUBLIC) wsc module_const_declaration;
 privateConstDeclaration: PRIVATE wsc module_const_declaration;
 moduleConstDeclaration: constDeclaration;
@@ -235,7 +229,7 @@ typedNameConstItem: typedName wsc? EQ wsc? constantExpression;
 untypedNameConstItem: ambiguousIdentifier (wsc constAsClause)? wsc? EQ wsc? constantExpression;
 constAsClause: builtinType;
 
-// 5.2.3.3
+// 5.2.3.3 User Defined Type Declarations
 publicTypeDeclaration: (GLOBAL | PUBLIC) wsc udrDeclaration;
 privateTypeDeclaration: PRIVATE wsc udtDeclaration;
 udtDeclaration: TYPE wsc untypedName endOfStatement+ udtMemberList endOfStatement+ END wsc TYPE
@@ -261,8 +255,27 @@ reservedMemberName
     | futureReserved
     ;
 
-// 5.2.3.4
+// 5.2.3.4 Enum Declarations
+globalEnumDeclaration: GLOBAL wsc  enumDeclaration;
+publicEnumDeclaration: (PUBLIC wsc)? enumDeclaration;
+privateEnumDeclaration: PRIVATE wsc enumDeclaration;
+enumDeclaration: ENUM wsc untypedName EOS memberList EOS END wsc ENUM ;
+enumMemberList: enumElement (endOfStatement enumElement)*;
+enumElement
+    : remStatement
+    | enumMember
+    ;
+enumMember: untyped-name (wsc? EQ wsc? constantExpression)?;
 
+// 5.2.3.5 External Procedure Declaration
+public-external-procedure-declaration: (PUBLIC wsc)? externalProcDcl;
+private-external-procedure-declaration: PRIVATE externalProcDcl;
+externalProcDcl: DECLARE wsc (PTRSAFE wsc)? (externalSub | externalFunction);
+externalSub: SUB subroutine-name lib-info [procedure-parameters];
+externalFunction: FUNCTION functionName libInfo procedureParameters? functionType?;
+libInfo: libClause (wsc aliasClause)?;
+libClause: LIB wsc STRING;
+aliasClause: ALIAS wsc STRING;
 
 // 5.3
 commonModuleCodeElement
