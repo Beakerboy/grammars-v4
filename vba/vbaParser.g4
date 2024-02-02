@@ -512,7 +512,7 @@ writeStatement: WRITE wsc markedFileNumber wsc? ',' wsc? outputList?;
 
 // 5.4.5.10
 inputStatement: INPUT wsc markedFileNumber wsc? ',' wsc? inputList;
-inputList: inputVariable (wsc? ',' wsc? inputVariable)*
+inputList: inputVariable (wsc? ',' wsc? inputVariable)*;
 inputVariable: boundVariableExpression;
 
 //5.4.5.11
