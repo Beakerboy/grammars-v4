@@ -529,34 +529,76 @@ do-statement = "Do" [condition-clause] EOS statement-block
 exit-do-statement: EXIT wsc DO;
 
 // 5.4.2.8 If Statement
-
+if-statement = LINE-START "If" boolean-expression "Then" EOL statement-block 
+                *[else-if-block] 
+                [else-block]   
+                LINE-START (("End" "If") / "EndIf") 
+ else-if-block = LINE-START "ElseIf" boolean-expression "Then" EOL 
+                 LINE-START statement-block 
+ else-if-block =/ "ElseIf" boolean-expression "Then" statement-block 
+ else-block = LINE-START "Else" statement-block 
 
 // 5.4.2.9 Single-line If Statement
+single-line-if-statement = if-with-non-empty-then / if-with-empty-then 
+  
+ if-with-non-empty-then = "If" boolean-expression "Then" list-or-label [single-line-else-clause] 
+ if-with-empty-then = "If" boolean-expression "Then" single-line-else-clause 
+ single-line-else-clause = "Else" [list-or-label]  
+ list-or-label = (statement-label *[":" [same-line-statement]]) /  
+ ([":"] same-line-statement *[":" [same-line-statement]]) 
+ same-line-statement = file-statement / error-handling-statement / 
+ data-manipulation-statement / control-statement-except-multiline-if 
 
 // 5.4.2.10 Select Case Statement
+select-case-statement = "Select" "Case" WS select-expression EOS 
+ *[case-clause] 
+ [case-else-clause] 
+ "End" "Select" 
+ case-clause = "Case" range-clause ["," range-clause] EOS statement-block 
+  
+ case-else-clause = "Case" "Else" EOS statement-block 
+ range-clause = expression  
+ range-clause =/  start-value "To" end-value  
+ range-clause =/    ["Is"] comparison-operator expression 
+ start-value = expression 
+ end-value = expression 
+ select-expression = expression 
+ comparison-operator = "=" / ("<" ">" ) / (">" "<") / "<" / ">" / (">" "=") /  ("=" ">") / ("<" "=") / ("=" "<") 
 
 // 5.4.2.11 Stop Statement
+stopStatement: STOP;
 
 // 5.4.2.12 GoTo Statement
+goto-statement = (("Go" "To") / "GoTo") statement-label
 
 // 5.4.2.13 On…GoTo Statement
+on-goto-statement = "On" expression "GoTo" statement-label-list
 
 // 5.4.2.14 GoSub Statement
+gosub-statement = (("Go" "Sub") / "GoSub") statement-label 
 
 // 5.4.2.15 Return Statement
 returnStatement: RETURN;
 
 // 5.4.2.16 On…GoSub Statement
+on-gosub-statement = "On" expression "GoSub" statement-label-list
 
 // 5.4.2.17 Exit Sub Statement
+exit-sub-statement = "Exit" "Sub"
 
 // 5.4.2.18 Exit Function Statement
+exit-function-statement = "Exit" "Function"
 
 // 5.4.2.19 Exit Property Statement
+exit-property-statement = "Exit" "Property"
 
 // 5.4.2.20 RaiseEvent Statement
+raiseevent-statement = "RaiseEvent" IDENTIFIER ["(" event-argument-list ")"] 
+ event-argument-list = [event-argument *("," event-argument)] 
+ event-argument = expression
 
 // 5.4.2.21 With Statement
+with-statement = "With" expression EOS statement-block "End" "With"
 
 // 5.4.3 Data Manipulation Statements
 dataManipulationStatement
