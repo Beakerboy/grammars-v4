@@ -232,8 +232,8 @@ constAsClause: builtinType;
 // 5.2.3.3 User Defined Type Declarations
 publicTypeDeclaration: (GLOBAL | PUBLIC) wsc udrDeclaration;
 privateTypeDeclaration: PRIVATE wsc udtDeclaration;
-udtDeclaration: TYPE wsc untypedName endOfStatement+ udtMemberList endOfStatement+ END wsc TYPE
-udtMemberList: udtElement wsc (endOfStatement udtElement)*
+udtDeclaration: TYPE wsc untypedName endOfStatement+ udtMemberList endOfStatement+ END wsc TYPE;
+udtMemberList: udtElement wsc (endOfStatement udtElement)*;
 udtElement
     : remStatement
     | udtMember
