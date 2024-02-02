@@ -463,7 +463,7 @@ markedFileNumber: '#' expression;
 unmarkedFileNumber: expression;
 
 // 5.4.5.2
-close Statement
+closeStatement
     : RESET
     | CLOSE wsc? fileNumberList?
     ;
