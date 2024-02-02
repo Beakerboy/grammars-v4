@@ -319,28 +319,27 @@ procedureDeclaration
     ;
 
 // 5.3.1 Procedure Declarations
- subroutine-declaration = procedure-scope [initial-static] 
-                "sub" subroutine-name [procedure-parameters] [trailing-static] EOS 
-                         [procedure-body EOS] 
-                [end-label] "end" "sub" procedure-tail 
+subroutineDeclaration
+    : procedureScope? initialStatic? SUB subroutineName procedureParameters? trailingStatic? endOfStatement
+        (procedure-body endOfStatement)?
+        endLabel? END wsc SUB procedureTail;
+
+functionDeclaration
+    : procedureScope? initialStatic? FUNCTION functionName procedureParameters? functionType? trailingStatic? endOfStatement
+        (procedureBody endOfStatement)?
+        endLabel? END wsc FUNCTION procedureTail;
   
- function-declaration = procedure-scope [initial-static] 
-                         "function" function-name [procedure-parameters] [function-type] [trailing-static] EOS 
-                  [procedure-body EOS] 
-                   [end-label]  "end" "function" procedure-tail 
-  
- property-get-declaration = procedure-scope [initial-static] 
-                  "Property" "Get" 
-                  function-name [procedure-parameters] [function-type] [trailing-static] EOS 
-                            [procedure-body EOS] 
-                            [end-label] "end" "property" procedure-tail 
+propertyGetDeclaration
+    : procedureScope? initialStatic? PROPERTY wsc GET wsc functionName procedureParameters? functionType? trailingStatic? endOfStatement
+        (procedureBody endOfStatement)?
+        endLabel? END wsc PROPERTY procedureTail;
   
 propertyLhsDeclaration
     : procedure-scope initialStatic? PROPERTY wsc (LET | SET) subroutineName propertyParameters trailingStatic? endOfStatement
         (procedureBody endOfStatement)?
-        endLabel? END wsc PROPERTY procedureTail 
+        endLabel? END wsc PROPERTY procedureTail;
 endLabel: statementLabelDefinition;
-procedure-Tail
+procedureTail
     : wsc NEWLINE
     | commentBody
     | remStatement
@@ -355,17 +354,17 @@ procedureScope
     ;
 
 // 5.3.1.2 Static Procedures
-initialStatic: STATIC 
-trailingStatic: STATIC
+initialStatic: STATIC;
+trailingStatic: STATIC;
 
 // 5.3.1.3 Procedure Names
-subroutine-name
+subroutineName
     : ambiguousIdentifier
     | prefixedName
     ;
 functionName
     : typedName
-    | subroutine-name 
+    | subroutineName 
     ;
 prefixedName
     : eventHandlerName
@@ -378,28 +377,39 @@ functionType = AS wsc typeExpression wsc? arrayDesignator?
 arrayDesignator: '(' wsc? ')';
 
 // 5.3.1.5 Parameter Lists
-procedure-parameters = "(" [parameter-list] ")" 
- property-parameters = "(" [parameter-list ","] value-param ")" 
+procedureParameters: "(" wsc? parameterList? wsc? ")";
+propertyParameters: "(" wsc? (parameterList wsc? "," wsc?)? valueParam wsc? ")";
+parameterList
+    : (positional-parameters wsc? "," wsc? optionalParameters)
+    | (positionalParameters  (wsc? "," wsc? paramArray)?)
+    | optionalParameters
+    | paramArray
+    ;
   
- parameter-list = (positional-parameters "," optional-parameters ) / 
-                  (positional-parameters  ["," param-array]) / 
-                  optional-parameters / 
-                  param-array  
-  
- positional-parameters = positional-param *("," positional-param) 
- optional-parameters = optional-param *("," optional-param) 
- value-param = positional-param 
- positional-param = [parameter-mechanism] param-dcl 
- optional-param = optional-prefix param-dcl [default-value] 
- param-array = "paramarray" IDENTIFIER "(" ")" ["as" ("variant" / "[variant]")] 
-  
- param-dcl = untyped-name-param-dcl / typed-name-param-dcl 
- untyped-name-param-dcl = IDENTIFIER [parameter-type]  
- typed-name-param-dcl = TYPED-NAME [array-designator] 
- optional-prefix = ("optional" [parameter-mechanism]) / ([parameter-mechanism] ("optional")) 
- parameter-mechanism = "byval" / " byref" 
- parameter-type = [array-designator] "as" (type-expression / "Any") 
- default-value = "=" constant-expression
+positionalParameters: positionalParam (wsc? "," wsc? positionalParam)*;
+optionalParameters: optionalParam (wsc? "," wsc? optionalParam)*;
+valueParam: positionalParam;
+positionalParam: parameterMechanism? param-dcl;
+optionalParam
+    : optionalPrefix wsc paramDcl wsc? defaultValue?;
+paramArray
+    : PARAMARRAY ambiguousIdentifier "(" wsc? ")" (wsc AS wsc (VARIANT | "[" VARIANT "]"))?;
+param-dcl
+    : untypedNameParamDcl
+    | typedNameParamDcl
+    ;
+untypedNameParamDcl: ambiguousIdentifier parameterType?;
+typedNameParamDcl: typedName arrayDesignator?;
+optionalPrefix
+    : OPTIONAL parameterMechanism?
+    | parameterMechanism? OPTIONAL
+    ;
+parameterMechanism
+    : BYVAL
+    | BYREF
+    ;
+parameterType: arrayDesignator? wsc AS wsc (typeExpression | ANY);
+defaultValue: "=" wsc? constantExpression;
 
 // 5.3.1.8 Event Handler Declarations
 eventHandlerName: ambiguousIdentifier;
