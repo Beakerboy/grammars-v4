@@ -23,14 +23,14 @@ startRule
     ;
 
 module
-    : WS? endOfLine* (
+    : endOfLineNoWs* (
           proceduralModule
-        | classFileHeader endOfLine+ classModule
+        | classFileHeader classModule
       ) endOfLine* WS?
     ;
 
 classFileHeader
-    : classVersionIdentification endOfLine+ classBeginBlock endOfLine+
+    : classVersionIdentification endOfLine+ classBeginBlock endOfLineNoWs+
     ;
 
 classVersionIdentification
@@ -48,7 +48,7 @@ beginBlockConfigElement
 //---------------------------------------------------------------------------------------
 // 4.2 Modules
 proceduralModule
-    : proceduralModuleHeader endOfLine* proceduralModuleBody
+    : proceduralModuleHeader endOfLineNoWs+ proceduralModuleBody
     ;
 classModule
     : classModuleHeader endOfLine* classModuleBody
@@ -58,14 +58,14 @@ classModule
 proceduralModuleHeader
     : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLine
     ;
-classModuleHeader: classAttr+;
+classModuleHeader: classAttr+ WS?
 classAttr
-    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLine
-    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE endOfLine
-    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? FALSE endOfLine
-    | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier endOfLine
-    | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier endOfLine
-    | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLine
+    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLineNoWs
+    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE endOfLineNoWs
+    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? FALSE endOfLineNoWs
+    | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier endOfLineNoWs
+    | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier endOfLineNoWs
+    | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLineNoWs
     ;
 //---------------------------------------------------------------------------------------
 // 5.1 Module Body Structure
@@ -87,7 +87,7 @@ untypedName
 //---------------------------------------------------------------------------------------
 // 5.2 Module Declaration Section Structure
 proceduralModuleDeclarationSection
-    : ((proceduralModuleDirectiveElement endOfLine+)* defDirective)? (proceduralModuleDeclarationElement endOfLine)*
+    : ((proceduralModuleDirectiveElement endOfLine+)* defDirective)? (proceduralModuleDeclarationElement endOfLineNoWs)*
     ;
 classModuleDeclarationSection
     : ((classModuleDirectiveElement endOfLine+)* defDirective)? (classModuleDeclarationElement endOfLine)*
@@ -881,6 +881,9 @@ endOfLineNoWs
 // known as EOS in MS-VBAL
 endOfStatement
     : (endOfLine | WS? COLON WS?)*
+    ;
+endOfStatementNoWs
+    : (endOfLineNoWs | WS? COLON)*
     ;
 // The COMMENT token includes the leading single quote
 commentBody: COMMENT;
