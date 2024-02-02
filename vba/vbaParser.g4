@@ -67,7 +67,6 @@ classAttr
     | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier endOfLine
     | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLine
     ;
-
 //---------------------------------------------------------------------------------------
 // 5.1 Module Body Structure
 // Everything from here down is user generated code.
@@ -379,6 +378,28 @@ functionType = AS wsc typeExpression wsc? arrayDesignator?
 arrayDesignator: '(' wsc? ')';
 
 // 5.3.1.5 Parameter Lists
+procedure-parameters = "(" [parameter-list] ")" 
+ property-parameters = "(" [parameter-list ","] value-param ")" 
+  
+ parameter-list = (positional-parameters "," optional-parameters ) / 
+                  (positional-parameters  ["," param-array]) / 
+                  optional-parameters / 
+                  param-array  
+  
+ positional-parameters = positional-param *("," positional-param) 
+ optional-parameters = optional-param *("," optional-param) 
+ value-param = positional-param 
+ positional-param = [parameter-mechanism] param-dcl 
+ optional-param = optional-prefix param-dcl [default-value] 
+ param-array = "paramarray" IDENTIFIER "(" ")" ["as" ("variant" / "[variant]")] 
+  
+ param-dcl = untyped-name-param-dcl / typed-name-param-dcl 
+ untyped-name-param-dcl = IDENTIFIER [parameter-type]  
+ typed-name-param-dcl = TYPED-NAME [array-designator] 
+ optional-prefix = ("optional" [parameter-mechanism]) / ([parameter-mechanism] ("optional")) 
+ parameter-mechanism = "byval" / " byref" 
+ parameter-type = [array-designator] "as" (type-expression / "Any") 
+ default-value = "=" constant-expression
 
 // 5.3.1.8 Event Handler Declarations
 eventHandlerName: ambiguousIdentifier;
@@ -466,18 +487,49 @@ callStatement
     ;
 
 // 5.4.2.2 While Statement
+while-statement = "While" boolean-expression EOS  statement-block  "Wend"
 
 // 5.4.2.3 For Statement
+for-statement = simple-for-statement / explicit-for-statement  
+  
+ simple-for-statement = for-clause EOS statement-block “Next” 
+  
+ explicit-for-statement = for-clause EOS statement-block 
+ (“Next” / (nested-for-statement “,”)) bound-variable-expression 
+ nested-for-statement = explicit-for-statement / explicit-for-each-statement 
+ for-clause = “For” bound-variable-expression “=” start-value “To” end-value [step-clause] 
+ start-value = expression 
+ end-value = expression 
+ step-clause = Step" step-increment  
+ step-increment = expression
 
 // 5.4.2.4 For Each Statement
+for-each-statement = simple-for-each-statement / explicit-for-each-statement
+  
+ simple-for-each-statement = for-each-clause EOS statement-block “Next” 
+  
+ explicit-for-each-statement = for-each-clause EOS statement-block 
+  (“Next” / (nested-for-statement “,”)) bound-variable-expression 
+  
+ for-each-clause = “For” “Each” bound-variable-expression “In” collection 
+ collection: expression;
 
 // 5.4.2.5 Exit For Statement
+exitForStatement: EXIT wsc FOR;
 
 // 5.4.2.6 Do Statement
+do-statement = "Do" [condition-clause] EOS statement-block 
+                 "Loop" [condition-clause] 
+ condition-clause = while-clause / until-clause 
+  
+ while-clause = "While" boolean-expression;
+ until-clause = "Until" boolean-expression;
 
 // 5.4.2.7 Exit Do Statement
+exit-do-statement: EXIT wsc DO;
 
 // 5.4.2.8 If Statement
+
 
 // 5.4.2.9 Single-line If Statement
 
