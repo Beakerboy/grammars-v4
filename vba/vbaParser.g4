@@ -487,7 +487,7 @@ controlStatementExceptMultilineIf
 
 // 5.4.2.1 Call Statement
 callStatement
-    : CALL WS (simpleNameExpression
+    : CALL wsc (simpleNameExpression
         | memberAccessExpression
         | indexExpression
         | withExpression)
@@ -497,14 +497,14 @@ callStatement
     ;
 
 // 5.4.2.2 While Statement
-while-statement = "While" boolean-expression EOS  statement-block  "Wend"
+whileStatement = "While" boolean-expression EOS  statement-block  "Wend"
 
 // 5.4.2.3 For Statement
-for-statement = simple-for-statement / explicit-for-statement  
+forstatement = simple-for-statement / explicit-for-statement  
   
- simple-for-statement = for-clause EOS statement-block “Next” 
+simpleForStatement = for-clause EOS statement-block “Next” 
   
- explicit-for-statement = for-clause EOS statement-block 
+explicit-for-statement = for-clause EOS statement-block 
  (“Next” / (nested-for-statement “,”)) bound-variable-expression 
  nested-for-statement = explicit-for-statement / explicit-for-each-statement 
  for-clause = “For” bound-variable-expression “=” start-value “To” end-value [step-clause] 
@@ -514,12 +514,16 @@ for-statement = simple-for-statement / explicit-for-statement
  step-increment = expression
 
 // 5.4.2.4 For Each Statement
-for-each-statement = simple-for-each-statement / explicit-for-each-statement
+forEachStatement
+    : simpleForEachStatement
+    | explicitForEachStatement
+    ;
+simpleForEachStatement
+    : forEachClause endOfStatement statementBlock NEXT;
   
- simple-for-each-statement = for-each-clause EOS statement-block “Next” 
-  
- explicit-for-each-statement = for-each-clause EOS statement-block 
-  (“Next” / (nested-for-statement “,”)) bound-variable-expression 
+explicitForEachStatement
+    : forEachClause endOfStatement statementBlock 
+  (NEXT | (nestedForStatement wsc? “,”)) boundVariableExpression;
   
  for-each-clause = “For” “Each” bound-variable-expression “In” collection 
  collection: expression;
