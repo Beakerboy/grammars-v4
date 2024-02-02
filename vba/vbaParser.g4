@@ -861,7 +861,7 @@ procedurePointerExpression
 //---------------------------------------------------------------------------------------
 // Many of the following are labeled as tokens in the standard, but are parser rules here.
 // 3.3.1 Separator and Special Tokens
-// In theory whitespace should be ignored, but there a handful of cases
+// In theory whitespace should be ignored, but there are a handful of cases
 // where statements MUST be at the beginning of a line or where a NO-WS
 // rule appears in the parser rule.
 // If may make things simpler her to send all wsc to the hidden channel
@@ -870,6 +870,12 @@ procedurePointerExpression
 wsc: (WS | LINE_CONTINUATION)+;
 // known as EOL in MS-VBAL
 endOfLine
+    : WS? (NEWLINE | commentBody | remStatement) WS?
+    ;
+// We usually don't care if a line of code begins with whitespace, and the paraer rules are
+// cleaner if we limp that in aith the EOL or EOS "token". However, for those cases where
+// something MUST occur on the start of a line, use endOfLineNoWs.
+endOfLineNoWs
     : WS? (NEWLINE | commentBody | remStatement)
     ;
 // known as EOS in MS-VBAL
