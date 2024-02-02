@@ -292,28 +292,8 @@ EMPTY
     : 'EMPTY'
     ;
 
-END_ENUM
-    : 'END' WS 'ENUM'
-    ;
-
 ENDIF
     : 'ENDIF'
-    ;
-
-END_PROPERTY
-    : 'END' WS 'PROPERTY'
-    ;
-
-END_SELECT
-    : 'END' WS 'SELECT'
-    ;
-
-END_TYPE
-    : 'END' WS 'TYPE'
-    ;
-
-END_WITH
-    : 'END' WS 'WITH'
     ;
 
 END
@@ -342,26 +322,6 @@ EVENT
 
 EXIT
     : 'EXIT'
-    ;
-
-EXIT_DO
-    : 'EXIT' WS 'DO'
-    ;
-
-EXIT_FOR
-    : 'EXIT' WS 'FOR'
-    ;
-
-EXIT_FUNCTION
-    : 'EXIT' WS 'FUNCTION'
-    ;
-
-EXIT_PROPERTY
-    : 'EXIT' WS 'PROPERTY'
-    ;
-
-EXIT_SUB
-    : 'EXIT' WS 'SUB'
     ;
 
 FALSE
@@ -472,10 +432,6 @@ LINEINPUT
     : 'LINEINPUT'
     ;
 
-LINE_INPUT
-    : 'LINE' WS 'INPUT'
-    ;
-
 LOAD
     : 'LOAD'
     ;
@@ -500,18 +456,6 @@ LOOP
     : 'LOOP'
     ;
 
-LOCK_READ
-    : 'LOCK' WS 'READ'
-    ;
-
-LOCK_WRITE
-    : 'LOCK' WS 'WRITE'
-    ;
-
-LOCK_READ_WRITE
-    : 'LOCK' WS 'READ' WS 'WRITE'
-    ;
-
 LSET
     : 'LSET'
     ;
@@ -530,10 +474,6 @@ MACRO_ELSEIF
 
 MACRO_ELSE
     : '#ELSE'
-    ;
-
-MACRO_END_IF
-    : '#END' WS? 'IF'
     ;
 
 ME
@@ -582,14 +522,6 @@ ON
     : 'ON'
     ;
 
-ON_ERROR
-    : 'ON' WS 'ERROR'
-    ;
-
-ON_LOCAL_ERROR
-    : 'ON' WS 'LOCAL' WS 'ERROR'
-    ;
-
 OPEN
     : 'OPEN'
     ;
@@ -600,22 +532,6 @@ OPTION
 
 OPTIONAL
     : 'OPTIONAL'
-    ;
-
-OPTION_BASE
-    : 'OPTION' WS 'BASE'
-    ;
-
-OPTION_EXPLICIT
-    : 'OPTION' WS 'EXPLICIT'
-    ;
-
-OPTION_COMPARE
-    : 'OPTION' WS 'COMPARE'
-    ;
-
-OPTION_PRIVATE_MODULE
-    : 'OPTION' WS 'PRIVATE' WS 'MODULE'
     ;
 
 OR
@@ -640,18 +556,6 @@ PRINT
 
 PRIVATE
     : 'PRIVATE'
-    ;
-
-PROPERTY_GET
-    : 'PROPERTY' WS 'GET'
-    ;
-
-PROPERTY_LET
-    : 'PROPERTY' WS 'LET'
-    ;
-
-PROPERTY_SET
-    : 'PROPERTY' WS 'SET'
     ;
 
 PSET
@@ -684,10 +588,6 @@ RAISEEVENT
 
 READ
     : 'READ'
-    ;
-
-READ_WRITE
-    : 'READ' WS 'WRITE'
     ;
 
 REDIM
