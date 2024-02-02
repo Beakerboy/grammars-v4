@@ -431,8 +431,8 @@ openStatement
     : OPEN wcs? pathName wsc? modeClause? wsc? accessClause? wsc? lock? wsc? AS wsc? fileNumber wsc? lenClause?
     ;
 pathName: expression;
-modeClause: FOR wsc? mode;
-mode
+modeClause: FOR wsc? modeOpt;
+modeOpt
     : APPEND
     | BINARY
     | INPUT
