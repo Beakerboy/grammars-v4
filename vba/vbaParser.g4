@@ -238,7 +238,7 @@ procedureDeclaration
     | macroStmt
     ;
 // block ----------------------------------
-variabledDcl)*;
+
 // body ------------------------------
 
 implementsDirective
