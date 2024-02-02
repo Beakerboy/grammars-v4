@@ -952,16 +952,6 @@ openStmt
     )?
     ;
 
-outputList
-    : outputList_Expression (WS? (';' | ',') WS? outputList_Expression?)*
-    | outputList_Expression? (WS? (';' | ',') WS? outputList_Expression?)+
-    ;
-
-outputList_Expression
-    : expression
-    | (SPC | TAB) (WS? LPAREN WS? argsCall WS? RPAREN)?
-    ;
-
 printStmt
     : PRINT WS fileNumber WS? ',' (WS? outputList)?
     ;
