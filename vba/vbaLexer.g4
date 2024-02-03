@@ -52,6 +52,10 @@ AS
     : 'AS'
     ;
 
+BASE
+    : 'BASE'
+    ;
+
 BEGIN
     : 'BEGIN'
     ;
@@ -372,6 +376,9 @@ GLOBAL
     : 'GLOBAL'
     ;
 
+GO
+    : 'GO'
+    ;
 GOSUB
     : 'GOSUB'
     ;
