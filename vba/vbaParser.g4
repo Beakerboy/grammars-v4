@@ -949,9 +949,10 @@ argumentExpression
 
 // 5.6.14 Dictionary Access Expressions
 dictionaryAccessExpression
-    : lExpression  '!' unrestrictedName;
-    | lExpression wsc? LINE_CONTINUATION wsc? '!' unrestrictedName;
-    | lExpression wsc? LINE_CONTINUATION wsc? "!" wsc? LINE_CONTINUATION wsc? unrestrictedName;
+    : lExpression  '!' unrestrictedName
+    | lExpression wsc? LINE_CONTINUATION wsc? '!' unrestrictedName
+    | lExpression wsc? LINE_CONTINUATION wsc? "!" wsc? LINE_CONTINUATION wsc? unrestrictedName
+    ;
 
 // 5.6.15 With Expressions
 withExpression
