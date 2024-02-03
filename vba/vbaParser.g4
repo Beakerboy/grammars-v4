@@ -555,28 +555,38 @@ exitDoStatement: EXIT wsc DO;
 // 5.4.2.8 If Statement
 // why is a LINE-START required before this?
 ifStatement
-    : IF wsc? booleanExpression wsc? THEN endOfLineNoWs
+    : IF wsc? booleanExpression wsc? THEN endOfLine
         statementBlock
     elseIfBlock*
-    elseBlock? endOfLineNoWs
+    elseBlock? endOfLine
     ((END wsc IF) | ENDIF);
 elseIfBlock
     : ELSEIF wsc? booleanExpression wsc? THEN endOfLineNoWs
         statementBlock
     | ELSEIF wsc? booleanExpression wsc? THEN statementBlock
     ;
-elseBlock: ELSE wsc? statementBlock;
+elseBlock: ELSE endOfLine? wsc? statementBlock;
 
 // 5.4.2.9 Single-line If Statement
-single-line-if-statement = if-with-non-empty-then / if-with-empty-then 
-  
- if-with-non-empty-then = "If" boolean-expression "Then" list-or-label [single-line-else-clause] 
- if-with-empty-then = "If" boolean-expression "Then" single-line-else-clause 
- single-line-else-clause = "Else" [list-or-label]  
- list-or-label = (statement-label *[":" [same-line-statement]]) /  
- ([":"] same-line-statement *[":" [same-line-statement]]) 
- same-line-statement = file-statement / error-handling-statement / 
- data-manipulation-statement / control-statement-except-multiline-if 
+singleLineIfStatement
+    : ifWithNonEmptyThen
+    | ifWithEmptyThen
+    ;
+ifWithNonEmptyThen
+    : IF wsc booleanExpression wsc THEN wsc listOrLabel singleLineElseClause?;
+ifWithEmptyThen
+    : IF wsc booleanExpression wsc THEN wsc singleLineElseClause;
+singleLineElseClause: ELSE wsc? listOrLabel?
+listOrLabel
+    : (statement-label *[":" [same-line-statement]])
+    | ([":"] same-line-statement *[":" [same-line-statement]])
+    ;
+same-line-statement
+    : file-statement
+    | error-handling-statement
+    | data-manipulation-statement
+    | control-statement-except-multiline-if
+    ;
 
 // 5.4.2.10 Select Case Statement
 select-case-statement = "Select" "Case" WS select-expression EOS 
