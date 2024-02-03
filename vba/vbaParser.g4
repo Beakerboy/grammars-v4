@@ -1314,6 +1314,7 @@ ambiguousKeyword
     | DELETESETTING
     | ERROR
     | FILECOPY
+    | GO
     | KILL
     | LOAD
     | LIB
