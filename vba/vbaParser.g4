@@ -1306,6 +1306,8 @@ ambiguousKeyword
     | CLASS
     | CHDIR
     | CHDRIVE
+    | CLASS_INITIALIZE
+    | CLASS_TERMINATE
     | COLLECTION
     | CONPARE
     | DATABASE
