@@ -1306,6 +1306,7 @@ ambiguousKeyword
     | CHDIR
     | CHDRIVE
     | COLLECTION
+    | CONPARE
     | DATABASE
     | DELETESETTING
     | ERROR
@@ -1321,6 +1322,7 @@ ambiguousKeyword
     | NAME
     | OBJECT
     | OUTPUT
+    | PROPERTY
     | RANDOM
     | RANDOMIZE
     | READ
