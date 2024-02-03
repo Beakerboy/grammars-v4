@@ -671,7 +671,7 @@ redimVariableDcl
     | redimUntypedDcl
     ;
 redimTypedVariableDcl: typedName dynamicArrayDim;
-redim-untyped-dcl = untyped-name dynamic-array-clause 
+redimUntypedDcl: untypedName wsc? dynamicArrayClause;
 dynamic-array-dim = "(" dynamic-bounds-list ")" 
 dynamic-bounds-list = dynamic-dim-spec *[ "," dynamic-dim-spec ] 
 dynamic-dim-spec = [dynamic-lower-bound] dynamic-upper-bound 
@@ -680,9 +680,9 @@ dynamic-upper-bound = integer-expression
 dynamic-array-clause = dynamic-array-dim [as-clause]
 
 // 5.4.3.4 Erase Statement
-erase-statement = “Erase” erase-list 
-erase-list = erase-element *[ “,” erase-element] 
-erase-element = l-expression
+eraseStatement: ERASE wsc? eraseList;
+eraseList: eraseElement (wsc? ',' wsc? eraseElement)*;
+eraseElement: lExpression;
 
 // 5.4.3.5 Mid/MidB/Mid$/MidB$ Statement
 midStatement: modeSpecifier wsc? '(' wsc? stringArgument wsc? ',' wsc? start wsc? (',' wsc? length)? ')' wsc? EQ wsc? expression;
