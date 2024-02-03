@@ -442,7 +442,7 @@ blockStatement
 statement
     : controlStatement
     | dataManipulationStatement
-    | errorHandingStatement
+    | errorHandlingStatement
     | fileStatement
     ;
     
