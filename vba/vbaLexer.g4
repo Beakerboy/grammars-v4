@@ -156,6 +156,10 @@ COLLECTION
     : 'COLLECTION'
     ;
 
+COMPARE
+    : 'COMPARE'
+    ;
+
 CONST
     : 'CONST'
     ;
@@ -322,6 +326,10 @@ EVENT
 
 EXIT
     : 'EXIT'
+    ;
+
+EXPLICIT
+    : 'EXPLICIT'
     ;
 
 FALSE
@@ -503,6 +511,10 @@ MOD
     : 'MOD'
     ;
 
+MODULE
+    : 'MODULE'
+    ;
+
 NAME
     : 'NAME'
     ;
@@ -567,6 +579,9 @@ PRINT
 
 PRIVATE
     : 'PRIVATE'
+    ;
+PROPERTY
+    : 'PROPERTY'
     ;
 
 PSET
