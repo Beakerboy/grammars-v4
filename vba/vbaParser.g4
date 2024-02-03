@@ -1299,6 +1299,7 @@ ambiguousKeyword
     | ALIAS
     | APPACTIVATE
     | APPEND
+    | BASE
     | BEEP
     | BEGIN
     | BINARY
