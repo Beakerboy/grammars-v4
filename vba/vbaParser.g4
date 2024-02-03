@@ -737,7 +737,7 @@ errorNumber: integerExpression;
 // 5.4.5 File Statements
 fileStatement
     : openStatement
-    | close Statement
+    | closeStatement
     | seekStatement
     | lockStatement
     | unlockStatement
