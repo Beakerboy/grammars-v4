@@ -58,7 +58,7 @@ classModule
 proceduralModuleHeader
     : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLine
     ;
-classModuleHeader: classAttr+ WS?
+classModuleHeader: classAttr+ WS?;
 classAttr
     : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLineNoWs
     | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE endOfLineNoWs
@@ -248,7 +248,7 @@ udtElement
     : remStatement
     | udtMember
     ;
-udtMember:
+udtMember
     : reservedNameMemberDcl
     | untypedNameMemberDcl
     ;
@@ -275,13 +275,13 @@ enumElement
     : remStatement
     | enumMember
     ;
-enumMember: untyped-name (wsc? EQ wsc? constantExpression)?;
+enumMember: untypedName (wsc? EQ wsc? constantExpression)?;
 
 // 5.2.3.5 External Procedure Declaration
-public-external-procedure-declaration: (PUBLIC wsc)? externalProcDcl;
-private-external-procedure-declaration: PRIVATE externalProcDcl;
+publicExternalProcedureDeclaration: (PUBLIC wsc)? externalProcDcl;
+privateExternalProcedureDeclaration: PRIVATE externalProcDcl;
 externalProcDcl: DECLARE wsc (PTRSAFE wsc)? (externalSub | externalFunction);
-externalSub: SUB subroutine-name lib-info [procedure-parameters];
+externalSub: SUB subroutineName libInfo procedureParameters?;
 externalFunction: FUNCTION functionName libInfo procedureParameters? functionType?;
 libInfo: libClause (wsc aliasClause)?;
 libClause: LIB wsc STRING;
@@ -321,7 +321,7 @@ procedureDeclaration
 // 5.3.1 Procedure Declarations
 subroutineDeclaration
     : procedureScope? initialStatic? SUB subroutineName procedureParameters? trailingStatic? endOfStatement
-        (procedure-body endOfStatement)?
+        (procedureBody endOfStatement)?
         endLabel? END wsc SUB procedureTail;
 
 functionDeclaration
@@ -335,7 +335,7 @@ propertyGetDeclaration
         endLabel? END wsc PROPERTY procedureTail;
   
 propertyLhsDeclaration
-    : procedure-scope initialStatic? PROPERTY wsc (LET | SET) subroutineName propertyParameters trailingStatic? endOfStatement
+    : procedureScope initialStatic? PROPERTY wsc (LET | SET) subroutineName propertyParameters trailingStatic? endOfStatement
         (procedureBody endOfStatement)?
         endLabel? END wsc PROPERTY procedureTail;
 endLabel: statementLabelDefinition;
@@ -373,27 +373,27 @@ prefixedName
     ;
 
 // 5.3.1.4 Function Type Declarations
-functionType: AS wsc typeExpression wsc? arrayDesignator?
+functionType: AS wsc typeExpression wsc? arrayDesignator?;
 arrayDesignator: '(' wsc? ')';
 
 // 5.3.1.5 Parameter Lists
-procedureParameters: "(" wsc? parameterList? wsc? ")";
-propertyParameters: "(" wsc? (parameterList wsc? "," wsc?)? valueParam wsc? ")";
+procedureParameters: '(' wsc? parameterList? wsc? ')';
+propertyParameters: '(' wsc? (parameterList wsc? ',' wsc?)? valueParam wsc? ')';
 parameterList
-    : (positional-parameters wsc? "," wsc? optionalParameters)
-    | (positionalParameters  (wsc? "," wsc? paramArray)?)
+    : (positional-parameters wsc? ',' wsc? optionalParameters)
+    | (positionalParameters  (wsc? ',' wsc? paramArray)?)
     | optionalParameters
     | paramArray
     ;
   
-positionalParameters: positionalParam (wsc? "," wsc? positionalParam)*;
-optionalParameters: optionalParam (wsc? "," wsc? optionalParam)*;
+positionalParameters: positionalParam (wsc? ',' wsc? positionalParam)*;
+optionalParameters: optionalParam (wsc? ',' wsc? optionalParam)*;
 valueParam: positionalParam;
 positionalParam: parameterMechanism? param-dcl;
 optionalParam
     : optionalPrefix wsc paramDcl wsc? defaultValue?;
 paramArray
-    : PARAMARRAY ambiguousIdentifier "(" wsc? ")" (wsc AS wsc (VARIANT | "[" VARIANT "]"))?;
+    : PARAMARRAY ambiguousIdentifier '(' wsc? ')' (wsc AS wsc (VARIANT | '[' VARIANT ']'))?;
 param-dcl
     : untypedNameParamDcl
     | typedNameParamDcl
