@@ -218,7 +218,7 @@ typeSpec
     : fixedLengthStringSpec
     | typeExpression
     ;
-fixedLengthStringSpe: STRING WS '*' WS stringLength;
+fixedLengthStringSpec: STRING WS '*' WS stringLength;
 stringLength
     : SHORTLITERAL
     | constantName
