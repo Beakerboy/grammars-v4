@@ -664,10 +664,13 @@ staticVariableDeclaration: STATIC wsc variableDeclarationList;
 localConstDeclaration: constDeclaration;
 
 // 5.4.3.3 ReDim Statement
-redim-statement = "Redim" ["Preserve"] redim-declaration-list
-redim-declaration-list = redim-variable-dcl *("," redim-variable-dcl) 
-redim-variable-dcl = redim-typed-variable-dcl / redim-untyped-dcl 
-redim-typed-variable-dcl = TYPED-NAME dynamic-array-dim 
+redimStatement: REDIM (wsc PRESERVE)? wsc? redimDeclarationList;
+redimDeclarationList: redimVariableDcl (wsc? ',' wsc? redimVariableDcl)*;
+redimVariableDcl
+    : redimTypedVariableDcl
+    | redimUntypedDcl
+    ;
+redimTypedVariableDcl: typedName dynamicArrayDim;
 redim-untyped-dcl = untyped-name dynamic-array-clause 
 dynamic-array-dim = "(" dynamic-bounds-list ")" 
 dynamic-bounds-list = dynamic-dim-spec *[ "," dynamic-dim-spec ] 
