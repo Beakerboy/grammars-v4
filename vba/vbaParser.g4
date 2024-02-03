@@ -164,7 +164,7 @@ defType
     | DEFINT
     | DEFLNG
     | DEFLNGLNG
-    | DEGLNGPTR
+    | DEFLNGPTR
     | DEFOBJ
     | DEFSNG
     | DEFSTR
