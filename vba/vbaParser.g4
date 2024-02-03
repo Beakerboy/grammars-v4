@@ -310,12 +310,10 @@ commonModuleCodeElement
     | procedureDeclaration
     ;
 procedureDeclaration
-    : functionStmt
-    | propertyGetStmt
-    | propertySetStmt
-    | propertyLetStmt
-    | subroutineDeclaration
-    | macroStmt
+    : subroutineDeclaration
+    | functionDeclaration
+    | propertyGetDeclaration
+    | propertyLhsDeclaration
     ;
 
 // 5.3.1 Procedure Declarations
@@ -599,8 +597,6 @@ rangeClause
     : expression
     | startValue wsc? TO wsc? endValue
     | IS? wsc comparisonOperator expression;
-startValue: expression;
-endValue: expression;
 selectExpression: expression;
 comparisonOperator
     : EQ
