@@ -716,8 +716,8 @@ errorHandlingStatement
     ;
 
 // 5.4.4.1 On Error Statement
-onErrorStatement: "On" "Error" error-behavior;
-errorBehavior: ("Resume" "Next") / ("Goto" statement-label);
+onErrorStatement: ON wsc ERROR wsc? errorBehavior;
+errorBehavior: (RESUME wsc NEXT) / ("Goto" statement-label);
 
 // 5.4.4.2 Resume Statement
 resumeStatement: "Resume" [("Next" / statement-label)];
