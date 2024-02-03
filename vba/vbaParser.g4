@@ -946,8 +946,16 @@ argumentExpression
     ;
 
 // 5.6.14 Dictionary Access Expressions
+dictionary-access-expression
+    : l-expression  NO-WS "!" NO-WS unrestricted-name;
+    | l-expression  line-continuation "!" NO-WS unrestricted-name;
+    | l-expression  line-continuation "!" line-continuation unrestricted-name;
 
 // 5.6.15 With Expressions
+with-expression
+    : with-member-access-expression / with-dictionary-access-expression 
+with-member-access-expression = "." unrestricted-name 
+with-dictionary-access-expression = "!" unrestricted-name
 
 // 5.6.16 Constrained Expressions
 // The following Expressions have complex static requirements
