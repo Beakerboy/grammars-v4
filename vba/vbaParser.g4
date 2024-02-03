@@ -716,10 +716,14 @@ errorHandlingStatement
     ;
 
 // 5.4.4.1 On Error Statement
+onErrorStatement: "On" "Error" error-behavior;
+errorBehavior: ("Resume" "Next") / ("Goto" statement-label);
 
 // 5.4.4.2 Resume Statement
+resumeStatement: "Resume" [("Next" / statement-label)];
 
 // 5.4.4.3 Error Statement
+errorNumber: integer-Expression;
 
 // 5.4.5 File Statements
 fileStatement
