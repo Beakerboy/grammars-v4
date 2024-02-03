@@ -1317,6 +1317,7 @@ ambiguousKeyword
     | KILL
     | LOAD
     | LIB
+    | LINE
     | MID
     | MIDB
     | MID_D
