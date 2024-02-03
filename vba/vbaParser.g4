@@ -975,6 +975,9 @@ ccExpression: expression;
 // 5.6.16.3 Boolean Expressions
 booleanExpression: expression;
 
+// 5.6.16.4 Integer Expressions
+integerExpression: expression;
+
 // 5.6.16.5
 variableExpression: lExpression;
 
