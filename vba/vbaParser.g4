@@ -274,7 +274,7 @@ reservedMemberName
 globalEnumDeclaration: GLOBAL wsc  enumDeclaration;
 publicEnumDeclaration: (PUBLIC wsc)? enumDeclaration;
 privateEnumDeclaration: PRIVATE wsc enumDeclaration;
-enumDeclaration: ENUM wsc untypedName EOS enumMemberList EOS END wsc ENUM ;
+enumDeclaration: ENUM wsc untypedName endOfStatement enumMemberList endOfStatement END wsc ENUM ;
 enumMemberList: enumElement (endOfStatement enumElement)*;
 enumElement
     : remStatement
