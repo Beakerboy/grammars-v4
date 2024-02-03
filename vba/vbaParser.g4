@@ -181,6 +181,10 @@ commonModuleDeclarationElement
     ;
 
 // 5.2.3.1 Module Variable Declaration Lists
+moduleVariableDeclaration
+    : publicVariableDecalation
+    | privateVariableDeclaration
+    ;
 globalVariableDeclaration: GLOBAL WS variableDeclarationList;
 publicVariableDecalation: PUBLIC (WS SHARED)? WS moduleVariableDeclarationList;
 privateVariableDeclaration: (PRIVATE | DIM) (wsc SHARED)? moduleVariableDeclarationList;
