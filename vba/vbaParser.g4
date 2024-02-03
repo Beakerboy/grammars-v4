@@ -462,7 +462,7 @@ remStatement: REMCOMMENT;
 
 // 5.4.2 Control Statements
 controlStatement
-    : ifThenElseStmt
+    : ifStatement
     | controlStatementExceptMultilineIf
     ;
 controlStatementExceptMultilineIf
@@ -596,7 +596,7 @@ selectCaseStatement
         caseClause*
         caseElseClause?
     END wsc SELECT;
-caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? endOfStatemsnt statementBlock;
+caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? endOfStatement statementBlock;
 caseElseClause: CASE wsc ELSE endOfStatement statementBlock;
 rangeClause
     : expression
