@@ -226,8 +226,8 @@ stringLength
 constantName: simpleNameExpression;
 
 // 5.2.3.2 Const Declarations
-publicConstDeclaration: (GLOBAL | PUBLIC) wsc module_const_declaration;
-privateConstDeclaration: PRIVATE wsc module_const_declaration;
+publicConstDeclaration: (GLOBAL | PUBLIC) wsc moduleConstDeclaration;
+privateConstDeclaration: PRIVATE wsc moduleConstDeclaration;
 moduleConstDeclaration: constDeclaration;
 constDeclaration: CONST wsc constItemList;
 constItemList: constItem (wsc? ',' wsc? constItem)*;
