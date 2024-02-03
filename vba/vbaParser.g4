@@ -720,7 +720,7 @@ onErrorStatement: ON wsc ERROR wsc? errorBehavior;
 errorBehavior: (RESUME wsc NEXT) / ("Goto" statement-label);
 
 // 5.4.4.2 Resume Statement
-resumeStatement: "Resume" [("Next" / statement-label)];
+resumeStatement: RESUME wsc? (NEXT| statementLabel)?;
 
 // 5.4.4.3 Error Statement
 errorNumber: integer-Expression;
