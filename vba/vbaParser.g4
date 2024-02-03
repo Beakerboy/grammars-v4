@@ -1309,7 +1309,7 @@ ambiguousKeyword
     | CLASS_INITIALIZE
     | CLASS_TERMINATE
     | COLLECTION
-    | CONPARE
+    | COMPARE
     | DATABASE
     | DELETESETTING
     | ERROR
