@@ -373,7 +373,7 @@ prefixedName
     ;
 
 // 5.3.1.4 Function Type Declarations
-functionType = AS wsc typeExpression wsc? arrayDesignator?
+functionType: AS wsc typeExpression wsc? arrayDesignator?
 arrayDesignator: '(' wsc? ')';
 
 // 5.3.1.5 Parameter Lists
@@ -497,21 +497,28 @@ callStatement
     ;
 
 // 5.4.2.2 While Statement
-whileStatement = "While" boolean-expression EOS  statement-block  "Wend"
+whileStatement
+    : WHILE booleanExpression endOfStatement
+        statementBlock WEND;
 
 // 5.4.2.3 For Statement
-forstatement = simple-for-statement / explicit-for-statement  
-  
-simpleForStatement = for-clause EOS statement-block “Next” 
-  
-explicit-for-statement = for-clause EOS statement-block 
- (“Next” / (nested-for-statement “,”)) bound-variable-expression 
- nested-for-statement = explicit-for-statement / explicit-for-each-statement 
- for-clause = “For” bound-variable-expression “=” start-value “To” end-value [step-clause] 
- start-value = expression 
- end-value = expression 
- step-clause = Step" step-increment  
- step-increment = expression
+forStatement
+    : simpleForStatement
+    | explicitForStatement
+    ;
+simpleForStatement: forClause endOfStatement statementBlock NEXT;
+explicitForStatement
+    : forClause endOfStatement statementBlock (NEXT | (nestedForStatement wsc? “,”)) boundVariableExpression
+nestedForStatement
+    : explicitForStatement
+    | explicitForEachStatement
+    ;
+forClause
+    : FOR boundVariableExpression wsc? EQ wsc? startValue TO endValue stepClause?
+startValue: expression;
+endValue: expression;
+stepClause: STEP stepIncrement;
+stepIncrement: expression;
 
 // 5.4.2.4 For Each Statement
 forEachStatement
@@ -532,25 +539,33 @@ explicitForEachStatement
 exitForStatement: EXIT wsc FOR;
 
 // 5.4.2.6 Do Statement
-do-statement = "Do" [condition-clause] EOS statement-block 
-                 "Loop" [condition-clause] 
- condition-clause = while-clause / until-clause 
-  
- while-clause = "While" boolean-expression;
- until-clause = "Until" boolean-expression;
+doStatement
+    : DO conditionClause? endOfStatement statementBlock
+        LOOP conditionClause?;
+conditionClause
+    : whileClause
+    | untilClause
+    ;
+whileClause: WHILE wsc? booleanExpression;
+untilClause: UNTIL wsc? booleanExpression;
 
 // 5.4.2.7 Exit Do Statement
-exit-do-statement: EXIT wsc DO;
+exitDoStatement: EXIT wsc DO;
 
 // 5.4.2.8 If Statement
-if-statement = LINE-START "If" boolean-expression "Then" EOL statement-block 
-                *[else-if-block] 
-                [else-block]   
-                LINE-START (("End" "If") / "EndIf") 
- else-if-block = LINE-START "ElseIf" boolean-expression "Then" EOL 
-                 LINE-START statement-block 
- else-if-block =/ "ElseIf" boolean-expression "Then" statement-block 
- else-block = LINE-START "Else" statement-block 
+// why is a LINE-START required before this?
+ifStatement
+    : IF wsc? booleanExpression wsc? THEN endOfLineNoWs
+        statementBlock
+    elseIfBlock*
+    elseBlock? endOfLineNoWs
+    ((END wsc IF) | ENDIF);
+elseIfBlock
+    : ELSEIF wsc? booleanExpression wsc? THEN endOfLineNoWs
+        statementBlock
+    | ELSEIF wsc? booleanExpression wsc? THEN statementBlock
+    ;
+elseBlock: ELSE wsc? statementBlock;
 
 // 5.4.2.9 Single-line If Statement
 single-line-if-statement = if-with-non-empty-then / if-with-empty-then 
