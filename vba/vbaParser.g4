@@ -661,7 +661,7 @@ localVariableDeclaration: DIM wsc? SHARED? wsc? variableDeclarationList;
 staticVariableDeclaration: STATIC wsc variableDeclarationList;
 
 // 5.4.3.2 Local Constant Declarations
-local-ConstDeclaration: const-declaration;
+localConstDeclaration: constDeclaration;
 
 // 5.4.3.3 ReDim Statement
 redim-statement = "Redim" ["Preserve"] redim-declaration-list
