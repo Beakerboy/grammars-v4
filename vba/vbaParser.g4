@@ -850,6 +850,8 @@ variable: variableExpression;
 // Modifying the order will affect the order of operations
 // valueExpression must be rolled up into expression due to mutual left recursion
 // operatorExpression must be rolled up into expression due to mutual left recursion
+// memberAccess
+// DictionaryAccess
 expression
     : literalExpression
     | parenthesizedExpression
