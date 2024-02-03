@@ -380,7 +380,7 @@ arrayDesignator: '(' wsc? ')';
 procedureParameters: '(' wsc? parameterList? wsc? ')';
 propertyParameters: '(' wsc? (parameterList wsc? ',' wsc?)? valueParam wsc? ')';
 parameterList
-    : (positional-parameters wsc? ',' wsc? optionalParameters)
+    : (positionalParameters wsc? ',' wsc? optionalParameters)
     | (positionalParameters  (wsc? ',' wsc? paramArray)?)
     | optionalParameters
     | paramArray
@@ -389,12 +389,12 @@ parameterList
 positionalParameters: positionalParam (wsc? ',' wsc? positionalParam)*;
 optionalParameters: optionalParam (wsc? ',' wsc? optionalParam)*;
 valueParam: positionalParam;
-positionalParam: parameterMechanism? param-dcl;
+positionalParam: parameterMechanism? paramDcl;
 optionalParam
     : optionalPrefix wsc paramDcl wsc? defaultValue?;
 paramArray
     : PARAMARRAY ambiguousIdentifier '(' wsc? ')' (wsc AS wsc (VARIANT | '[' VARIANT ']'))?;
-param-dcl
+paramDcl
     : untypedNameParamDcl
     | typedNameParamDcl
     ;
@@ -409,7 +409,7 @@ parameterMechanism
     | BYREF
     ;
 parameterType: arrayDesignator? wsc AS wsc (typeExpression | ANY);
-defaultValue: "=" wsc? constantExpression;
+defaultValue: '=' wsc? constantExpression;
 
 // 5.3.1.8 Event Handler Declarations
 eventHandlerName: ambiguousIdentifier;
@@ -418,7 +418,7 @@ eventHandlerName: ambiguousIdentifier;
 implementedName: ambiguousIdentifier;
 
 // 5.3.1.10 Lifecycle Handler Declarations
-lifecycleHandlerName:
+lifecycleHandlerName
     : CLASS_INITIALIZE
     | CLASS_TERMINATE
     ;
@@ -449,7 +449,7 @@ statementLabel
     : identifierStatementLabel
     | lineNumberLabel
     ; 
-statementLabelList: statementLabel (wsc? ',' wsc? statementLabel)? 
+statementLabelList: statementLabel (wsc? ',' wsc? statementLabel)?;
 identifierStatementLabel: ambiguousIdentifier;
 lineNumberLabel: (INTEGERLITERAL | SHORTLITERAL);
 
@@ -508,7 +508,7 @@ forStatement
     ;
 simpleForStatement: forClause endOfStatement statementBlock NEXT;
 explicitForStatement
-    : forClause endOfStatement statementBlock (NEXT | (nestedForStatement wsc? “,”)) boundVariableExpression
+    : forClause endOfStatement statementBlock (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression
 nestedForStatement
     : explicitForStatement
     | explicitForEachStatement
@@ -530,9 +530,8 @@ simpleForEachStatement
   
 explicitForEachStatement
     : forEachClause endOfStatement statementBlock 
-  (NEXT | (nestedForStatement wsc? “,”)) boundVariableExpression;
-  
- for-each-clause = “For” “Each” bound-variable-expression “In” collection 
+  (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression;
+ forEachClause: FOR wsc EACH wsc? boundVariableExpression wsc? IN wsc? collection;
  collection: expression;
 
 // 5.4.2.5 Exit For Statement
