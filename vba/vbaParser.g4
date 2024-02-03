@@ -672,7 +672,7 @@ redimVariableDcl
     ;
 redimTypedVariableDcl: typedName dynamicArrayDim;
 redimUntypedDcl: untypedName wsc? dynamicArrayClause;
-dynamic-array-dim = "(" dynamic-bounds-list ")" 
+dynamicArrayDim: '(' wsc? dynamicBoundsList wsc? ')';
 dynamic-bounds-list = dynamic-dim-spec *[ "," dynamic-dim-spec ] 
 dynamic-dim-spec = [dynamic-lower-bound] dynamic-upper-bound 
 dynamic-lower-bound = integer-expression  "to"  
