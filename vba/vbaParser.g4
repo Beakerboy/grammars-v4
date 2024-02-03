@@ -857,7 +857,7 @@ variable: variableExpression;
 expression
     : literalExpression
     | parenthesizedExpression
-    | typeOfIsExpression
+    | typeofIsExpression
     | newExpress
     | expression wsc? POW wsc? expression
     | unaryMinusExpression
