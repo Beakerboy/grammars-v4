@@ -136,6 +136,14 @@ CLASS
     : 'CLASS'
     ;
 
+CLASS_INITIALIZE
+    : 'CLASS_INITIALIZE'
+    ;
+
+CLASS_TERMINATE
+    : 'CLASS_TERMINATE'
+    ;
+
 CLNG
     : 'CLNG'
     ;
