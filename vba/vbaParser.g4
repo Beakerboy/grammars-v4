@@ -1319,6 +1319,7 @@ ambiguousKeyword
     | MID_D
     | MIDB_D
     | MKDIR
+    | MODULE
     | NAME
     | OBJECT
     | OUTPUT
