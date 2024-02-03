@@ -673,7 +673,7 @@ redimVariableDcl
 redimTypedVariableDcl: typedName dynamicArrayDim;
 redimUntypedDcl: untypedName wsc? dynamicArrayClause;
 dynamicArrayDim: '(' wsc? dynamicBoundsList wsc? ')';
-dynamicBoundsList: dynamicDimSpec (wsc? ',' wsc? dynamic-dim-spec)*;
+dynamicBoundsList: dynamicDimSpec (wsc? ',' wsc? dynamicDimSpec)*;
 dynamicDimSpec: dynamicLowerBound? dynamicUpperBound;
 dynamicLowerBound: integerExpression wsc? TO;
 dynamicUpperBound: integerExpression;
@@ -703,10 +703,10 @@ lsetStatement: LSET wsc? boundVariableExpression wsc? EQ wsc? expression;
 rsetStatement: RSET wsc? boundVariableExpression wsc? EQ wsc? expression;
 
 // 5.4.3.8 Let Statement
-letStatement: LET? lExpression wsc? EQ wsc? expression
+letStatement: LET? lExpression wsc? EQ wsc? expression;
 
 // 5.4.3.9 Set Statement
-setStatement: SET lExpression wsc? EQ wsc? expression
+setStatement: SET lExpression wsc? EQ wsc? expression;
 
 // 5.4.4 Error Handling Statements
 errorHandlingStatement
