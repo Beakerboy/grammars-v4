@@ -508,13 +508,13 @@ forStatement
     ;
 simpleForStatement: forClause endOfStatement statementBlock NEXT;
 explicitForStatement
-    : forClause endOfStatement statementBlock (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression
+    : forClause endOfStatement statementBlock (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression;
 nestedForStatement
     : explicitForStatement
     | explicitForEachStatement
     ;
 forClause
-    : FOR boundVariableExpression wsc? EQ wsc? startValue TO endValue stepClause?
+    : FOR boundVariableExpression wsc? EQ wsc? startValue TO endValue stepClause?;
 startValue: expression;
 endValue: expression;
 stepClause: STEP stepIncrement;
@@ -575,24 +575,25 @@ ifWithNonEmptyThen
     : IF wsc booleanExpression wsc THEN wsc listOrLabel singleLineElseClause?;
 ifWithEmptyThen
     : IF wsc booleanExpression wsc THEN wsc singleLineElseClause;
-singleLineElseClause: ELSE wsc? listOrLabel?
+singleLineElseClause: ELSE wsc? listOrLabel?;
 listOrLabel
-    : (statement-label *[":" [same-line-statement]])
-    | ([":"] same-line-statement *[":" [same-line-statement]])
+    : (statementLabel (':' wsc? sameLineStatement?)*)
+    | ':'? sameLineStatement (":" wsc? sameLineStatement?)*)
     ;
-same-line-statement
-    : file-statement
-    | error-handling-statement
-    | data-manipulation-statement
-    | control-statement-except-multiline-if
+sameLineStatement
+    : fileStatement
+    | errorHandlingStatement
+    | dataManipulationStatement
+    | controlStatementExceptMultilineIf
     ;
 
 // 5.4.2.10 Select Case Statement
-select-case-statement = "Select" "Case" WS select-expression EOS 
- *[case-clause] 
- [case-else-clause] 
- "End" "Select" 
- case-clause = "Case" range-clause ["," range-clause] EOS statement-block 
+selectCaseStatement:
+    : SELECT wsc CASE wsc selectExpression endOfStatement
+        caseClause*
+        caseElseClause?
+    END wsc SELECT
+ case-Clause: "Case" range-clause ["," range-clause] EOS statement-block 
   
  case-else-clause = "Case" "Else" EOS statement-block 
  range-clause = expression  
