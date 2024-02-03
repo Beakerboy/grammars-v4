@@ -858,7 +858,7 @@ literalExpression
 parenthesizedExpression: LPAREN wsc? expression wsc? RPAREN;
 
 // 5.6.7 TypeOf…Is Expressions
-typeofIsExpression = TYPEOF wsc? expression wsc? IS wsc? typeExpression;
+typeofIsExpression: TYPEOF wsc? expression wsc? IS wsc? typeExpression;
 
 // 5.6.8 New Expressions
 // The name 'newExpression' fails under the Go language
