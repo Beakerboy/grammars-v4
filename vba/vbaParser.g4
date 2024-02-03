@@ -578,7 +578,7 @@ ifWithEmptyThen
 singleLineElseClause: ELSE wsc? listOrLabel?;
 listOrLabel
     : (statementLabel (':' wsc? sameLineStatement?)*)
-    | ':'? sameLineStatement (':' wsc? sameLineStatement?)*)
+    | ':'? sameLineStatement (':' wsc? sameLineStatement?)*
     ;
 sameLineStatement
     : fileStatement
@@ -588,13 +588,13 @@ sameLineStatement
     ;
 
 // 5.4.2.10 Select Case Statement
-selectCaseStatement:
+selectCaseStatement
     : SELECT wsc CASE wsc selectExpression endOfStatement
         caseClause*
         caseElseClause?
-    END wsc SELECT
+    END wsc SELECT;
 caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? endOfStatemsnt statementBlock;
-caseElseClause: CASE wsc ELSE endOfStatement statementBlock
+caseElseClause: CASE wsc ELSE endOfStatement statementBlock;
 rangeClause
     : expression
     | startValue wsc? TO wsc? endValue
@@ -639,7 +639,7 @@ exitFunctionStatement: EXIT wsc FUNCTION;
 exitPropertyStatement: EXIT wsc PROPERTY;
 
 // 5.4.2.20 RaiseEvent Statement
-raiseevent-statement
+raiseeventStatement
     : RAISEEVENT wsc? ambiguousIdentifier wsc? ('(' wsc? eventArgumentList wsc? ')')?;
 eventArgumentList: (eventArgument (wsc? ',' wsc? eventArgument)*)?;
 eventArgument: expression;
@@ -858,7 +858,7 @@ literalExpression
 parenthesizedExpression: LPAREN wsc? expression wsc? RPAREN;
 
 // 5.6.7 TypeOf…Is Expressions
-typeofIsExpression = TYPEOF wsc? expression wsc? IS wsc? typeExpression
+typeofIsExpression = TYPEOF wsc? expression wsc? IS wsc? typeExpression;
 
 // 5.6.8 New Expressions
 // The name 'newExpression' fails under the Go language
@@ -1207,7 +1207,7 @@ futureReserved
 
 // Known as FOREIGN-NAME in MS-VBAL
 foreignName: '[' foreignIdentifier ']';
-foreignIdentifier: ~(NEWLINE | LINE_CONTINUATION)
+foreignIdentifier: ~(NEWLINE | LINE_CONTINUATION);
 
 // known as BUILTIN-TYPE in MS-VBAL
 builtinType
