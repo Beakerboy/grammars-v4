@@ -484,6 +484,17 @@ MID
     : 'MID'
     ;
 
+MIDB
+    : 'MIDB'
+    ;
+MID_D
+    : 'MID$'
+    ;
+
+MIDB_D
+    : 'MIDB$'
+    ;
+
 MKDIR
     : 'MKDIR'
     ;
