@@ -115,7 +115,7 @@ classModuleDirectiveElement
 classModuleDeclarationElement
     : commonModuleDeclarationElement
     | eventDeclaration
-    | commonoptionDirective
+    | commonOptionDirective
     | implementsDirective
     ;
 
