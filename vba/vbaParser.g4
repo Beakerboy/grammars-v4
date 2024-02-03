@@ -258,6 +258,7 @@ udtMember
     ;
 untypedNameMemberDcl: ambiguousIdentifier optionalArrayClause;
 reservedNameMemberDcl: reservedMemberName wsc asClause;
+optionalArrayClause: arrayDim? asClause;
 reservedMemberName
     : statementKeyword
     | markerKeyword
