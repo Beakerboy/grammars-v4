@@ -731,7 +731,7 @@ errorBehavior
 resumeStatement: RESUME wsc? (NEXT| statementLabel)?;
 
 // 5.4.4.3 Error Statement
-errorStatement: ERROR wsc errorNumber
+errorStatement: ERROR wsc errorNumber;
 errorNumber: integerExpression;
 
 // 5.4.5 File Statements
