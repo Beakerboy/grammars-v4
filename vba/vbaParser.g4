@@ -673,9 +673,9 @@ redimVariableDcl
 redimTypedVariableDcl: typedName dynamicArrayDim;
 redimUntypedDcl: untypedName wsc? dynamicArrayClause;
 dynamicArrayDim: '(' wsc? dynamicBoundsList wsc? ')';
-dynamicBoundsList: dynamicDimSpec *[ "," dynamic-dim-spec ];
-dynamicDimSpec: [dynamicLowerBound] dynamicUpperBound;
-dynamicLowerBound: integerExpression  "to";
+dynamicBoundsList: dynamicDimSpec (wsc? ',' wsc? dynamic-dim-spec)*;
+dynamicDimSpec: dynamicLowerBound? dynamicUpperBound;
+dynamicLowerBound: integerExpression wsc? TO;
 dynamicUpperBound: integerExpression;
 dynamicArrayClause: dynamicArrayDim wsc? asClause?;
 
