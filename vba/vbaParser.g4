@@ -661,20 +661,49 @@ localVariableDeclaration: DIM wsc? SHARED? wsc? variableDeclarationList;
 staticVariableDeclaration: STATIC wsc variableDeclarationList;
 
 // 5.4.3.2 Local Constant Declarations
+local-ConstDeclaration: const-declaration;
 
 // 5.4.3.3 ReDim Statement
+redim-statement = "Redim" ["Preserve"] redim-declaration-list
+redim-declaration-list = redim-variable-dcl *("," redim-variable-dcl) 
+redim-variable-dcl = redim-typed-variable-dcl / redim-untyped-dcl 
+redim-typed-variable-dcl = TYPED-NAME dynamic-array-dim 
+redim-untyped-dcl = untyped-name dynamic-array-clause 
+dynamic-array-dim = "(" dynamic-bounds-list ")" 
+dynamic-bounds-list = dynamic-dim-spec *[ "," dynamic-dim-spec ] 
+dynamic-dim-spec = [dynamic-lower-bound] dynamic-upper-bound 
+dynamic-lower-bound = integer-expression  "to"  
+dynamic-upper-bound = integer-expression 
+dynamic-array-clause = dynamic-array-dim [as-clause]
 
 // 5.4.3.4 Erase Statement
+erase-statement = “Erase” erase-list 
+erase-list = erase-element *[ “,” erase-element] 
+erase-element = l-expression
 
 // 5.4.3.5 Mid/MidB/Mid$/MidB$ Statement
+midStatement: modeSpecifier wsc? '(' wsc? stringArgument wsc? ',' wsc? start wsc? (',' wsc? length)? ')' wsc? EQ wsc? expression;
+modeSpecifier
+    : MID
+    | MIDB
+    | MID_D
+    | MIDB_D
+    ;
+stringArgument: boundVariableExpression;
+start: integerExpression;
+length: integerExpression;
 
 // 5.4.3.6 LSet Statement
+lsetStatement: LSET wsc? boundVariableExpression wsc? EQ wsc? expression;
 
 // 5.4.3.7 RSet Statement
+rsetStatement: RSET wsc? boundVariableExpression wsc? EQ wsc? expression;
 
 // 5.4.3.8 Let Statement
+letStatement: LET? lExpression wsc? EQ wsc? expression
 
 // 5.4.3.9 Set Statement
+setStatement: SET lExpression wsc? EQ wsc? expression
 
 // 5.4.4 Error Handling Statements
 errorHandlingStatement
@@ -1253,6 +1282,9 @@ ambiguousKeyword
     | LOAD
     | LIB
     | MID
+    | MIDB
+    | MID_D
+    | MIDB_D
     | MKDIR
     | NAME
     | OBJECT
