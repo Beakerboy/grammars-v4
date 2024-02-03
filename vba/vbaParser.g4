@@ -717,13 +717,13 @@ errorHandlingStatement
 
 // 5.4.4.1 On Error Statement
 onErrorStatement: ON wsc ERROR wsc? errorBehavior;
-errorBehavior: (RESUME wsc NEXT) / ("Goto" statement-label);
+errorBehavior: (RESUME wsc NEXT) / ("Goto" statementLabel);
 
 // 5.4.4.2 Resume Statement
 resumeStatement: RESUME wsc? (NEXT| statementLabel)?;
 
 // 5.4.4.3 Error Statement
-errorNumber: integer-Expression;
+errorNumber: integerExpression;
 
 // 5.4.5 File Statements
 fileStatement
