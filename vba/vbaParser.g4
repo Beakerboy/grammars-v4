@@ -710,7 +710,7 @@ fileStatement
 
 // 5.4.5.1 Open Statement
 openStatement
-    : OPEN wcs? pathName wsc? modeClause? wsc? accessClause? wsc? lock? wsc? AS wsc? fileNumber wsc? lenClause?
+    : OPEN wsc? pathName wsc? modeClause? wsc? accessClause? wsc? lock? wsc? AS wsc? fileNumber wsc? lenClause?
     ;
 pathName: expression;
 modeClause: FOR wsc? modeOpt;
@@ -803,7 +803,7 @@ recordNumber: expression;
 data: expression;
 
 // 5.4.5.12 Get Statement
-getStatement: GET wsc fileNumber wsc? ',' wsc? recordNumber? wsc? ',' ws? variable;
+getStatement: GET wsc fileNumber wsc? ',' wsc? recordNumber? wsc? ',' wsc? variable;
 variable: variableExpression;
 
 //---------------------------------------------------------------------------------------
