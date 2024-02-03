@@ -717,7 +717,10 @@ errorHandlingStatement
 
 // 5.4.4.1 On Error Statement
 onErrorStatement: ON wsc ERROR wsc? errorBehavior;
-errorBehavior: (RESUME wsc NEXT) / ("Goto" statementLabel);
+errorBehavior
+    : RESUME wsc NEXT
+    | GOTO wsc? statementLabel
+    ;
 
 // 5.4.4.2 Resume Statement
 resumeStatement: RESUME wsc? (NEXT| statementLabel)?;
