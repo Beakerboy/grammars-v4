@@ -673,11 +673,11 @@ redimVariableDcl
 redimTypedVariableDcl: typedName dynamicArrayDim;
 redimUntypedDcl: untypedName wsc? dynamicArrayClause;
 dynamicArrayDim: '(' wsc? dynamicBoundsList wsc? ')';
-dynamic-bounds-list = dynamic-dim-spec *[ "," dynamic-dim-spec ] 
-dynamic-dim-spec = [dynamic-lower-bound] dynamic-upper-bound 
-dynamic-lower-bound = integer-expression  "to"  
-dynamic-upper-bound = integer-expression 
-dynamic-array-clause = dynamic-array-dim [as-clause]
+dynamicBoundsList: dynamicDimSpec *[ "," dynamic-dim-spec ];
+dynamicDimSpec: [dynamicLowerBound] dynamicUpperBound;
+dynamicLowerBound: integerExpression  "to";
+dynamicUpperBound: integerExpression;
+dynamicArrayClause: dynamicArrayDim wsc? asClause?;
 
 // 5.4.3.4 Erase Statement
 eraseStatement: ERASE wsc? eraseList;
