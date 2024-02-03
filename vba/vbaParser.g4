@@ -828,7 +828,7 @@ outputExpression: expression;
 spcClause: SPC wsc '(' wsc? spcNumber wsc? ')';
 spcNumber: expression;
 tabClause: TAB wsc '(' wsc? tabNumber wsc? ')';
-tabNumbeer: expression;
+tabNumber: expression;
 
 // 5.4.5.9 Write Statement
 writeStatement: WRITE wsc markedFileNumber wsc? ',' wsc? outputList?;
