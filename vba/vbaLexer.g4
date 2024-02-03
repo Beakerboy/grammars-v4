@@ -444,6 +444,10 @@ LIKE
     : 'LIKE'
     ;
 
+LINE
+    : 'LINE'
+    ;
+
 LINEINPUT
     : 'LINEINPUT'
     ;
