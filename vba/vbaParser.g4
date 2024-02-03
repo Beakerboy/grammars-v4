@@ -578,7 +578,7 @@ ifWithEmptyThen
 singleLineElseClause: ELSE wsc? listOrLabel?;
 listOrLabel
     : (statementLabel (':' wsc? sameLineStatement?)*)
-    | ':'? sameLineStatement (":" wsc? sameLineStatement?)*)
+    | ':'? sameLineStatement (':' wsc? sameLineStatement?)*)
     ;
 sameLineStatement
     : fileStatement
@@ -593,7 +593,7 @@ selectCaseStatement:
         caseClause*
         caseElseClause?
     END wsc SELECT
- case-Clause: "Case" range-clause ["," range-clause] EOS statement-block 
+ caseClause: "Case" rangeClause (',' rangeClause)? EOS statement-block 
   
  case-else-clause = "Case" "Else" EOS statement-block 
  range-clause = expression  
