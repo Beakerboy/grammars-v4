@@ -954,10 +954,12 @@ dictionaryAccessExpression
     | lExpression wsc? LINE_CONTINUATION wsc? "!" wsc? LINE_CONTINUATION wsc? unrestrictedName;
 
 // 5.6.15 With Expressions
-with-expression
-    : with-member-access-expression / withDictionaryAccessExpression;
-with-member-access-expression = "." unrestrictedName;
-with-dictionary-access-expression: "!" unrestrictedName;
+withExpression
+    : withMemberAccessExpression
+    | withDictionaryAccessExpression
+    ;
+withMemberAccessExpression: '.' unrestrictedName;
+withDictionaryAccessExpression: '!' unrestrictedName;
 
 // 5.6.16 Constrained Expressions
 // The following Expressions have complex static requirements
