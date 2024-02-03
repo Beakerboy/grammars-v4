@@ -593,51 +593,59 @@ selectCaseStatement:
         caseClause*
         caseElseClause?
     END wsc SELECT
- caseClause: "Case" rangeClause (',' rangeClause)? EOS statement-block 
-  
- case-else-clause = "Case" "Else" EOS statement-block 
- range-clause = expression  
- range-clause =/  start-value "To" end-value  
- range-clause =/    ["Is"] comparison-operator expression 
- start-value = expression 
- end-value = expression 
- select-expression = expression 
- comparison-operator = "=" / ("<" ">" ) / (">" "<") / "<" / ">" / (">" "=") /  ("=" ">") / ("<" "=") / ("=" "<") 
+caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? endOfStatemsnt statementBlock;
+caseElseClause: CASE wsc ELSE endOfStatement statementBlock
+rangeClause
+    : expression
+    | startValue wsc? TO wsc? endValue
+    | IS? wsc comparisonOperator expression;
+startValue: expression;
+endValue: expression;
+selectExpression: expression;
+comparisonOperator
+    : EQ
+    | NEW
+    | LT
+    | GT
+    | LEQ
+    | GEQ
+    ;
 
 // 5.4.2.11 Stop Statement
 stopStatement: STOP;
 
 // 5.4.2.12 GoTo Statement
-goto-statement = (("Go" "To") / "GoTo") statement-label
+gotoStatement: (GO wsc TO | GOTO) statementLabel;
 
 // 5.4.2.13 On…GoTo Statement
-on-goto-statement = "On" expression "GoTo" statement-label-list
+onGotoStatement: ON wsc? expression GOTO statementLabelList;
 
 // 5.4.2.14 GoSub Statement
-gosub-statement = (("Go" "Sub") / "GoSub") statement-label 
+gosubStatement: ((GO wsc SUB) | GOSUB) statementLabel;
 
 // 5.4.2.15 Return Statement
 returnStatement: RETURN;
 
 // 5.4.2.16 On…GoSub Statement
-on-gosub-statement = "On" expression "GoSub" statement-label-list
+onGosubStatement: ON wsc? expression wsc? GOSUB wsc? statementLabelList;
 
 // 5.4.2.17 Exit Sub Statement
-exit-sub-statement = "Exit" "Sub"
+exitSubStatement: EXIT wsc SUB;
 
 // 5.4.2.18 Exit Function Statement
-exit-function-statement = "Exit" "Function"
+exitFunctionStatement: EXIT wsc FUNCTION;
 
 // 5.4.2.19 Exit Property Statement
-exit-property-statement = "Exit" "Property"
+exitPropertyStatement: EXIT wsc PROPERTY;
 
 // 5.4.2.20 RaiseEvent Statement
-raiseevent-statement = "RaiseEvent" IDENTIFIER ["(" event-argument-list ")"] 
- event-argument-list = [event-argument *("," event-argument)] 
- event-argument = expression
+raiseevent-statement
+    : RAISEEVENT wsc? ambiguousIdentifier wsc? ('(' wsc? eventArgumentList wsc? ')')?;
+eventArgumentList: (eventArgument (wsc? ',' wsc? eventArgument)*)?;
+eventArgument: expression;
 
 // 5.4.2.21 With Statement
-with-statement = "With" expression EOS statement-block "End" "With"
+withStatement: WITH wsc? expression endOfStatement statementBlock END wsc WITH;
 
 // 5.4.3 Data Manipulation Statements
 dataManipulationStatement
