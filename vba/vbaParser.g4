@@ -432,7 +432,7 @@ procedureBody: statementBlock;
 
 // 5.4.1 Statement Blocks
 statementBlock
-    : (blockStatement endOfStatement)*
+    : (blockStatement endOfStatement)+
     ;
 blockStatement
     : statementLabelDefinition
