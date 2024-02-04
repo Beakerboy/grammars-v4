@@ -325,13 +325,13 @@ procedureDeclaration
 
 // 5.3.1 Procedure Declarations
 subroutineDeclaration
-    : procedureScope? initialStatic? SUB wsc subroutineName procedureParameters? trailingStatic? endOfStatement
+    : procedureScope? (wsc initialStatic)? wsc SUB wsc subroutineName procedureParameters? trailingStatic? endOfStatement
         (procedureBody endOfStatement?)?
         endLabel? END wsc SUB procedureTail;
 
 functionDeclaration
     : procedureScope? initialStatic? FUNCTION wsc functionName procedureParameters? functionType? trailingStatic? endOfStatement
-        (procedureBody endOfStatement)?
+        (procedureBody endOfStatement?)?
         endLabel? END wsc FUNCTION procedureTail;
   
 propertyGetDeclaration
