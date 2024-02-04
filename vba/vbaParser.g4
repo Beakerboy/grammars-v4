@@ -198,8 +198,8 @@ variableDcl
     : typedVariableDcl
     | untypedVariableDcl
     ;
-typedVariableDcl: typedName arrayDim?;
-untypedVariableDcl: ambiguousIdentifier (arrayClause | asClause)?;
+typedVariableDcl: typedName wsc? arrayDim?;
+untypedVariableDcl: ambiguousIdentifier wsc? (arrayClause | asClause)?;
 arrayClause: arrayDim wsc? asClause;
 asClause
     : asAutoObject
