@@ -304,7 +304,7 @@ ELSEIF
     : 'ELSEIF'
     ;
 
-EMPTY
+EMPTY_X
     : 'EMPTY'
     ;
 
