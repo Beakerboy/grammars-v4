@@ -326,7 +326,7 @@ procedureDeclaration
 // 5.3.1 Procedure Declarations
 subroutineDeclaration
     : procedureScope? initialStatic? SUB wsc subroutineName procedureParameters? trailingStatic? endOfStatement
-        (procedureBody endOfStatement)?
+        (procedureBody endOfStatement?)?
         endLabel? END wsc SUB procedureTail;
 
 functionDeclaration
@@ -345,7 +345,7 @@ propertyLhsDeclaration
         endLabel? END wsc PROPERTY procedureTail;
 endLabel: statementLabelDefinition;
 procedureTail
-    : wsc NEWLINE
+    : wsc? NEWLINE
     | commentBody
     | remStatement
     ;
