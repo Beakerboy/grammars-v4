@@ -1227,7 +1227,7 @@ objectLiteralIdentifier
     : NOTHING
     ;
 variantLiteralIdentifier
-    : EMPTY
+    : EMPTY_X
     | NULL_
     ;
 reservedForImplementationUse
