@@ -1028,10 +1028,10 @@ endOfLineNoWs
     ;
 // known as EOS in MS-VBAL
 endOfStatement
-    : (endOfLine | WS? COLON WS?)*
+    : (endOfLine | WS? COLON WS?)+
     ;
 endOfStatementNoWs
-    : (endOfLineNoWs | WS? COLON)*
+    : (endOfLineNoWs | WS? COLON)+
     ;
 // The COMMENT token includes the leading single quote
 commentBody: COMMENT;
