@@ -821,7 +821,9 @@ printStatement: PRINT wsc markedFileNumber wsc? ',' wsc? outputList?;
 
 // 5.4.5.8.1 Output Lists
 outputList: outputItem+;
-outputItem: outputClause? charPosition?;
+outputItem
+    : outputClause charPosition?
+    | charPosition;
 outputClause: spcClause | tabClause| outputExpression;
 charPosition: ';' | ',';
 outputExpression: expression;
