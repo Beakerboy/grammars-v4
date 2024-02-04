@@ -325,7 +325,7 @@ procedureDeclaration
 
 // 5.3.1 Procedure Declarations
 subroutineDeclaration
-    : procedureScope? (wsc initialStatic)? wsc SUB wsc subroutineName procedureParameters? trailingStatic? endOfStatement
+    : (procedureScope wsc)? (initialStatic wsc)? SUB wsc subroutineName procedureParameters? trailingStatic? endOfStatement
         (procedureBody endOfStatement?)?
         endLabel? END wsc SUB procedureTail;
 
