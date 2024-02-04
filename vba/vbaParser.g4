@@ -48,7 +48,7 @@ beginBlockConfigElement
 //---------------------------------------------------------------------------------------
 // 4.2 Modules
 proceduralModule
-    : proceduralModuleHeader endOfLineNoWs+ proceduralModuleBody
+    : proceduralModuleHeader endOfLineNoWs* proceduralModuleBody
     ;
 classModule
     : classModuleHeader endOfLine* classModuleBody
