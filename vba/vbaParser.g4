@@ -91,7 +91,8 @@ proceduralModuleDeclarationSection
     | ((proceduralModuleDirectiveElement endOfLine+)* defDirective) (proceduralModuleDeclarationElement endOfLineNoWs)*
     ;
 classModuleDeclarationSection
-    : ((classModuleDirectiveElement endOfLine+)* defDirective)? (classModuleDeclarationElement endOfLine)*
+    : (classModuleDeclarationElement endOfLine)+
+    | ((classModuleDirectiveElement endOfLine+)* defDirective) (classModuleDeclarationElement endOfLine)*
     ;
 proceduralModuleDirectiveElement
     : commonOptionDirective
