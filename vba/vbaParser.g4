@@ -87,7 +87,8 @@ untypedName
 //---------------------------------------------------------------------------------------
 // 5.2 Module Declaration Section Structure
 proceduralModuleDeclarationSection
-    : ((proceduralModuleDirectiveElement endOfLine+)* defDirective)? (proceduralModuleDeclarationElement endOfLineNoWs)*
+    : (proceduralModuleDeclarationElement endOfLineNoWs)+
+    | ((proceduralModuleDirectiveElement endOfLine+)* defDirective) (proceduralModuleDeclarationElement endOfLineNoWs)*
     ;
 classModuleDeclarationSection
     : ((classModuleDirectiveElement endOfLine+)* defDirective)? (classModuleDeclarationElement endOfLine)*
