@@ -546,8 +546,8 @@ exitForStatement: EXIT wsc FOR;
 
 // 5.4.2.6 Do Statement
 doStatement
-    : DO conditionClause? endOfStatement statementBlock?
-        LOOP conditionClause?;
+    : DO (wsc? conditionClause)? endOfStatement statementBlock?
+        LOOP (wsc? conditionClause)?;
 conditionClause
     : whileClause
     | untilClause
