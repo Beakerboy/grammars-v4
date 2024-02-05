@@ -42,7 +42,7 @@ classBeginBlock
     ;
 
 beginBlockConfigElement
-    : ambiguousIdentifier WS? EQ WS? literalExpression (COLON literalExpression)? endOfLine*
+    : ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)? endOfLine*
     ;
 
 //---------------------------------------------------------------------------------------
