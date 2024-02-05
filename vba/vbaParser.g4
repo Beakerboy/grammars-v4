@@ -886,7 +886,7 @@ lExpression
     | lExpression '.' wsc? unrestrictedName
     | lExpression wsc? LINE_CONTINUATION wsc?'.' wsc? unrestrictedName
 // indexExpression
-    | lExpression WS? '(' WS? argumentList WS ')'
+    | lExpression WS? '(' WS? argumentList WS? ')'
 // dictionaryAccessExpression
     | lExpression  '!' unrestrictedName
     | lExpression wsc? LINE_CONTINUATION wsc? '!' unrestrictedName
@@ -943,7 +943,7 @@ memberAccessExpression
 // This expression is also rolled into lExpression.
 // Changes here must be duplicated there
 indexExpression
-    : lExpression WS? '(' WS? argumentList WS ')'
+    : lExpression WS? '(' WS? argumentList WS? ')'
     ;
 
 // 5.6.13.1 Argument Lists
