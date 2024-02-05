@@ -1,4 +1,4 @@
-Attribute VB_Name = "erase"
+Attribute VB_Name = "fixedstring"
 
 Public Sub Module()
     Dim str As String * 3
