@@ -5,3 +5,4 @@ Dim Number
  Debug.Print Number
  Debug.Print OtherNumber
 End Sub
+v
