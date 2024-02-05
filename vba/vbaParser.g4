@@ -326,22 +326,22 @@ procedureDeclaration
 
 // 5.3.1 Procedure Declarations
 subroutineDeclaration
-    : (procedureScope wsc)? (initialStatic wsc)? SUB wsc subroutineName procedureParameters? (wsc? trailingStatic)? endOfStatement
+    : (procedureScope wsc)? (initialStatic wsc)? SUB wsc subroutineName procedureParameters? (wsc? trailingStatic)? endOfStatement*
         procedureBody?
         endLabel? END wsc SUB procedureTail;
 
 functionDeclaration
-    : (procedureScope wsc)? (initialStatic wsc)? FUNCTION wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement
+    : (procedureScope wsc)? (initialStatic wsc)? FUNCTION wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement*
         procedureBody?
         endLabel? END wsc FUNCTION procedureTail;
   
 propertyGetDeclaration
-    : (procedureScope wsc)? (initialStatic wsc)? PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement
+    : (procedureScope wsc)? (initialStatic wsc)? PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement*
         procedureBody?
         endLabel? END wsc PROPERTY procedureTail;
   
 propertyLhsDeclaration
-    : procedureScope wsc (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters (wsc? trailingStatic)? endOfStatement
+    : procedureScope wsc (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters (wsc? trailingStatic)? endOfStatement*
         procedureBody?
         endLabel? END wsc PROPERTY procedureTail;
 endLabel: statementLabelDefinition;
@@ -437,11 +437,11 @@ procedureBody: statementBlock;
 // spec used *, changed to + changed all parent to call with ? to avoid empty context.
 // Made EOS optional to be able to force EOL before ifStatement elements.
 statementBlock
-    : (blockStatement endOfStatement?)+
+    : blockStatement+
     ;
 blockStatement
-    : statementLabelDefinition
-    | remStatement
+    : endOfStatement* endOfLineNoWs statementLabelDefinition
+    | endOfStatement* remStatement
     | statement
     ;
 statement
@@ -467,8 +467,8 @@ remStatement: REMCOMMENT;
 
 // 5.4.2 Control Statements
 controlStatement
-    : ifStatement
-    | controlStatementExceptMultilineIf
+    : endOfStatement* endOfLine ifStatement
+    | endOfStatement* controlStatementExceptMultilineIf
     ;
 controlStatementExceptMultilineIf
     : callStatement
@@ -562,16 +562,16 @@ exitDoStatement: EXIT wsc DO;
 // 5.4.2.8 If Statement
 // why is a LINE-START required before this?
 ifStatement
-    : endOfLine IF wsc? booleanExpression wsc? THEN endOfLine
+    : IF wsc? booleanExpression wsc? THEN
         statementBlock?
     elseIfBlock*
     elseBlock?
     ((END wsc IF) | ENDIF);
 // Need to verify why some of the end-of-line / line-start things are set the way they are.
 elseIfBlock
-    : endOfLine ELSEIF wsc? booleanExpression wsc? THEN endOfLine
+    : endOfStatement* endOfLine ELSEIF wsc? booleanExpression wsc? THEN endOfLine?
         statementBlock?
-    | endOfLine ELSEIF wsc? booleanExpression wsc? THEN statementBlock?
+    | endOfStatement* ELSEIF wsc? booleanExpression wsc? THEN statementBlock?
     ;
 elseBlock: endOfLine ELSE endOfLine? wsc? statementBlock?;
 
