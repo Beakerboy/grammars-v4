@@ -350,8 +350,8 @@ propertyLhsDeclaration
 endLabel: endOfStatement* endOfLineNoWs statementLabelDefinition;
 procedureTail
     : wsc? NEWLINE
-    | commentBody
-    | remStatement
+    | wsc? commentBody
+    | WS? ':' WS? remStatement
     ;
 
 // 5.3.1.1 Procedure Scope
