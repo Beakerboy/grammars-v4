@@ -1030,23 +1030,32 @@ STRINGLITERAL
     ;
 
 OCTLITERAL
-    : '&O' [0-7]+ '&'?
+    : '&' [O]? [0-7]+
     ;
 
 HEXLITERAL
-    : '&H' [0-9A-F]+ '&'?
-    ;
-
-SHORTLITERAL
-    : (PLUS | MINUS)? DIGIT+
+    : '&H' [0-9A-F]+
     ;
 
 INTEGERLITERAL
-    : SHORTLITERAL ('E' SHORTLITERAL)?
+    : DIGIT DIGIT* [%&^]?
     ;
 
-DOUBLELITERAL
-    : (PLUS | MINUS)? DIGIT* '.' DIGIT+ ('E' SHORTLITERAL)?
+FLOATLITERAL
+    : FLOATINGPOINTLITERAL [!#@]?
+    | DECIMALLITERAL [!#@]
+    ;
+
+DATELITERAL
+    : '#' DATEORTIME '#'
+    ;
+
+fragment FLOATINGPOINTLITERAL
+    : DECIMALLITERAL [DE] [+-]? DECIMALLITERAL
+    | DECIMALLITERAL '.' DECIMALLITERAL? ([DE] [+-]? DECIMALLITERAL)?
+    ;
+fragment DECIMALLITERAL
+    : DIGIT DIGIT*
     ;
 
 DATELITERAL
