@@ -437,7 +437,7 @@ procedureBody: statementBlock;
 // spec used *, changed to + changed all parent to call with ? to avoid empty context.
 // Made EOS optional to be able to force EOL before ifStatement elements.
 statementBlock
-    : (blockStatement endOfStatement?)+
+    : blockStatement (endOfStatement blockStatement)* endOfStatement?
     ;
 blockStatement
     : statementLabelDefinition
