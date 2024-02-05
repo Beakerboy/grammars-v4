@@ -331,17 +331,17 @@ subroutineDeclaration
         endLabel? END wsc SUB procedureTail;
 
 functionDeclaration
-    : procedureScope? initialStatic? FUNCTION wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement
+    : (procedureScope wsc)? (initialStatic wsc)? FUNCTION wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement
         (procedureBody endOfStatement?)?
         endLabel? END wsc FUNCTION procedureTail;
   
 propertyGetDeclaration
-    : procedureScope? initialStatic? PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement
+    : (procedureScope wsc)? (initialStatic wsc)? PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement
         (procedureBody endOfStatement)?
         endLabel? END wsc PROPERTY procedureTail;
   
 propertyLhsDeclaration
-    : procedureScope initialStatic? PROPERTY wsc (LET | SET) subroutineName propertyParameters trailingStatic? endOfStatement
+    : procedureScope wsc (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters (wsc? trailingStatic)? endOfStatement
         (procedureBody endOfStatement)?
         endLabel? END wsc PROPERTY procedureTail;
 endLabel: statementLabelDefinition;
