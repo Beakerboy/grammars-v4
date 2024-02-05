@@ -305,8 +305,9 @@ eventParameterList: '(' wsc? positionalParameters? wsc? ')';
 
 //---------------------------------------------------------------------------------------
 // 5.3 Module Code Section Structure
-proceduralModuleCode: proceduralModuleCodeElement (endOfLine+ proceduralModuleCodeElement)* endOfLine*;
-classModuleCode: classModuleCodeElement (endOfLine+ classModuleCodeElement)* endOfLine*;
+// removed an EOS
+proceduralModuleCode: proceduralModuleCodeElement*;
+classModuleCode: classModuleCodeElement*;
 proceduralModuleCodeElement: commonModuleCodeElement;
 classModuleCodeElement
     : commonModuleCodeElement
