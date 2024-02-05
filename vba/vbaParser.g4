@@ -434,6 +434,7 @@ lifecycleHandlerName
 procedureBody: statementBlock;
 
 // 5.4.1 Statement Blocks
+// spec used *, changed to + changed all parent to call with ? to avoid empty context.
 statementBlock
     : (blockStatement endOfStatement)+
     ;
@@ -505,16 +506,16 @@ callStatement
 // 5.4.2.2 While Statement
 whileStatement
     : WHILE booleanExpression endOfStatement
-        statementBlock WEND;
+        statementBlock? WEND;
 
 // 5.4.2.3 For Statement
 forStatement
     : simpleForStatement
     | explicitForStatement
     ;
-simpleForStatement: forClause endOfStatement statementBlock NEXT;
+simpleForStatement: forClause endOfStatement statementBlock? NEXT;
 explicitForStatement
-    : forClause endOfStatement statementBlock (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression;
+    : forClause endOfStatement statementBlock? (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression;
 nestedForStatement
     : explicitForStatement
     | explicitForEachStatement
@@ -532,10 +533,10 @@ forEachStatement
     | explicitForEachStatement
     ;
 simpleForEachStatement
-    : forEachClause endOfStatement statementBlock NEXT;
+    : forEachClause endOfStatement statementBlock? NEXT;
   
 explicitForEachStatement
-    : forEachClause endOfStatement statementBlock 
+    : forEachClause endOfStatement statementBlock? 
   (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression;
  forEachClause: FOR wsc EACH wsc? boundVariableExpression wsc? IN wsc? collection;
  collection: expression;
@@ -545,7 +546,7 @@ exitForStatement: EXIT wsc FOR;
 
 // 5.4.2.6 Do Statement
 doStatement
-    : DO conditionClause? endOfStatement statementBlock
+    : DO conditionClause? endOfStatement statementBlock?
         LOOP conditionClause?;
 conditionClause
     : whileClause
@@ -561,16 +562,16 @@ exitDoStatement: EXIT wsc DO;
 // why is a LINE-START required before this?
 ifStatement
     : IF wsc? booleanExpression wsc? THEN endOfLine
-        statementBlock
+        statementBlock?
     elseIfBlock*
     elseBlock? endOfLine
     ((END wsc IF) | ENDIF);
 elseIfBlock
     : ELSEIF wsc? booleanExpression wsc? THEN endOfLineNoWs
-        statementBlock
-    | ELSEIF wsc? booleanExpression wsc? THEN statementBlock
+        statementBlock?
+    | ELSEIF wsc? booleanExpression wsc? THEN statementBlock?
     ;
-elseBlock: ELSE endOfLine? wsc? statementBlock;
+elseBlock: ELSE endOfLine? wsc? statementBlock?;
 
 // 5.4.2.9 Single-line If Statement
 singleLineIfStatement
@@ -599,8 +600,8 @@ selectCaseStatement
         caseClause*
         caseElseClause?
     END wsc SELECT;
-caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? endOfStatement statementBlock;
-caseElseClause: CASE wsc ELSE endOfStatement statementBlock;
+caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? endOfStatement statementBlock?;
+caseElseClause: CASE wsc ELSE endOfStatement statementBlock?;
 rangeClause
     : expression
     | startValue wsc? TO wsc? endValue
@@ -649,7 +650,7 @@ eventArgumentList: (eventArgument (wsc? ',' wsc? eventArgument)*)?;
 eventArgument: expression;
 
 // 5.4.2.21 With Statement
-withStatement: WITH wsc? expression endOfStatement statementBlock END wsc WITH;
+withStatement: WITH wsc? expression endOfStatement statementBlock? END wsc WITH;
 
 // 5.4.3 Data Manipulation Statements
 dataManipulationStatement
