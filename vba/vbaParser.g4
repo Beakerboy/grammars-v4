@@ -395,7 +395,7 @@ parameterList
 positionalParameters: positionalParam (wsc? ',' wsc? positionalParam)*;
 optionalParameters: optionalParam (wsc? ',' wsc? optionalParam)*;
 valueParam: positionalParam;
-positionalParam: parameterMechanism? paramDcl;
+positionalParam: (parameterMechanism wsc)? paramDcl;
 optionalParam
     : optionalPrefix wsc paramDcl wsc? defaultValue?;
 paramArray
@@ -407,8 +407,8 @@ paramDcl
 untypedNameParamDcl: ambiguousIdentifier parameterType?;
 typedNameParamDcl: typedName arrayDesignator?;
 optionalPrefix
-    : OPTIONAL parameterMechanism?
-    | parameterMechanism? OPTIONAL
+    : OPTIONAL (wsc parameterMechanism)?
+    | parameterMechanism wsc OPTIONAL
     ;
 parameterMechanism
     : BYVAL
@@ -521,10 +521,10 @@ nestedForStatement
     | explicitForEachStatement
     ;
 forClause
-    : FOR boundVariableExpression wsc? EQ wsc? startValue TO endValue stepClause?;
+    : FOR wsc boundVariableExpression wsc? EQ wsc? startValue wsc TO wsc endValue (wsc stepClause)?;
 startValue: expression;
 endValue: expression;
-stepClause: STEP stepIncrement;
+stepClause: STEP wsc stepIncrement;
 stepIncrement: expression;
 
 // 5.4.2.4 For Each Statement
@@ -685,7 +685,7 @@ redimTypedVariableDcl: typedName dynamicArrayDim;
 redimUntypedDcl: untypedName wsc? dynamicArrayClause;
 dynamicArrayDim: '(' wsc? dynamicBoundsList wsc? ')';
 dynamicBoundsList: dynamicDimSpec (wsc? ',' wsc? dynamicDimSpec)*;
-dynamicDimSpec: dynamicLowerBound? dynamicUpperBound;
+dynamicDimSpec: (dynamicLowerBound wsc)? dynamicUpperBound;
 dynamicLowerBound: integerExpression wsc? TO;
 dynamicUpperBound: integerExpression;
 dynamicArrayClause: dynamicArrayDim wsc? asClause?;
