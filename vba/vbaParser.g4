@@ -883,8 +883,13 @@ lExpression
 // memberAccessExpression
     | lExpression '.' WS? unrestrictedName
     | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
-//
+// indexExpression
     | lExpression WS? '(' WS? argumentList WS ')'
+// dictionaryAccessExpression
+    | lExpression  '!' unrestrictedName
+    | lExpression wsc? LINE_CONTINUATION wsc? '!' unrestrictedName
+    | lExpression wsc? LINE_CONTINUATION wsc? '!' wsc? LINE_CONTINUATION wsc? unrestrictedName
+    | withExpression
     ;
     
 // 5.6.5 Literal Expressions
@@ -926,14 +931,16 @@ simpleNameExpression: name;
 instanceExpression: ME;
 
 // 5.6.12  Member Access Expressions
-// This expression is also rolled into lExpression
-// changes here must be duplicated there
+// This expression is also rolled into lExpression.
+// Changes here must be duplicated there
 memberAccessExpression
     : lExpression '.' WS? unrestrictedName
     | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
     ;
 
 // 5.6.13 Index Expressions
+// This expression is also rolled into lExpression.
+// Changes here must be duplicated there
 indexExpression
     : lExpression WS? '(' WS? argumentList WS ')'
     ;
@@ -954,6 +961,8 @@ argumentExpression
     ;
 
 // 5.6.14 Dictionary Access Expressions
+// This expression is also rolled into lExpression.
+// Changes here must be duplicated there
 dictionaryAccessExpression
     : lExpression  '!' unrestrictedName
     | lExpression wsc? LINE_CONTINUATION wsc? '!' unrestrictedName
