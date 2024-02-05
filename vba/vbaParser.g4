@@ -471,7 +471,7 @@ controlStatement
     | endOfStatement* controlStatementExceptMultilineIf
     ;
 controlStatementExceptMultilineIf
-    : callStatement
+    : ement
     | whileStatement
     | forStatement
     | exitForStatement
@@ -501,7 +501,7 @@ callStatement
         | withExpression)
     | (simpleNameExpression
         | memberAccessExpression
-        | withExpression) wsc argumentList
+        | withExpression) (wsc argumentList)?
     ;
 
 // 5.4.2.2 While Statement
