@@ -505,7 +505,7 @@ callStatement
 
 // 5.4.2.2 While Statement
 whileStatement
-    : WHILE booleanExpression endOfStatement
+    : WHILE wsc booleanExpression endOfStatement
         statementBlock? WEND;
 
 // 5.4.2.3 For Statement
@@ -566,8 +566,9 @@ ifStatement
     elseIfBlock*
     elseBlock? endOfLine
     ((END wsc IF) | ENDIF);
+// Need to verify why some of the end-of-line / line-start things are set the way they are.
 elseIfBlock
-    : ELSEIF wsc? booleanExpression wsc? THEN endOfLineNoWs
+    : ELSEIF wsc? booleanExpression wsc? THEN endOfLine
         statementBlock?
     | ELSEIF wsc? booleanExpression wsc? THEN statementBlock?
     ;
