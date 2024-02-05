@@ -696,7 +696,7 @@ eraseList: eraseElement (wsc? ',' wsc? eraseElement)*;
 eraseElement: lExpression;
 
 // 5.4.3.5 Mid/MidB/Mid$/MidB$ Statement
-midStatement: modeSpecifier wsc? '(' wsc? stringArgument wsc? ',' wsc? start wsc? (',' wsc? length)? ')' wsc? EQ wsc? expression;
+midStatement: modeSpecifier wsc? '(' wsc? stringArgument wsc? ',' wsc? startMid wsc? (',' wsc? length)? ')' wsc? EQ wsc? expression;
 modeSpecifier
     : MID
     | MIDB
@@ -704,7 +704,8 @@ modeSpecifier
     | MIDB_D
     ;
 stringArgument: boundVariableExpression;
-start: integerExpression;
+// Changed name from start to startMid due to a problem with the Dart compilation.
+startMid: integerExpression;
 length: integerExpression;
 
 // 5.4.3.6 LSet Statement
