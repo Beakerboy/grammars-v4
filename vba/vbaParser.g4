@@ -34,7 +34,7 @@ classFileHeader
     ;
 
 classVersionIdentification
-    : VERSION WS DOUBLELITERAL (WS CLASS)?
+    : VERSION WS FLOATLITERAL (WS CLASS)?
     ;
 
 classBeginBlock
@@ -134,7 +134,7 @@ optionCompareDirective: OPTION wsc COMPARE wsc (BINARY | TEXT);
 
 // 5.2.1.2 Option Base Directive
 // INTEGER or SHORT?
-optionBaseDirective: OPTION wsc BASE wsc SHORTLITERAL;
+optionBaseDirective: OPTION wsc BASE wsc INTEGERLITERAL;
 
 // 5.2.1.3 Option Explicit Directive
 optionExplicitDirective: OPTION wsc EXPLICIT;
@@ -226,7 +226,7 @@ typeSpec
     ;
 fixedLengthStringSpec: STRING WS '*' WS stringLength;
 stringLength
-    : SHORTLITERAL
+    : INTEGERLITERAL
     | constantName
     ;
 constantName: simpleNameExpression;
@@ -458,7 +458,7 @@ statementLabel
     ; 
 statementLabelList: statementLabel (wsc? ',' wsc? statementLabel)?;
 identifierStatementLabel: ambiguousIdentifier;
-lineNumberLabel: (INTEGERLITERAL | SHORTLITERAL);
+lineNumberLabel: INTEGERLITERAL;
 
 // 5.4.1.2 Rem Statement
 // We have a token for this
@@ -901,9 +901,8 @@ literalExpression
     : HEXLITERAL
     | OCTLITERAL
     | DATELITERAL
-    | DOUBLELITERAL
+    | FLOATLITERAL
     | INTEGERLITERAL
-    | SHORTLITERAL
     | STRINGLITERAL
     | literalIdentifier typeSuffix?
     ;
