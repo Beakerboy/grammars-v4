@@ -653,11 +653,13 @@ eventArgument: expression;
 withStatement: WITH wsc? expression endOfStatement statementBlock? END wsc WITH;
 
 // 5.4.3 Data Manipulation Statements
+// Added eraseStatement. It is missing from the list in MsS-VBAL 1.7
 dataManipulationStatement
     : localVariableDeclaration
     | staticVariableDeclaration
     | localConstDeclaration
     | redimStatement
+    | eraseStatement
     | midStatement
     | rsetStatement
     | lsetStatement
