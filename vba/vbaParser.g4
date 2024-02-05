@@ -471,7 +471,7 @@ controlStatement
     | endOfStatement* controlStatementExceptMultilineIf
     ;
 controlStatementExceptMultilineIf
-    : ement
+    : callStatement
     | whileStatement
     | forStatement
     | exitForStatement
