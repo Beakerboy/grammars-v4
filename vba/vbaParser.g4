@@ -189,7 +189,7 @@ moduleVariableDeclaration
     ;
 globalVariableDeclaration: GLOBAL WS variableDeclarationList;
 publicVariableDecalation: PUBLIC (WS SHARED)? WS moduleVariableDeclarationList;
-privateVariableDeclaration: (PRIVATE | DIM) (wsc SHARED)? moduleVariableDeclarationList;
+privateVariableDeclaration: ((PRIVATE | DIM) wsc) (SHARED wsc)? moduleVariableDeclarationList;
 moduleVariableDeclarationList: (witheventsVariableDcl | variableDcl) (wsc? ',' wsc? (witheventsVariableDcl | variableDcl))*;
 variableDeclarationList: variableDcl (wsc? ',' wsc? variableDcl)*;
 
