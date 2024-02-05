@@ -2,7 +2,7 @@ Attribute VB_Name = "typeHints"
 
 Sub TypehintsDemo() 
 Dim Number
- Number = #1
+ Number = 1#
  OtherNumber = &10
  Debug.Print Number
  Debug.Print OtherNumber
