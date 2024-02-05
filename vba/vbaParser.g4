@@ -564,7 +564,7 @@ ifStatement
     : IF wsc? booleanExpression wsc? THEN endOfLine
         statementBlock?
     elseIfBlock*
-    elseBlock? endOfLine
+    elseBlock?
     ((END wsc IF) | ENDIF);
 // Need to verify why some of the end-of-line / line-start things are set the way they are.
 elseIfBlock
