@@ -500,7 +500,7 @@ callStatement
         | withExpression)
     | (simpleNameExpression
         | memberAccessExpression
-        | withExpression) argumentList
+        | withExpression) wsc argumentList
     ;
 
 // 5.4.2.2 While Statement
@@ -888,7 +888,7 @@ lExpression
     | lExpression '.' wsc? unrestrictedName
     | lExpression wsc? LINE_CONTINUATION wsc?'.' wsc? unrestrictedName
 // indexExpression
-    | lExpression WS? '(' WS? argumentList WS? ')'
+    | lExpression wsc? '(' wsc? argumentList wsc? ')'
 // dictionaryAccessExpression
     | lExpression  '!' unrestrictedName
     | lExpression wsc? LINE_CONTINUATION wsc? '!' unrestrictedName
@@ -950,14 +950,14 @@ memberAccessExpression
 // This expression is also rolled into lExpression.
 // Changes here must be duplicated there
 indexExpression
-    : lExpression WS? '(' WS? argumentList WS? ')'
+    : lExpression WS? '(' wsc? argumentList wsc? ')'
     ;
 
 // 5.6.13.1 Argument Lists
 argumentList: positionalOrNamedArgumentList?;
 positionalOrNamedArgumentList
-    : (positionalArgument WS? ',')* requiredPositionalArgument
-    | (positionalArgument WS? ',')* namedArgumentList
+    : (positionalArgument wsc? ',')* requiredPositionalArgument
+    | (positionalArgument wsc? ',')* namedArgumentList
     ;
 positionalArgument: argumentExpression?;
 requiredPositionalArgument: argumentExpression;
