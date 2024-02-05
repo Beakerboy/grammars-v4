@@ -926,7 +926,12 @@ notOperatorExpression: NOT wsc? expression;
 unaryMinusExpression: MINUS wsc? expression;
 
 // 5.6.10 Simple Name Expressions
-simpleNameExpression: name;
+// Had to add reservedName and specialForm to allow calls to Abs() Debug. and Lbound()
+simpleNameExpression
+    : name
+    | reservedName
+    | specialForm
+;
 
 // 5.6.11 Instance Expressions
 instanceExpression: ME;
