@@ -883,8 +883,8 @@ lExpression
     : simpleNameExpression
     | instanceExpression
 // memberAccessExpression
-    | lExpression '.' WS? unrestrictedName
-    | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
+    | lExpression '.' wsc? unrestrictedName
+    | lExpression wsc? LINE_CONTINUATION wsc?'.' wsc? unrestrictedName
 // indexExpression
     | lExpression WS? '(' WS? argumentList WS ')'
 // dictionaryAccessExpression
@@ -936,8 +936,8 @@ instanceExpression: ME;
 // This expression is also rolled into lExpression.
 // Changes here must be duplicated there
 memberAccessExpression
-    : lExpression '.' WS? unrestrictedName
-    | lExpression WS? LINE_CONTINUATION WS?'.' WS? unrestrictedName
+    : lExpression '.' wsc? unrestrictedName
+    | lExpression wsc? LINE_CONTINUATION wsc?'.' wsc? unrestrictedName
     ;
 
 // 5.6.13 Index Expressions
