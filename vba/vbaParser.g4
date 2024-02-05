@@ -70,7 +70,7 @@ classAttr
 //---------------------------------------------------------------------------------------
 // 5.1 Module Body Structure
 // Everything from here down is user generated code.
-proceduralModuleBody: proceduralModuleDeclarationSection? proceduralModuleCode;
+proceduralModuleBody: proceduralModuleDeclarationSection? endOfLine* proceduralModuleCode;
 classModuleBody: classModuleDeclarationSection? classModuleCode;
 unrestrictedName
     : reservedIdentifier
@@ -716,10 +716,10 @@ lsetStatement: LSET wsc? boundVariableExpression wsc? EQ wsc? expression;
 rsetStatement: RSET wsc? boundVariableExpression wsc? EQ wsc? expression;
 
 // 5.4.3.8 Let Statement
-letStatement: LET? lExpression wsc? EQ wsc? expression;
+letStatement: (LET wsc)? lExpression wsc? EQ wsc? expression;
 
 // 5.4.3.9 Set Statement
-setStatement: SET lExpression wsc? EQ wsc? expression;
+setStatement: SET wsc lExpression wsc? EQ wsc? expression;
 
 // 5.4.4 Error Handling Statements
 errorHandlingStatement
