@@ -435,8 +435,9 @@ procedureBody: statementBlock;
 
 // 5.4.1 Statement Blocks
 // spec used *, changed to + changed all parent to call with ? to avoid empty context.
+// Made EOS optional to be able to force EOL before ifStatement elements.
 statementBlock
-    : (blockStatement endOfStatement)+
+    : (blockStatement endOfStatement?)+
     ;
 blockStatement
     : statementLabelDefinition
@@ -561,18 +562,18 @@ exitDoStatement: EXIT wsc DO;
 // 5.4.2.8 If Statement
 // why is a LINE-START required before this?
 ifStatement
-    : IF wsc? booleanExpression wsc? THEN endOfLine
+    : endOfLine IF wsc? booleanExpression wsc? THEN endOfLine
         statementBlock?
     elseIfBlock*
     elseBlock?
     ((END wsc IF) | ENDIF);
 // Need to verify why some of the end-of-line / line-start things are set the way they are.
 elseIfBlock
-    : ELSEIF wsc? booleanExpression wsc? THEN endOfLine
+    : endOfLine ELSEIF wsc? booleanExpression wsc? THEN endOfLine
         statementBlock?
-    | ELSEIF wsc? booleanExpression wsc? THEN statementBlock?
+    | endOfLine ELSEIF wsc? booleanExpression wsc? THEN statementBlock?
     ;
-elseBlock: ELSE endOfLine? wsc? statementBlock?;
+elseBlock: endOfLine ELSE endOfLine? wsc? statementBlock?;
 
 // 5.4.2.9 Single-line If Statement
 singleLineIfStatement
