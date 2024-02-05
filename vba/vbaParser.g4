@@ -620,19 +620,19 @@ comparisonOperator
 stopStatement: STOP;
 
 // 5.4.2.12 GoTo Statement
-gotoStatement: (GO wsc TO | GOTO) statementLabel;
+gotoStatement: (GO wsc TO | GOTO) wsc statementLabel;
 
 // 5.4.2.13 On…GoTo Statement
-onGotoStatement: ON wsc? expression GOTO statementLabelList;
+onGotoStatement: ON wsc? expression GOTO wsc statementLabelList;
 
 // 5.4.2.14 GoSub Statement
-gosubStatement: ((GO wsc SUB) | GOSUB) statementLabel;
+gosubStatement: ((GO wsc SUB) | GOSUB) wsc statementLabel;
 
 // 5.4.2.15 Return Statement
 returnStatement: RETURN;
 
 // 5.4.2.16 On…GoSub Statement
-onGosubStatement: ON wsc? expression wsc? GOSUB wsc? statementLabelList;
+onGosubStatement: ON wsc? expression wsc? GOSUB wsc statementLabelList;
 
 // 5.4.2.17 Exit Sub Statement
 exitSubStatement: EXIT wsc SUB;
