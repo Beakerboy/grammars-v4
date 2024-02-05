@@ -579,7 +579,7 @@ singleLineIfStatement
     | ifWithEmptyThen
     ;
 ifWithNonEmptyThen
-    : IF wsc booleanExpression wsc THEN wsc listOrLabel singleLineElseClause?;
+    : IF wsc booleanExpression wsc THEN wsc listOrLabel wsc singleLineElseClause?;
 ifWithEmptyThen
     : IF wsc booleanExpression wsc THEN wsc singleLineElseClause;
 singleLineElseClause: ELSE wsc? listOrLabel?;
