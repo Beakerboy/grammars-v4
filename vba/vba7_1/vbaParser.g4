@@ -352,7 +352,7 @@ propertyLhsDeclaration
               (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters
             | PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters wsc? trailingStatic)
         procedureBody?
-        endLabel? END wsc PROPERTY procedureTail;
+        endLabel? endOfStatement+ END wsc PROPERTY procedureTail;
 endLabel: endOfStatement* endOfLineNoWs statementLabelDefinition;
 procedureTail
     : wsc? NEWLINE
