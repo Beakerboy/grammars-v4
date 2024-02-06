@@ -1026,7 +1026,9 @@ HEXLITERAL
     ;
 
 INTEGERLITERAL
-    : DIGIT DIGIT* [%&^]?
+    : (DIGIT DIGIT*
+    | HEXLITERAL
+    | OCTLITERAL) [%&^]?
     ;
 
 FLOATLITERAL
