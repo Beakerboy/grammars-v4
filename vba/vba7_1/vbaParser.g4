@@ -56,7 +56,7 @@ classModule
 
 // Compare STRINGLITERAL to quoted-identifier
 proceduralModuleHeader
-    : endOfLine+ ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
+    : endOfLine* ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
     ;
 classModuleHeader: (endOfLine+ classAttr)+ WS?;
 classAttr
