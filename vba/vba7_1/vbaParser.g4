@@ -529,7 +529,7 @@ forStatement
     ;
 simpleForStatement: forClause endOfStatement statementBlock? NEXT;
 explicitForStatement
-    : forClause endOfStatement statementBlock? (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression;
+    : forClause endOfStatement statementBlock? (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
 nestedForStatement
     : explicitForStatement
     | explicitForEachStatement
@@ -551,7 +551,7 @@ simpleForEachStatement
   
 explicitForEachStatement
     : forEachClause endOfStatement statementBlock? 
-  (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression;
+  (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
  forEachClause: FOR wsc EACH wsc? boundVariableExpression wsc? IN wsc? collection;
  collection: expression;
 
