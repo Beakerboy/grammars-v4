@@ -455,7 +455,10 @@ statement
     ;
     
 // 5.4.1.1  Statement Labels
-statementLabelDefinition: (identifierStatementLabel | lineNumberLabel) ':';
+statementLabelDefinition
+    : identifierStatementLabel ':'
+    | lineNumberLabel ':'?
+    ;
 statementLabel
     : identifierStatementLabel
     | lineNumberLabel
