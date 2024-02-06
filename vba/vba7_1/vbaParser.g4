@@ -329,22 +329,28 @@ procedureDeclaration
 subroutineDeclaration
     : (procedureScope wsc)? (
               ((initialStatic wsc)? SUB wsc subroutineName procedureParameters?)
-            | (SUB wsc subroutineName procedureParameters? wsc trailingStatic)
+            | (SUB wsc subroutineName procedureParameters? wsc? trailingStatic)
         )
         procedureBody?
         endLabel? endOfStatement+ END wsc SUB procedureTail;
 functionDeclaration
-    : (procedureScope wsc)? (initialStatic wsc)? FUNCTION wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement*
+    : (procedureScope wsc)? (
+              (initialStatic wsc)? FUNCTION wsc functionName procedureParameters? (wsc? functionType)?
+            | FUNCTION wsc functionName procedureParameters? (wsc? functionType)? wsc? trailingStatic)
         procedureBody?
         endLabel? endOfStatement+ END wsc FUNCTION procedureTail;
   
 propertyGetDeclaration
-    : (procedureScope wsc)? (initialStatic wsc)? PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)? (wsc? trailingStatic)? endOfStatement*
+    : (procedureScope wsc)? (
+              (initialStatic wsc)? PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)?
+            | PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)? wsc? trailingStatic)
         procedureBody?
         endLabel? endOfStatement+ END wsc PROPERTY procedureTail;
   
 propertyLhsDeclaration
-    : procedureScope wsc (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters (wsc? trailingStatic)? endOfStatement*
+    : procedureScope wsc (
+              (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters
+            | PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters wsc? trailingStatic)
         procedureBody?
         endLabel? END wsc PROPERTY procedureTail;
 endLabel: endOfStatement* endOfLineNoWs statementLabelDefinition;
@@ -373,7 +379,8 @@ subroutineName
     ;
 functionName
     : typedName
-    | subroutineName 
+    | ambiguousIdentifier
+    | prefixedName 
     ;
 prefixedName
     : eventHandlerName
@@ -444,14 +451,14 @@ statementBlock
     ;
 blockStatement
     : endOfStatement* endOfLineNoWs statementLabelDefinition
-    | endOfStatement* remStatement
+    | endOfStatement+ remStatement
     | statement
     ;
 statement
     : controlStatement
-    | endOfStatement* dataManipulationStatement
-    | endOfStatement* errorHandlingStatement
-    | endOfStatement* fileStatement
+    | endOfStatement+ dataManipulationStatement
+    | endOfStatement+ errorHandlingStatement
+    | endOfStatement+ fileStatement
     ;
     
 // 5.4.1.1  Statement Labels
@@ -473,8 +480,8 @@ remStatement: REMCOMMENT;
 
 // 5.4.2 Control Statements
 controlStatement
-    : endOfStatement* endOfLine ifStatement
-    | endOfStatement* controlStatementExceptMultilineIf
+    : endOfStatement* endOfLine+ ifStatement
+    | endOfStatement+ controlStatementExceptMultilineIf
     ;
 controlStatementExceptMultilineIf
     : callStatement
@@ -522,7 +529,7 @@ forStatement
     ;
 simpleForStatement: forClause endOfStatement statementBlock? NEXT;
 explicitForStatement
-    : forClause endOfStatement statementBlock? (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression;
+    : forClause endOfStatement statementBlock? (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
 nestedForStatement
     : explicitForStatement
     | explicitForEachStatement
@@ -544,7 +551,7 @@ simpleForEachStatement
   
 explicitForEachStatement
     : forEachClause endOfStatement statementBlock? 
-  (NEXT | (nestedForStatement wsc? ',')) boundVariableExpression;
+  (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
  forEachClause: FOR wsc EACH wsc? boundVariableExpression wsc? IN wsc? collection;
  collection: expression;
 

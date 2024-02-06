@@ -1,5 +1,5 @@
 Attribute VB_Name = "test_sub"
-Public Static Sub Module()
+Public Static Sub Module
 
 End Sub
 
