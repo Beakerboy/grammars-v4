@@ -519,15 +519,15 @@ callStatement
 
 // 5.4.2.2 While Statement
 whileStatement
-    : WHILE wsc booleanExpression endOfStatement
-        statementBlock? WEND;
+    : WHILE wsc booleanExpression
+        statementBlock?  endOfStatement+ WEND;
 
 // 5.4.2.3 For Statement
 forStatement
     : simpleForStatement
     | explicitForStatement
     ;
-simpleForStatement: forClause endOfStatement statementBlock? NEXT;
+simpleForStatement: forClause statementBlock? endOfStatement+ NEXT;
 explicitForStatement
     : forClause statementBlock? endOfStatement+ (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
 nestedForStatement
@@ -560,7 +560,7 @@ exitForStatement: EXIT wsc FOR;
 
 // 5.4.2.6 Do Statement
 doStatement
-    : DO (wsc? conditionClause)? endOfStatement statementBlock?
+    : DO (wsc? conditionClause)? statementBlock? endOfStatement+
         LOOP (wsc? conditionClause)?;
 conditionClause
     : whileClause
