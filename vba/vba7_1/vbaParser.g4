@@ -30,7 +30,7 @@ module
     ;
 
 classFileHeader
-    : classVersionIdentification endOfLine+ classBeginBlock endOfLineNoWs+
+    : classVersionIdentification classBeginBlock
     ;
 
 classVersionIdentification
@@ -38,7 +38,7 @@ classVersionIdentification
     ;
 
 classBeginBlock
-    : BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* beginBlockConfigElement+ END
+    : endOfLine BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* beginBlockConfigElement+ endOfLine END
     ;
 
 beginBlockConfigElement
@@ -56,16 +56,16 @@ classModule
 
 // Compare STRINGLITERAL to quoted-identifier
 proceduralModuleHeader
-    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLineNoWs
+    : endOfLine+ ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
     ;
-classModuleHeader: classAttr+ WS?;
+classModuleHeader: (endOfLine+ classAttr)+ WS?;
 classAttr
-    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLineNoWs
-    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE endOfLineNoWs
-    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? FALSE endOfLineNoWs
-    | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier endOfLineNoWs
-    | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier endOfLineNoWs
-    | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLineNoWs
+    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
+    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE
+    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? FALSE
+    | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier
+    | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier
+    | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier
     ;
 //---------------------------------------------------------------------------------------
 // 5.1 Module Body Structure
