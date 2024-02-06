@@ -491,18 +491,6 @@ MACRO_CONST
     : '#CONST'
     ;
 
-MACRO_IF
-    : '#IF'
-    ;
-
-MACRO_ELSEIF
-    : '#ELSEIF'
-    ;
-
-MACRO_ELSE
-    : '#ELSE'
-    ;
-
 ME
     : 'ME'
     ;
@@ -1153,6 +1141,13 @@ UNDERSCORE
 
 WS
     : ([ \t])+
+    ;
+
+MACRO_LINE
+    : (WS? '#IF' ~[\r\n\u2028\u2029]* THEN COMMENT?
+    | WS? '#ELSEIF' ~[\r\n\u2028\u2029]* THEN COMMENT?
+    | WS? '#ELSE' COMMENT?
+    | WS? ('#END If'|'#endif') COMMENT?) -> channel(HIDDEN)
     ;
 
 // identifier
