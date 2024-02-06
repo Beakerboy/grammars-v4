@@ -1380,12 +1380,12 @@ ambiguousKeyword
 //---------------------------------------------------------------------------------------
 // 3.4 Conditional Compilation
 conditionalModuleBody = ccBlock
-ccBlock = *(ccConst | ccIfBlock | logical-line)
+ccBlock: (ccConst | ccIfBlock | logical-line)*
 
 // 3.4.1 Conditional Compilation Const Directive
-ccConst = endOfLine '#' CONST cc-var-lhs WS? EQ WS? ccExpression ccEol
+ccConst: endOfLine '#' CONST cc-var-lhs WS? EQ WS? ccExpression ccEol
 ccVarLhs: name;
-ccEol = (COMMENT)?
+ccEol: (COMMENT)?
 
 // 3.4.2 Conditional Compilation If Directives
 ccIfBlock
