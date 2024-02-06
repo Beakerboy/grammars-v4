@@ -754,8 +754,7 @@ fileStatement
     | lockStatement
     | unlockStatement
     | lineInputStatement
-    | widthStatement
-    | printStatement
+    | widthStatemet
     | writeStatement
     | inputStatement
     | putStatement
