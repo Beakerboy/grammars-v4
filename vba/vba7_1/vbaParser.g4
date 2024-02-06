@@ -451,14 +451,14 @@ statementBlock
     ;
 blockStatement
     : endOfStatement* endOfLineNoWs statementLabelDefinition
-    | endOfStatement* remStatement
+    | endOfStatement+ remStatement
     | statement
     ;
 statement
     : controlStatement
-    | endOfStatement* dataManipulationStatement
-    | endOfStatement* errorHandlingStatement
-    | endOfStatement* fileStatement
+    | endOfStatement+ dataManipulationStatement
+    | endOfStatement+ errorHandlingStatement
+    | endOfStatement+ fileStatement
     ;
     
 // 5.4.1.1  Statement Labels
@@ -480,8 +480,8 @@ remStatement: REMCOMMENT;
 
 // 5.4.2 Control Statements
 controlStatement
-    : endOfStatement* endOfLine ifStatement
-    | endOfStatement* controlStatementExceptMultilineIf
+    : endOfStatement* endOfLine+ ifStatement
+    | endOfStatement+ controlStatementExceptMultilineIf
     ;
 controlStatementExceptMultilineIf
     : callStatement
