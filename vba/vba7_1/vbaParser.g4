@@ -87,8 +87,8 @@ untypedName
 //---------------------------------------------------------------------------------------
 // 5.2 Module Declaration Section Structure
 proceduralModuleDeclarationSection
-    : (proceduralModuleDeclarationElement endOfLineNoWs)+
-    | ((proceduralModuleDirectiveElement endOfLine+)* defDirective) (proceduralModuleDeclarationElement endOfLineNoWs)*
+    : (endOfLine+ proceduralModuleDeclarationElement)+
+    | ((endOfLine+ proceduralModuleDirectiveElement)* endOfLine+ defDirective) (proceduralModuleDeclarationElement endOfLineNoWs)*
     ;
 classModuleDeclarationSection
     : (classModuleDeclarationElement endOfLine+)+
@@ -178,7 +178,7 @@ commonModuleDeclarationElement
     : moduleVariableDeclaration
     | privateConstDeclaration
     | privateTypeDeclaration
-    | enumDeclaration
+    | privateEnumDeclaration
     | privateExternalProcedureDeclaration
     ;
 
@@ -214,7 +214,7 @@ classTypeName: definedTypeExpression;
 arrayDim: '(' wsc? boundsList? wsc? ')';
 boundsList: dimSpec (wsc',' wsc dimSpec)*;
 dimSpec: lowerBound? wsc? upperBound;
-lowerBound: constantExpression TO;
+lowerBound: constantExpression wsc TO wsc;
 upperBound: constantExpression;
 
 // 5.2.3.1.4 Variable Type Declarations
@@ -243,13 +243,13 @@ constItem
     ;
 typedNameConstItem: typedName wsc? EQ wsc? constantExpression;
 untypedNameConstItem: ambiguousIdentifier (wsc constAsClause)? wsc? EQ wsc? constantExpression;
-constAsClause: builtinType;
+constAsClause: AS wsc builtinType;
 
 // 5.2.3.3 User Defined Type Declarations
 publicTypeDeclaration: (GLOBAL | PUBLIC) wsc udtDeclaration;
 privateTypeDeclaration: PRIVATE wsc udtDeclaration;
 udtDeclaration: TYPE wsc untypedName endOfStatement+ udtMemberList endOfStatement+ END wsc TYPE;
-udtMemberList: udtElement wsc (endOfStatement udtElement)*;
+udtMemberList: udtElement (endOfStatement udtElement)*;
 udtElement
     : remStatement
     | udtMember
@@ -260,7 +260,7 @@ udtMember
     ;
 untypedNameMemberDcl: ambiguousIdentifier optionalArrayClause;
 reservedNameMemberDcl: reservedMemberName wsc asClause;
-optionalArrayClause: arrayDim? asClause;
+optionalArrayClause: arrayDim? wsc asClause;
 reservedMemberName
     : statementKeyword
     | markerKeyword
@@ -276,7 +276,7 @@ reservedMemberName
 globalEnumDeclaration: GLOBAL wsc  enumDeclaration;
 publicEnumDeclaration: (PUBLIC wsc)? enumDeclaration;
 privateEnumDeclaration: PRIVATE wsc enumDeclaration;
-enumDeclaration: ENUM wsc untypedName endOfStatement enumMemberList endOfStatement END wsc ENUM ;
+enumDeclaration: ENUM wsc untypedName endOfStatement+ enumMemberList endOfStatement+ END wsc ENUM ;
 enumMemberList: enumElement (endOfStatement enumElement)*;
 enumElement
     : remStatement
@@ -286,13 +286,13 @@ enumMember: untypedName (wsc? EQ wsc? constantExpression)?;
 
 // 5.2.3.5 External Procedure Declaration
 publicExternalProcedureDeclaration: (PUBLIC wsc)? externalProcDcl;
-privateExternalProcedureDeclaration: PRIVATE externalProcDcl;
+privateExternalProcedureDeclaration: PRIVATE wsc externalProcDcl;
 externalProcDcl: DECLARE wsc (PTRSAFE wsc)? (externalSub | externalFunction);
-externalSub: SUB subroutineName libInfo procedureParameters?;
-externalFunction: FUNCTION functionName libInfo procedureParameters? functionType?;
+externalSub: SUB wsc subroutineName wsc libInfo (wsc procedureParameters)?;
+externalFunction: FUNCTION wsc functionName wsc libInfo (wsc procedureParameters)? (wsc functionType)?;
 libInfo: libClause (wsc aliasClause)?;
-libClause: LIB wsc STRING;
-aliasClause: ALIAS wsc STRING;
+libClause: LIB wsc STRINGLITERAL;
+aliasClause: ALIAS wsc STRINGLITERAL;
 
 // 5.2.4 Class Module Declarations
 // 5.2.4.2 Implements Directive
