@@ -9,5 +9,5 @@ Private Sub Module() Static
 1: End Sub ' Comment
 
 Global Sub Module(Foo As Boolean, Optional Bar=2)
-End Property : REM sefkljnsa
+End Sub : REM sefkljnsa
 
