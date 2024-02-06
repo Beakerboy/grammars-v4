@@ -348,7 +348,7 @@ propertyGetDeclaration
         endLabel? endOfStatement+ END wsc PROPERTY procedureTail;
   
 propertyLhsDeclaration
-    : procedureScope wsc (
+    : (procedureScope wsc)? (
               (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters
             | PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters wsc? trailingStatic)
         procedureBody?
@@ -529,7 +529,7 @@ forStatement
     ;
 simpleForStatement: forClause endOfStatement statementBlock? NEXT;
 explicitForStatement
-    : forClause endOfStatement statementBlock? (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
+    : forClause statementBlock? endOfStatement+ (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
 nestedForStatement
     : explicitForStatement
     | explicitForEachStatement
@@ -547,7 +547,7 @@ forEachStatement
     | explicitForEachStatement
     ;
 simpleForEachStatement
-    : forEachClause endOfStatement statementBlock? NEXT;
+    : forEachClause statementBlock? endOfStatement+ NEXT;
   
 explicitForEachStatement
     : forEachClause endOfStatement statementBlock? 
