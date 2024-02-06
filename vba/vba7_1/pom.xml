@@ -42,7 +42,7 @@
 					<entryPoint>startRule</entryPoint>
 					<grammarName>vba</grammarName>
 					<packageName></packageName>
-					<exampleFiles>tests/</exampleFiles>
+					<exampleFiles>examples/</exampleFiles>
 				</configuration>
 				<executions>
 					<execution>
