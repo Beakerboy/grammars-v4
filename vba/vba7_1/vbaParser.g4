@@ -550,8 +550,8 @@ simpleForEachStatement
     : forEachClause statementBlock? endOfStatement+ NEXT;
   
 explicitForEachStatement
-    : forEachClause endOfStatement statementBlock? 
-  (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
+    : forEachClause statementBlock? 
+  endOfStatement (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
  forEachClause: FOR wsc EACH wsc? boundVariableExpression wsc? IN wsc? collection;
  collection: expression;
 
@@ -614,9 +614,9 @@ selectCaseStatement
     : SELECT wsc CASE wsc selectExpression endOfStatement
         caseClause*
         caseElseClause?
-    END wsc SELECT;
-caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? endOfStatement statementBlock?;
-caseElseClause: CASE wsc ELSE endOfStatement statementBlock?;
+    endOfStatement+ END wsc SELECT;
+caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? statementBlock?;
+caseElseClause: endOfStatement+ CASE wsc ELSE statementBlock?;
 rangeClause
     : expression
     | startValue wsc? TO wsc? endValue
@@ -665,7 +665,7 @@ eventArgumentList: (eventArgument (wsc? ',' wsc? eventArgument)*)?;
 eventArgument: expression;
 
 // 5.4.2.21 With Statement
-withStatement: WITH wsc? expression endOfStatement statementBlock? END wsc WITH;
+withStatement: WITH wsc? expression statementBlock? endOfStatement+ END wsc WITH;
 
 // 5.4.3 Data Manipulation Statements
 // Added eraseStatement. It is missing from the list in MsS-VBAL 1.7
