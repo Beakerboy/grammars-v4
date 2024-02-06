@@ -348,11 +348,11 @@ propertyGetDeclaration
         endLabel? endOfStatement+ END wsc PROPERTY procedureTail;
   
 propertyLhsDeclaration
-    : procedureScope wsc (
+    : (procedureScope wsc)? (
               (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters
             | PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters wsc? trailingStatic)
         procedureBody?
-        endLabel? END wsc PROPERTY procedureTail;
+        endLabel? endOfStatement+ END wsc PROPERTY procedureTail;
 endLabel: endOfStatement* endOfLineNoWs statementLabelDefinition;
 procedureTail
     : wsc? NEWLINE
@@ -519,17 +519,17 @@ callStatement
 
 // 5.4.2.2 While Statement
 whileStatement
-    : WHILE wsc booleanExpression endOfStatement
-        statementBlock? WEND;
+    : WHILE wsc booleanExpression
+        statementBlock?  endOfStatement+ WEND;
 
 // 5.4.2.3 For Statement
 forStatement
     : simpleForStatement
     | explicitForStatement
     ;
-simpleForStatement: forClause endOfStatement statementBlock? NEXT;
+simpleForStatement: forClause statementBlock? endOfStatement+ NEXT;
 explicitForStatement
-    : forClause endOfStatement statementBlock? (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
+    : forClause statementBlock? endOfStatement+ (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
 nestedForStatement
     : explicitForStatement
     | explicitForEachStatement
@@ -547,11 +547,11 @@ forEachStatement
     | explicitForEachStatement
     ;
 simpleForEachStatement
-    : forEachClause endOfStatement statementBlock? NEXT;
+    : forEachClause statementBlock? endOfStatement+ NEXT;
   
 explicitForEachStatement
-    : forEachClause endOfStatement statementBlock? 
-  (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
+    : forEachClause statementBlock? 
+  endOfStatement (NEXT | (nestedForStatement wsc? ',')) wsc boundVariableExpression;
  forEachClause: FOR wsc EACH wsc? boundVariableExpression wsc? IN wsc? collection;
  collection: expression;
 
@@ -560,7 +560,7 @@ exitForStatement: EXIT wsc FOR;
 
 // 5.4.2.6 Do Statement
 doStatement
-    : DO (wsc? conditionClause)? endOfStatement statementBlock?
+    : DO (wsc? conditionClause)? statementBlock? endOfStatement+
         LOOP (wsc? conditionClause)?;
 conditionClause
     : whileClause
@@ -614,9 +614,9 @@ selectCaseStatement
     : SELECT wsc CASE wsc selectExpression endOfStatement
         caseClause*
         caseElseClause?
-    END wsc SELECT;
-caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? endOfStatement statementBlock?;
-caseElseClause: CASE wsc ELSE endOfStatement statementBlock?;
+    endOfStatement+ END wsc SELECT;
+caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? statementBlock?;
+caseElseClause: endOfStatement+ CASE wsc ELSE statementBlock?;
 rangeClause
     : expression
     | startValue wsc? TO wsc? endValue
@@ -665,7 +665,7 @@ eventArgumentList: (eventArgument (wsc? ',' wsc? eventArgument)*)?;
 eventArgument: expression;
 
 // 5.4.2.21 With Statement
-withStatement: WITH wsc? expression endOfStatement statementBlock? END wsc WITH;
+withStatement: WITH wsc? expression statementBlock? endOfStatement+ END wsc WITH;
 
 // 5.4.3 Data Manipulation Statements
 // Added eraseStatement. It is missing from the list in MsS-VBAL 1.7

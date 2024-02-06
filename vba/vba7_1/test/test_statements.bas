@@ -14,6 +14,13 @@ Public Static Function Module()
     For i = 0 To 7 Step 2
     Next
     
-    ' Need a complex and nested for
+    For i = 0 To 7 Step 2
+    Next i
 
+    For i = 0 To 7 Step 2
+        For j = 0 To 7
+            sum = sum + i * j
+        Next j
+        for each j in k
+next j, i
 End Function
