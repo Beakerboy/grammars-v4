@@ -379,7 +379,8 @@ subroutineName
     ;
 functionName
     : typedName
-    | subroutineName 
+    | ambiguousIdentifier
+    | prefixedName 
     ;
 prefixedName
     : eventHandlerName
