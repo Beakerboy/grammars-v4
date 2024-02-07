@@ -13,7 +13,7 @@ conditionalModuleBody: ccBlock*;
 ccBlock: (ccConst | ccIfBlock)*;
 
 // 3.4.1 Conditional Compilation Const Directive
-ccConst: NEWLINE CONST ccVarLhs EQ ccExpression COMMENT?;
+ccConst: NEWLINE CONST ccVarLhs '=' ccExpression COMMENT?;
 ccVarLhs: IDENTIFIER;
 
 // 3.4.2 Conditional Compilation If Directives
@@ -90,6 +90,9 @@ ENDIF
     | '#ENDIF'
     ;
 
+THEN
+    : 'THEN'
+    ;
 IDENTIFIER
     : ~[\]()\r\n\t.,'"|!@#$%^&*\-+:=; ]+
     ;
