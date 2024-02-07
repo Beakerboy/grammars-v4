@@ -1049,7 +1049,7 @@ DATELITERAL
     ;
 
 fragment DATEORTIME
-    : DATEVALUE WS? TIMEVALUE
+    : DATEVALUE WS+ TIMEVALUE
     | DATEVALUE
     | TIMEVALUE
     ;
@@ -1064,7 +1064,8 @@ fragment DATEVALUEPART
     ;
 
 fragment DATESEPARATOR
-    : WS? [/,-]? WS?
+    : WS+
+    : WS? [/,-] WS?
     ;
 
 fragment MONTHNAME
@@ -1078,7 +1079,9 @@ fragment ENGLISHMONTHNAME
     | 'MARCH'
     | 'APRIL'
     | 'MAY'
-    | 'JUNE | AUGUST'
+    | 'JUNE'
+    | 'JULY'
+    | 'AUGUST'
     | 'SEPTEMBER'
     | 'OCTOBER'
     | 'NOVEMBER'
