@@ -16,7 +16,7 @@ conditionalModuleBody: ccBlock+;
 ccBlock: (ccConst | ccIfBlock | LOGICAL_LINE)+;
 
 // 3.4.1 Conditional Compilation Const Directive
-ccConst: NEWLINE CONST ccVarLhs '=' ccExpression COMMENT?;
+ccConst: CONST ccVarLhs '=' ccExpression COMMENT?;
 ccVarLhs: IDENTIFIER;
 
 // 3.4.2 Conditional Compilation If Directives
