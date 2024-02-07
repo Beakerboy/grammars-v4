@@ -19,12 +19,12 @@ ccVarLhs: IDENTIFIER;
 // 3.4.2 Conditional Compilation If Directives
 ccIfBlock
     : ccIf ccBlock ccElseifBlock* ccElseBlock? ccEndif;
-ccIf: NEWLINE IF ccExpression THEN COMMENT?;
+ccIf: IF ccExpression THEN COMMENT?;
 ccElseifBlock: ccElseif ccBlock;
-ccElseif: NEWLINE ELSEIF ccExpression THEN COMMENT?;
+ccElseif: ELSEIF ccExpression THEN COMMENT?;
 ccElseBlock: ccElse ccBlock;
-ccElse: NEWLINE ELSE COMMENT?;
-ccEndif: NEWLINE ENDIF COMMENT?;
+ccElse: ELSE COMMENT?;
+ccEndif: ENDIF COMMENT?;
 ccExpression
     : literal
     | IDENTIFIER
@@ -70,24 +70,24 @@ ccFunc
     ;
 
 CONST
-    : '#CONST'
+    : NEWLINE WS? '#CONST'
     ;
 
 IF
-    : '#IF'
+    : NEWLINE WS? '#IF'
     ;
 
 ELSEIF
-    : '#ELSEIF'
+    : NEWLINE WS? '#ELSEIF'
     ;
 
 ELSE
-    : '#ELSE'
+    : NEWLINE WS? '#ELSE'
     ;
 
 ENDIF
-    : '#END IF'
-    | '#ENDIF'
+    : NEWLINE WS? '#END IF'
+    | NEWLINE WS? '#ENDIF'
     ;
 
 THEN
