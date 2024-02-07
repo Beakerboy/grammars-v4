@@ -5,12 +5,17 @@ options {
 }
 
 startRule
-    : proceduralModuleHeader conditionalModuleBody NEWLINE* EOF
+    : (proceduralModuleHeader | classFileHeader) conditionalModuleBody NEWLINE* EOF
     ;
 
 proceduralModuleHeader
     : 'ATTRIBUTE VB_NAME = ' STRINGLITERAL
     ;
+
+classFileHeader
+    : 'VERSION' FLOATLITERAL 'CLASS'?
+    ;
+
 // 3.4 Conditional Compilation
 conditionalModuleBody: ccBlock+;
 ccBlock: (ccConst | ccIfBlock | LOGICAL_LINE)+;
@@ -29,12 +34,23 @@ ccElseBlock: ccElse ccBlock?;
 ccElse: ELSE COMMENT?;
 ccEndif: ENDIF COMMENT?;
 ccExpression
-    : literal
+    : literalExpression
     | IDENTIFIER
     | '-' ccExpression
     | '(' ccExpression ')'
     | ccExpression operator ccExpression
     | ccFunc '(' ccExpression ')'
+    ;
+
+// 5.6.5 Literal Expressions
+// check on hex and oct
+// check definition of integer and float
+literalExpression
+    : HEXLITERAL
+    | OCTLITERAL
+    | FLOATLITERAL
+    | INTEGERLITERAL
+    | STRINGLITERAL
     ;
 
 literal
@@ -122,7 +138,35 @@ SINGLEQUOTE
     ;
 
 STRINGLITERAL
-    : '"' IDENTIFIER '"'
+    : '"' (~["\r\n] | '""')* '"'
+    ;
+
+OCTLITERAL
+    : '&' [O]? [0-7]+
+    ;
+
+HEXLITERAL
+    : '&H' [0-9A-F]+
+    ;
+
+INTEGERLITERAL
+    : (DIGIT DIGIT*
+    | HEXLITERAL
+    | OCTLITERAL) [%&^]?
+    ;
+
+FLOATLITERAL
+    : FLOATINGPOINTLITERAL [!#@]?
+    | DECIMALLITERAL [!#@]
+    ;
+
+fragment FLOATINGPOINTLITERAL
+    : DECIMALLITERAL [DE] [+-]? DECIMALLITERAL
+    | DECIMALLITERAL '.' DECIMALLITERAL? ([DE] [+-]? DECIMALLITERAL)?
+    ;
+
+fragment DECIMALLITERAL
+    : DIGIT DIGIT*
     ;
 
 COMMENT
