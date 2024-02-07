@@ -9,23 +9,23 @@ startRule
     ;
 
 // 3.4 Conditional Compilation
-conditionalModuleBody = ccBlock*
-ccBlock: (ccConst | ccIfBlock | logical-line)*
+conditionalModuleBody: ccBlock*;
+ccBlock: (ccConst | ccIfBlock)*;
 
 // 3.4.1 Conditional Compilation Const Directive
-ccConst: endOfLine '#' CONST cc-var-lhs WS? EQ WS? ccExpression ccEol
+ccConst: NEWLINE CONST ccVarLhs EQ ccExpression COMMENT?
 ccVarLhs: name;
 ccEol: (COMMENT)?
 
 // 3.4.2 Conditional Compilation If Directives
 ccIfBlock
     : ccIf ccBlock *ccElseifBlock ccElseBlock? ccEndif;
-ccIf: endOfLine IF cc-expression THEN ccEol;
+ccIf: NEWLINE IF ccExpression THEN COMMENT?;
 ccElseifBlock: ccElseif ccBlock;
-ccElseif: LINE-START ELSEIF ccExpression THEN ccEol;
+ccElseif: NEWLINE ELSEIF ccExpression THEN ccEol;
 ccElseBlock: ccElse ccBlock;
-ccElse: LINE-START ELSE ccEol;
-ccEndif: LINE-START ENDIF ccEol
+ccElse: NEWLINE ELSE ccEol;
+ccEndif: NEWLINE ENDIF COMMENT?
 
 CONST
     : '#CONST'
