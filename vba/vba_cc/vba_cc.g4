@@ -14,8 +14,7 @@ ccBlock: (ccConst | ccIfBlock)*;
 
 // 3.4.1 Conditional Compilation Const Directive
 ccConst: NEWLINE CONST ccVarLhs EQ ccExpression COMMENT?
-ccVarLhs: name;
-ccEol: (COMMENT)?
+ccVarLhs: IDENTIFIER;
 
 // 3.4.2 Conditional Compilation If Directives
 ccIfBlock
@@ -26,6 +25,45 @@ ccElseif: NEWLINE ELSEIF ccExpression THEN ccEol;
 ccElseBlock: ccElse ccBlock;
 ccElse: NEWLINE ELSE ccEol;
 ccEndif: NEWLINE ENDIF COMMENT?
+ccExpression
+    : literal
+    | IDENTIFIER
+    | '-' ccExpression
+    | '(' ccExpression ')'
+    | ccExpression operator ccExpression
+    | ccFunc '(' ccExpression ')'
+    ;
+
+operator
+    : '+'
+    | '-'
+    | '*'
+    | '/'
+    | '\\'
+    | '^'
+    | 'MOD'
+    | '&'
+    | 'AND'
+    | 'OR'
+    | 'XOR'
+    | 'EQV'
+    | 'IMP'
+    | 'LIKE'
+    | '='
+    | '<'
+    | '>'
+    | '<>'
+    | '<='
+    | '=>'
+    ;
+
+ccFunc
+    : 'INT'
+    | 'FIX'
+    | 'ABS'
+    | 'SGN'
+    | 'LEN'
+    ;
 
 CONST
     : '#CONST'
@@ -58,6 +96,10 @@ NEWLINE
 
 SINGLEQUOTE
     : '\''
+    ;
+
+STRINGLITERAL
+    : '"' IDENTIFIER '"'
     ;
 
 COMMENT
