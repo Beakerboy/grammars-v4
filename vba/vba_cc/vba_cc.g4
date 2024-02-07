@@ -53,10 +53,6 @@ literalExpression
     | STRINGLITERAL
     ;
 
-literal
-    : STRINGLITERAL
-    ;
-
 operator
     : '+'
     | '-'
