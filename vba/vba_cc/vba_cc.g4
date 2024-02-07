@@ -5,9 +5,12 @@ options {
 }
 
 startRule
-    : conditionalModuleBody EOF
+    : proceduralModuleHeader conditionalModuleBody EOF
     ;
 
+proceduralModuleHeader
+    : 'ATTRIBUTE VB_NAME = ' STRINGLITERAL
+    ;
 // 3.4 Conditional Compilation
 conditionalModuleBody: ccBlock+;
 ccBlock: (ccConst | ccIfBlock | LOGICAL_LINE)+;
@@ -113,7 +116,7 @@ COMMENT
     : SINGLEQUOTE ~[\r\n\u2028\u2029]*
     ;
 LOGICAL_LINE
-    : NEWLINE? WS? ~[\r\n\u2028\u2029#] ~[\r\n\u2028\u2029#]*
+    : NEWLINE WS? ~[\r\n\u2028\u2029#] ~[\r\n\u2028\u2029#]*
     ;
 WS
     : ([ \t])+ -> skip
