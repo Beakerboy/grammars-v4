@@ -39,10 +39,27 @@ ccExpression
     : literalExpression
     | reservedKeywords
     | IDENTIFIER
-    | '-' ccExpression
-    | '(' ccExpression ')'
+    | unaryMinusExpression
+    | parenthesizedExpression
     | ccExpression operator ccExpression
-    | ccFunc '(' ccExpression ')'
+    | indexExpression
+    | notOperatorExpression
+    ;
+
+indexExpression
+    : ccFunc '(' ccExpression ')'
+    ;
+
+parenthesizedExpression
+    : '(' ccExpression ')'
+    ;
+
+uniaryMinusExpression
+    :  '-' ccExpression
+    ;
+
+notOperatorExpression
+    : 'NOT' ccExpression
     ;
 
 literalExpression
