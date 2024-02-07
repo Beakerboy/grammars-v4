@@ -1,0 +1,1 @@
+(startRule (proceduralModuleHeader Attribute VB_Name =  "CCTEST") (conditionalModuleBody (ccBlock (ccIfBlock (ccIf \n#If (ccExpression (ccExpression VB_base) (operator =) (ccExpression 4)) Then 'comment here) (ccBlock \n    foo = 4) (ccElseBlock (ccElse \n#Else) (ccBlock \n    foo = 2)) (ccEndif \n\n#End If)) \n\nOtherStuff = 3)) \n <EOF>)
