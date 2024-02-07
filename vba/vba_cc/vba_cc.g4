@@ -47,3 +47,23 @@ ENDIF
     : '#END IF'
     | '#ENDIF'
     ;
+
+IDENTIFIER
+    : ~[\]()\r\n\t.,'"|!@#$%^&*\-+:=; ]+
+    ;
+
+NEWLINE
+    : [\r\n\u2028\u2029]+
+    ;
+
+SINGLEQUOTE
+    : '\''
+    ;
+
+COMMENT
+    : SINGLEQUOTE ~[\r\n\u2028\u2029]*
+    ;
+
+WS
+    : ([ \t])+ -> skip
+    ;
