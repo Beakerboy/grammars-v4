@@ -409,7 +409,7 @@ positionalParam: (parameterMechanism wsc)? paramDcl;
 optionalParam
     : optionalPrefix wsc paramDcl wsc? defaultValue?;
 paramArray
-    : PARAMARRAY ambiguousIdentifier '(' wsc? ')' (wsc AS wsc (VARIANT | '[' VARIANT ']'))?;
+    : PARAMARRAY wsc ambiguousIdentifier '(' wsc? ')' (wsc AS wsc (VARIANT | '[' VARIANT ']'))?;
 paramDcl
     : untypedNameParamDcl
     | typedNameParamDcl
@@ -594,7 +594,7 @@ singleLineIfStatement
     | ifWithEmptyThen
     ;
 ifWithNonEmptyThen
-    : IF wsc booleanExpression wsc THEN wsc listOrLabel wsc singleLineElseClause?;
+    : IF wsc booleanExpression wsc THEN wsc listOrLabel (wsc singleLineElseClause)?;
 ifWithEmptyThen
     : IF wsc booleanExpression wsc THEN wsc singleLineElseClause;
 singleLineElseClause: ELSE wsc? listOrLabel?;
@@ -973,15 +973,15 @@ indexExpression
 // 5.6.13.1 Argument Lists
 argumentList: positionalOrNamedArgumentList?;
 positionalOrNamedArgumentList
-    : (positionalArgument wsc? ',')* requiredPositionalArgument
-    | (positionalArgument wsc? ',')* namedArgumentList
+    : (positionalArgument wsc? ',' wsc?)* requiredPositionalArgument
+    | (positionalArgument wsc? ',' wsc?)* namedArgumentList
     ;
 positionalArgument: argumentExpression?;
 requiredPositionalArgument: argumentExpression;
 namedArgumentList: namedArgument (wsc? ',' wsc? namedArgument)*;
 namedArgument: unrestrictedName wsc? ASSIGN wsc? argumentExpression;
 argumentExpression
-    : BYVAL? wsc? expression
+    : (BYVAL wsc)? expression
     | addressofExpression
     ;
 
