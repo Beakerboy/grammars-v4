@@ -6,7 +6,7 @@ Attribute VB_Name = "CCTEST"
 #Elseif conDebug > 1 Then
     Debug.Print "help"
 #Else
-    #If conDebug < 1 Then
+    #If Cdbl(Abs(conDebug)) < (1 Mod 3) Then
     
         foo = 2
     #Endif
