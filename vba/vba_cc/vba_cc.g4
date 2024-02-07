@@ -165,6 +165,10 @@ fragment DECIMALLITERAL
     : DIGIT DIGIT*
     ;
 
+fragment DIGIT
+    : [0-9]
+    ;
+
 COMMENT
     : SINGLEQUOTE ~[\r\n\u2028\u2029]*
     ;
