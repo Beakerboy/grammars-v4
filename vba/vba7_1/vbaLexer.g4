@@ -1065,7 +1065,7 @@ fragment DATEVALUEPART
 
 fragment DATESEPARATOR
     : WS+
-    : WS? [/,-] WS?
+    | WS? [/,-] WS?
     ;
 
 fragment MONTHNAME
