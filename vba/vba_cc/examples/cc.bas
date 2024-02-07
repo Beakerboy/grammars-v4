@@ -3,6 +3,7 @@ Attribute VB_Name = "CCTEST"
     foo = 4
 #Else
     foo = 2
+
 #End If
 
 OtherStuff = 3
