@@ -36,10 +36,6 @@ ATTRIBUTE
     : 'ATTRIBUTE'
     ;
 
-APPACTIVATE
-    : 'APPACTIVATE'
-    ;
-
 APPEND
     : 'APPEND'
     ;
@@ -58,10 +54,6 @@ BASE
 
 BEGIN
     : 'BEGIN'
-    ;
-
-BEEP
-    : 'BEEP'
     ;
 
 BINARY
@@ -164,10 +156,6 @@ CLOSE
     : 'CLOSE'
     ;
 
-COLLECTION
-    : 'COLLECTION'
-    ;
-
 COMPARE
     : 'COMPARE'
     ;
@@ -194,10 +182,6 @@ CVERR
 
 CURRENCY
     : 'CURRENCY'
-    ;
-
-DATABASE
-    : 'DATABASE'
     ;
 
 DATE
@@ -272,10 +256,6 @@ DEFVAR
     : 'DEFVAR'
     ;
 
-DELETESETTING
-    : 'DELETESETTING'
-    ;
-
 DIM
     : 'DIM'
     ;
@@ -348,10 +328,6 @@ FALSE
     : 'FALSE'
     ;
 
-FILECOPY
-    : 'FILECOPY'
-    ;
-
 FIX
     : 'FIX'
     ;
@@ -379,6 +355,7 @@ GLOBAL
 GO
     : 'GO'
     ;
+
 GOSUB
     : 'GOSUB'
     ;
@@ -459,10 +436,6 @@ LINEINPUT
     : 'LINEINPUT'
     ;
 
-LOAD
-    : 'LOAD'
-    ;
-
 LOCK
     : 'LOCK'
     ;
@@ -487,10 +460,6 @@ LSET
     : 'LSET'
     ;
 
-MACRO_CONST
-    : '#CONST'
-    ;
-
 ME
     : 'ME'
     ;
@@ -502,6 +471,7 @@ MID
 MIDB
     : 'MIDB'
     ;
+
 MID_D
     : 'MID$'
     ;
@@ -510,20 +480,12 @@ MIDB_D
     : 'MIDB$'
     ;
 
-MKDIR
-    : 'MKDIR'
-    ;
-
 MOD
     : 'MOD'
     ;
 
 MODULE
     : 'MODULE'
-    ;
-
-NAME
-    : 'NAME'
     ;
 
 NEXT
@@ -545,9 +507,11 @@ NOTHING
 NULL_
     : 'NULL'
     ;
+
 OBJECT
     : 'OBJECT'
     ;
+
 ON
     : 'ON'
     ;
@@ -587,6 +551,7 @@ PRINT
 PRIVATE
     : 'PRIVATE'
     ;
+
 PROPERTY
     : 'PROPERTY'
     ;
@@ -609,10 +574,6 @@ PUT
 
 RANDOM
     : 'RANDOM'
-    ;
-
-RANDOMIZE
-    : 'RANDOMIZE'
     ;
 
 RAISEEVENT
@@ -643,22 +604,10 @@ RETURN
     : 'RETURN'
     ;
 
-RMDIR
-    : 'RMDIR'
-    ;
-
 RSET
     : 'RSET'
     ;
-
-SAVEPICTURE
-    : 'SAVEPICTURE'
-    ;
-
-SAVESETTING
-    : 'SAVESETTING'
-    ;
-
+ 
 SCALE
     : 'SCALE'
     ;
@@ -671,16 +620,8 @@ SELECT
     : 'SELECT'
     ;
 
-SENDKEYS
-    : 'SENDKEYS'
-    ;
-
 SET
     : 'SET'
-    ;
-
-SETATTR
-    : 'SETATTR'
     ;
 
 SGN
@@ -731,10 +672,6 @@ THEN
     : 'THEN'
     ;
 
-TIME
-    : 'TIME'
-    ;
-
 TO
     : 'TO'
     ;
@@ -753,10 +690,6 @@ TYPEOF
 
 UBOUND
     : 'UBOUND'
-    ;
-
-UNLOAD
-    : 'UNLOAD'
     ;
 
 UNLOCK
@@ -897,6 +830,76 @@ WRITE
 
 XOR
     : 'XOR'
+    ;
+
+// Standard Library functions, subs, and properties
+// should these be removed?
+APPACTIVATE
+    : 'APPACTIVATE'
+    ;
+
+BEEP
+    : 'BEEP'
+    ;
+
+COLLECTION
+    : 'COLLECTION'
+    ;
+
+DATABASE
+    : 'DATABASE'
+    ;
+ 
+DELETESETTING
+    : 'DELETESETTING'
+    ;
+
+FILECOPY
+    : 'FILECOPY'
+    ;
+
+MKDIR
+    : 'MKDIR'
+    ;
+
+NAME
+    : 'NAME'
+    ;
+
+RANDOMIZE
+    : 'RANDOMIZE'
+    ;
+
+RMDIR
+    : 'RMDIR'
+    ;
+
+SAVEPICTURE
+    : 'SAVEPICTURE'
+    ;
+
+SAVESETTING
+    : 'SAVESETTING'
+    ;
+
+SENDKEYS
+    : 'SENDKEYS'
+    ;
+
+SETATTR
+    : 'SETATTR'
+    ;
+
+TIME
+    : 'TIME'
+    ;
+
+LOAD
+    : 'LOAD'
+    ;
+
+UNLOAD
+    : 'UNLOAD'
     ;
 
 // symbols
