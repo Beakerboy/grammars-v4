@@ -10,7 +10,7 @@ startRule
 
 // 3.4 Conditional Compilation
 conditionalModuleBody: ccBlock+;
-ccBlock: (ccConst | ccIfBlock)*;
+ccBlock: (ccConst | ccIfBlock | logicalLine)*;
 
 // 3.4.1 Conditional Compilation Const Directive
 ccConst: NEWLINE CONST ccVarLhs '=' ccExpression COMMENT?;
@@ -34,6 +34,7 @@ ccExpression
     | ccFunc '(' ccExpression ')'
     ;
 
+logicalLine: NEWLINE (IDENTIFIER| operator)*
 literal
     : STRINGLITERAL
     ;
