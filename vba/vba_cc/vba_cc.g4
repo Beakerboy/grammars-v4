@@ -34,6 +34,10 @@ ccExpression
     | ccFunc '(' ccExpression ')'
     ;
 
+literal
+    : STRINGLITERAL
+    ;
+
 operator
     : '+'
     | '-'
