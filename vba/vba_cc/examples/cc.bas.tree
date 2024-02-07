@@ -1,1 +1,1 @@
-(conditionalModuleBody (ccBlock Attribute VB_Name = "CCTEST") (ccBlock (ccIfBlock ())))<EOF>
+(startRule (conditionalModuleBody (ccBlock Attribute VB_Name = "CCTEST") (ccBlock (ccIfBlock ()))))<EOF>
