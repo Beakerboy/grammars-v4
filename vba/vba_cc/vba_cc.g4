@@ -101,7 +101,7 @@ ccFunc
 reservedKeywords
     : WIN16
     | WIN32
-    | Win64
+    | WIN64
     | VBA6
     | VBA7
     | MAC
