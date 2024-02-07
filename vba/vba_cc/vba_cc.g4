@@ -21,7 +21,7 @@ ccIfBlock
     : ccIf ccBlock *ccElseifBlock ccElseBlock? ccEndif;
 ccIf: NEWLINE IF ccExpression THEN COMMENT?;
 ccElseifBlock: ccElseif ccBlock;
-ccElseif: NEWLINE ELSEIF ccExpression THEN ccEol;
+ccElseif: NEWLINE ELSEIF ccExpression THEN COMMENT?;
 ccElseBlock: ccElse ccBlock;
 ccElse: NEWLINE ELSE ccEol;
 ccEndif: NEWLINE ENDIF COMMENT?;
