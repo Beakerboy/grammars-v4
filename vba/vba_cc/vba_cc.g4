@@ -114,7 +114,7 @@ COMMENT
     : SINGLEQUOTE ~[\r\n\u2028\u2029]*
     ;
 LOGICAL_LINE
-    : NEWLINE (THEN | WS |)*
+    : NEWLINE (THEN | WS | ~[\r\n\u2028\u2029])*
     ;
 WS
     : ([ \t])+ -> skip
