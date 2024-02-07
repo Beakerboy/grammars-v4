@@ -113,7 +113,9 @@ STRINGLITERAL
 COMMENT
     : SINGLEQUOTE ~[\r\n\u2028\u2029]*
     ;
-
+LOGICAL_LINE
+    : NEWLINE (THEN | WS |)*
+    ;
 WS
     : ([ \t])+ -> skip
     ;
