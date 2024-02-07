@@ -1,1 +1,4 @@
-any deviations from the published standard are noted
+TO DO
+
+non-latin identifiers
+Verify Date Literals
