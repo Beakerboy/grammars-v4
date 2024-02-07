@@ -1073,13 +1073,13 @@ endOfStatementNoWs
 commentBody: COMMENT;
 
 // 3.3.5.2 Reserved Identifiers and IDENTIFIER
-// should this include reservedTypeIdentifier?
 reservedIdentifier
     : statementKeyword
     | markerKeyword
     | operatorIdentifier
     | specialForm
     | reservedName
+    | reservedTypeIdentifier
     | literalIdentifier
     | remKeyword
     | reservedForImplementationUse
@@ -1331,7 +1331,8 @@ typeSuffix
 // Extra Rules
 
 // lexer keywords not in the reservedIdentifier set
-// should this include reservedTypeIdentifier?
+// any that are unused within the parser rules should probably
+// be removed from the lexer.
 ambiguousKeyword
     : ACCESS
     | ALIAS
