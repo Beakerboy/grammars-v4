@@ -5,7 +5,7 @@ options {
 }
 
 startRule
-    : proceduralModuleHeader conditionalModuleBody EOF
+    : proceduralModuleHeader conditionalModuleBody NEWLINE* EOF
     ;
 
 proceduralModuleHeader
