@@ -23,7 +23,7 @@ ccIf: NEWLINE IF ccExpression THEN COMMENT?;
 ccElseifBlock: ccElseif ccBlock;
 ccElseif: NEWLINE ELSEIF ccExpression THEN COMMENT?;
 ccElseBlock: ccElse ccBlock;
-ccElse: NEWLINE ELSE ccEol;
+ccElse: NEWLINE ELSE COMMENT?;
 ccEndif: NEWLINE ENDIF COMMENT?;
 ccExpression
     : literal
