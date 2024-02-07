@@ -13,7 +13,7 @@ conditionalModuleBody: ccBlock*;
 ccBlock: (ccConst | ccIfBlock)*;
 
 // 3.4.1 Conditional Compilation Const Directive
-ccConst: NEWLINE CONST ccVarLhs EQ ccExpression COMMENT?
+ccConst: NEWLINE CONST ccVarLhs EQ ccExpression COMMENT?;
 ccVarLhs: IDENTIFIER;
 
 // 3.4.2 Conditional Compilation If Directives
@@ -24,7 +24,7 @@ ccElseifBlock: ccElseif ccBlock;
 ccElseif: NEWLINE ELSEIF ccExpression THEN ccEol;
 ccElseBlock: ccElse ccBlock;
 ccElse: NEWLINE ELSE ccEol;
-ccEndif: NEWLINE ENDIF COMMENT?
+ccEndif: NEWLINE ENDIF COMMENT?;
 ccExpression
     : literal
     | IDENTIFIER
