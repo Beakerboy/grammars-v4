@@ -33,6 +33,8 @@ ccElseif: ELSEIF ccExpression THEN COMMENT?;
 ccElseBlock: ccElse ccBlock?;
 ccElse: ELSE COMMENT?;
 ccEndif: ENDIF COMMENT?;
+
+// 5.6.16.2 Conditional Compilation Expressions
 ccExpression
     : literalExpression
     | reservedKeywords
@@ -43,15 +45,16 @@ ccExpression
     | ccFunc '(' ccExpression ')'
     ;
 
-// 5.6.5 Literal Expressions
-// check on hex and oct
-// check definition of integer and float
 literalExpression
     : HEXLITERAL
     | OCTLITERAL
     | FLOATLITERAL
     | INTEGERLITERAL
     | STRINGLITERAL
+    | DATELITERAL
+    | EMPTY
+    | NULL_
+    | NOTHING
     ;
 
 operator
@@ -128,6 +131,18 @@ ENDIF
     | NEWLINE WS? '#ENDIF'
     ;
 
+EMPTY
+    : 'EMPTY'
+    ;
+
+NOTHING
+    : 'NOTHING'
+    ;
+
+NULL_
+    : 'NULL'
+    ;
+
 THEN
     : 'THEN'
     ;
@@ -198,6 +213,78 @@ fragment FLOATINGPOINTLITERAL
 
 fragment DECIMALLITERAL
     : DIGIT DIGIT*
+    ;
+
+DATELITERAL
+    : '#' DATEORTIME '#'
+    ;
+
+fragment DATEORTIME
+    : DATEVALUE WS+ TIMEVALUE
+    | DATEVALUE
+    | TIMEVALUE
+    ;
+
+fragment DATEVALUE
+    : DATEVALUEPART DATESEPARATOR DATEVALUEPART (DATESEPARATOR DATEVALUEPART)?
+    ;
+
+fragment DATEVALUEPART
+    : DIGIT+
+    | MONTHNAME
+    ;
+
+fragment DATESEPARATOR
+    : WS+
+    | WS? [/,-] WS?
+    ;
+
+fragment MONTHNAME
+    : ENGLISHMONTHNAME
+    | ENGLISHMONTHABBREVIATION
+    ;
+
+fragment ENGLISHMONTHNAME
+    : 'JANUARY'
+    | 'FEBRUARY'
+    | 'MARCH'
+    | 'APRIL'
+    | 'MAY'
+    | 'JUNE'
+    | 'JULY'
+    | 'AUGUST'
+    | 'SEPTEMBER'
+    | 'OCTOBER'
+    | 'NOVEMBER'
+    | 'DECEMBER'
+    ;
+
+// May has intentionally been left out
+fragment ENGLISHMONTHABBREVIATION
+    : 'JAN'
+    | 'FEB'
+    | 'MAR'
+    | 'APR'
+    | 'JUN'
+    | 'JUL'
+    | 'AUG'
+    | 'SEP'
+    | 'OCT'
+    | 'NOV'
+    | 'DEC'
+    ;
+
+fragment TIMEVALUE
+    : DIGIT+ AMPM
+    | DIGIT+ TIMESEPARATOR DIGIT+ (TIMESEPARATOR DIGIT+)? AMPM?
+    ;
+
+fragment TIMESEPARATOR
+    : WS? (':' | '.') WS?
+    ;
+
+fragment AMPM
+    : WS? ('AM' | 'PM' | 'A' | 'P')
     ;
 
 fragment DIGIT
