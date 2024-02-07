@@ -70,6 +70,19 @@ ccFunc
     | 'ABS'
     | 'SGN'
     | 'LEN'
+    | 'LENB'
+    | 'CBOOL'
+    | 'CBYTE'
+    | 'CCUR'
+    | 'CDATE'
+    | 'CDBL'
+    | 'CINT'
+    | 'CLNG'
+    | 'CLNGLNG'
+    | 'CLNGPTR'
+    | 'CSNG'
+    | 'CSTR'
+    | 'CVAR'
     ;
 
 CONST
