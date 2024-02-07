@@ -54,7 +54,7 @@ parenthesizedExpression
     : '(' ccExpression ')'
     ;
 
-uniaryMinusExpression
+unaryMinusExpression
     :  '-' ccExpression
     ;
 
