@@ -35,6 +35,7 @@ ccElse: ELSE COMMENT?;
 ccEndif: ENDIF COMMENT?;
 ccExpression
     : literalExpression
+    | reservedKeywords
     | IDENTIFIER
     | '-' ccExpression
     | '(' ccExpression ')'
@@ -97,6 +98,15 @@ ccFunc
     | 'CVAR'
     ;
 
+reservedKeywords
+    : WIN16
+    | WIN32
+    | Win64
+    | VBA6
+    | VBA7
+    | MAC
+    ;
+
 CONST
     : NEWLINE WS? '#CONST'
     ;
@@ -121,6 +131,31 @@ ENDIF
 THEN
     : 'THEN'
     ;
+
+WIN16
+    : 'WIN16'
+    ;
+
+WIN32
+    : 'WIN32'
+    ;
+
+WIN64
+    : 'WIN64'
+    ;
+
+VBA6
+    : 'VBA6'
+    ;
+
+VBA7
+    : 'VBA7'
+    ;
+
+MAC
+    : 'MAC'
+    ;
+
 IDENTIFIER
     : ~[\]()\r\n\t.,'"|!@#$%^&*\-+:=; ]+
     ;
