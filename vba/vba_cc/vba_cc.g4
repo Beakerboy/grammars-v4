@@ -1,3 +1,10 @@
+grammar vba_cc;
+
+options {
+    caseInsensitive = true;
+}
+
+
 // 3.4 Conditional Compilation
 conditionalModuleBody = ccBlock
 ccBlock: (ccConst | ccIfBlock | logical-line)*
