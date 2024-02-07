@@ -1088,6 +1088,7 @@ fragment ENGLISHMONTHNAME
     | 'DECEMBER'
     ;
 
+// May has intentionally been left out
 fragment ENGLISHMONTHABBREVIATION
     : 'JAN'
     | 'FEB'
