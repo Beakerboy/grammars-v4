@@ -17,22 +17,24 @@ classFileHeader
     ;
 
 // 3.4 Conditional Compilation
-conditionalModuleBody: ccBlock+;
-ccBlock: (ccConst | ccIfBlock | LOGICAL_LINE)+;
+logicalLine
+    : NEWLINE WS? ~(CONST | IF | ELSEIF| ELSE) (~(NEWLINE))*;
+conditionalModuleBody: ccBlock;
+ccBlock: (ccConst | ccIfBlock | logicalLine)+;
 
 // 3.4.1 Conditional Compilation Const Directive
-ccConst: CONST ccVarLhs '=' ccExpression COMMENT?;
+ccConst: NEWLINE CONST ccVarLhs '=' ccExpression COMMENT?;
 ccVarLhs: IDENTIFIER;
 
 // 3.4.2 Conditional Compilation If Directives
 ccIfBlock
     : ccIf ccBlock ccElseifBlock* ccElseBlock? ccEndif;
-ccIf: IF ccExpression THEN COMMENT?;
+ccIf: NEWLINE+ IF ccExpression THEN COMMENT?;
 ccElseifBlock: ccElseif ccBlock?;
-ccElseif: ELSEIF ccExpression THEN COMMENT?;
+ccElseif: NEWLINE+ ELSEIF ccExpression THEN COMMENT?;
 ccElseBlock: ccElse ccBlock?;
-ccElse: ELSE COMMENT?;
-ccEndif: ENDIF COMMENT?;
+ccElse: NEWLINE+ ELSE COMMENT?;
+ccEndif: NEWLINE+ ENDIF COMMENT?;
 
 // 5.6.16.2 Conditional Compilation Expressions
 ccExpression
@@ -47,7 +49,7 @@ ccExpression
     | ccExpression 'MOD' ccExpression
     | ccExpression ('+' | '-') ccExpression
     | ccExpression '&' ccExpression
-    | ccExpression relationalOperator ccExpression
+    | ccExpression (EQ | NEQ | GT | GEQ | LEQ | LT | LIKE) ccExpression
     | indexExpression
     | notOperatorExpression
     | ccExpression 'AND' ccExpression
@@ -85,19 +87,6 @@ literalExpression
     | NOTHING
     ;
 
-booleanOperator
-    | 'LIKE'
-    ;
-
-relationalOperator
-    : '='
-    | '<'
-    | '>'
-    | '<>' | '><'
-    | '<=' | '=<'
-    | '=>' | '>='
-    ;
-
 ccFunc
     : 'INT'
     | 'FIX'
@@ -129,28 +118,32 @@ reservedKeywords
     ;
 
 CONST
-    : NEWLINE WS? '#CONST'
+    : '#CONST'
     ;
 
 IF
-    : NEWLINE WS? '#IF'
+    : '#IF'
     ;
 
 ELSEIF
-    : NEWLINE WS? '#ELSEIF'
+    : '#ELSEIF'
     ;
 
 ELSE
-    : NEWLINE WS? '#ELSE'
+    : '#ELSE'
     ;
 
 ENDIF
-    : NEWLINE WS? '#END IF'
-    | NEWLINE WS? '#ENDIF'
+    : '#END IF'
+    | '#ENDIF'
     ;
 
 EMPTY
     : 'EMPTY'
+    ;
+
+LIKE
+    : 'LIKE'
     ;
 
 NOTHING
@@ -187,6 +180,33 @@ VBA7
 
 MAC
     : 'MAC'
+    ;
+
+EQ
+    : '='
+    ;
+
+GEQ
+    : '>='
+    | '=>'
+    ;
+
+GT
+    : '.'
+    ;
+
+LEQ
+    : '<='
+    | '=<'
+    ;
+
+LT
+    : '<'
+    ;
+
+NEQ
+    : '<>'
+    | '><'
     ;
 
 IDENTIFIER
@@ -312,9 +332,7 @@ fragment DIGIT
 COMMENT
     : SINGLEQUOTE ~[\r\n\u2028\u2029]*
     ;
-LOGICAL_LINE
-    : NEWLINE WS? ~[\r\n\u2028\u2029#] ~[\r\n\u2028\u2029#]*
-    ;
+
 WS
     : ([ \t])+ -> skip
     ;
