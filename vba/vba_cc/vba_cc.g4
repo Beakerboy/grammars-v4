@@ -44,10 +44,10 @@ ccExpression
     | parenthesizedExpression
     | ccExpression ('^') ccExpression
     | unaryMinusExpression
-    | ccExpression ('*' | '/') ccExpression
-    | ccExpression '\\' ccExpression
-    | ccExpression 'MOD' ccExpression
-    | ccExpression ('+' | '-') ccExpression
+    | ccExpression op = ('*' | '/') ccExpression                             # ArithmeticExpression
+    | ccExpression op = '\\' ccExpression                                    # ArithmeticExpression
+    | ccExpression op = 'MOD' ccExpression                                   # ArithmeticExpression
+    | ccExpression op = ('+' | '-') ccExpression                             # ArithmeticExpression
     | ccExpression '&' ccExpression
     | ccExpression (EQ | NEQ | GT | GEQ | LEQ | LT | LIKE) ccExpression
     | indexExpression
