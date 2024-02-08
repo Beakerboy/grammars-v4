@@ -39,11 +39,15 @@ ccExpression
     : literalExpression
     | reservedKeywords
     | IDENTIFIER
-    | unaryMinusExpression
     | parenthesizedExpression
-    | ccExpression operator ccExpression
+    | ccExpression ('^') ccExpression
+    | unaryMinusExpression
+    | ccExpression ('*' | '/') ccExpression
+    | ccExpression ('+' | '-') ccExpression
+    | ccExpression relationalOperator ccExpression
     | indexExpression
     | notOperatorExpression
+    | ccExpression booleanOperator ccExpression
     ;
 
 indexExpression
@@ -74,13 +78,8 @@ literalExpression
     | NOTHING
     ;
 
-operator
-    : '+'
-    | '-'
-    | '*'
-    | '/'
-    | '\\'
-    | '^'
+booleanOperator
+    : '\\'
     | 'MOD'
     | '&'
     | 'AND'
@@ -89,7 +88,10 @@ operator
     | 'EQV'
     | 'IMP'
     | 'LIKE'
-    | '='
+    ;
+
+relationalOperator
+    : '='
     | '<'
     | '>'
     | '<>' | '><'
