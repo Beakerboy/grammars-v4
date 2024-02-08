@@ -43,11 +43,18 @@ ccExpression
     | ccExpression ('^') ccExpression
     | unaryMinusExpression
     | ccExpression ('*' | '/') ccExpression
+    | ccExpression '\\' ccExpression
+    | ccExpression 'MOD' ccExpression
     | ccExpression ('+' | '-') ccExpression
+    | ccExpression '&' ccExpression
     | ccExpression relationalOperator ccExpression
     | indexExpression
     | notOperatorExpression
-    | ccExpression booleanOperator ccExpression
+    | ccExpression 'AND' ccExpression
+    | ccExpression 'OR' ccExpression
+    | ccExpression 'XOR' ccExpression
+    | ccExpression 'EQV' ccExpression
+    | ccExpression 'IMP' ccExpression
     ;
 
 indexExpression
@@ -79,14 +86,6 @@ literalExpression
     ;
 
 booleanOperator
-    : '\\'
-    | 'MOD'
-    | '&'
-    | 'AND'
-    | 'OR'
-    | 'XOR'
-    | 'EQV'
-    | 'IMP'
     | 'LIKE'
     ;
 
