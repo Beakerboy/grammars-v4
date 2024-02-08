@@ -52,11 +52,11 @@ ccExpression
     | ccExpression (EQ | NEQ | GT | GEQ | LEQ | LT | LIKE) ccExpression
     | indexExpression
     | notOperatorExpression
-    | ccExpression 'AND' ccExpression
-    | ccExpression 'OR' ccExpression
-    | ccExpression 'XOR' ccExpression
-    | ccExpression 'EQV' ccExpression
-    | ccExpression 'IMP' ccExpression
+    | ccExpression 'AND' ccExpression                                        # booleanExpression
+    | ccExpression 'OR' ccExpression                                         # booleanExpression
+    | ccExpression 'XOR' ccExpression                                        # booleanExpression
+    | ccExpression 'EQV' ccExpression                                        # booleanExpression
+    | ccExpression 'IMP' ccExpression                                        # booleanExpression
     ;
 
 indexExpression
