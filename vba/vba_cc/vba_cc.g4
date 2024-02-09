@@ -334,5 +334,5 @@ COMMENT
     ;
 
 WS
-    : ([ \t])+ -> skip
+    : ([ \t])+ -> channel(HIDDEN)
     ;
