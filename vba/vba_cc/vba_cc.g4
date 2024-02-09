@@ -126,6 +126,10 @@ EMPTY
     : 'EMPTY'
     ;
 
+FALSE
+    : 'FALSE'
+    ;
+
 LIKE
     : 'LIKE'
     ;
@@ -136,6 +140,9 @@ NOTHING
 
 NULL_
     : 'NULL'
+    ;
+TRUE
+    : 'TRUE'
     ;
 
 THEN
@@ -315,6 +322,10 @@ fragment AMPM
 
 fragment DIGIT
     : [0-9]
+    ;
+BOOLEANLITERAL
+    : TRUE
+    | FALSE
     ;
 
 COMMENT
