@@ -38,41 +38,25 @@ ccEndif: NEWLINE+ ENDIF COMMENT?;
 
 // 5.6.16.2 Conditional Compilation Expressions
 ccExpression
-    : literalExpression                                                  # LiteralMinusExpression
+    : literalExpression                                                  # LiteralExpress
     | reservedKeywords                                                   # IdentifierExpression
     | IDENTIFIER                                                         # IdentifierExpression
-    | parenthesizedExpression                                            # ParenthesizedExpression
+    | '(' ccExpression ')'                                               # ParenthesizedExpression
     | ccExpression ('^') ccExpression                                    # UnaryMinusExpression
-    | unaryMinusExpression                                               # UnaryMinusExpression
+    | '-' ccExpression                                                   # UnaryMinusExpression
     | ccExpression op = ('*' | '/') ccExpression                         # ArithmeticExpression
     | ccExpression op = '\\' ccExpression                                # ArithmeticExpression
     | ccExpression op = 'MOD' ccExpression                               # ArithmeticExpression
     | ccExpression op = ('+' | '-') ccExpression                         # ArithmeticExpression
     | ccExpression '&' ccExpression                                      # ConcatExpression
     | ccExpression (EQ | NEQ | GT | GEQ | LEQ | LT | LIKE) ccExpression  # RelationExpression
-    | indexExpression                                                    # IndexExpression
-    | notOperatorExpression                                              # NotOperatorExpressiom
+    | ccFunc '(' ccExpression ')'                                        # IndexExpression
+    | 'NOT' ccExpression                                                 # NotOperatorExpressiom
     | ccExpression 'AND' ccExpression                                    # booleanExpression
     | ccExpression 'OR' ccExpression                                     # booleanExpression
     | ccExpression 'XOR' ccExpression                                    # booleanExpression
     | ccExpression 'EQV' ccExpression                                    # booleanExpression
     | ccExpression 'IMP' ccExpression                                    # booleanExpression
-    ;
-
-indexExpression
-    : ccFunc '(' ccExpression ')'
-    ;
-
-parenthesizedExpression
-    : '(' ccExpression ')'
-    ;
-
-unaryMinusExpression
-    :  '-' ccExpression
-    ;
-
-notOperatorExpression
-    : 'NOT' ccExpression
     ;
 
 literalExpression
