@@ -60,7 +60,8 @@ ccExpression
     ;
 
 literalExpression
-    : HEXLITERAL
+    : BOOLEANLITERAL
+    | HEXLITERAL
     | OCTLITERAL
     | FLOATLITERAL
     | INTEGERLITERAL
