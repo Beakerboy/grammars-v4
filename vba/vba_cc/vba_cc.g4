@@ -51,7 +51,7 @@ ccExpression
     | ccExpression '&' ccExpression                                      # ConcatExpression
     | ccExpression (EQ | NEQ | GT | GEQ | LEQ | LT | LIKE) ccExpression  # RelationExpression
     | ccFunc '(' ccExpression ')'                                        # IndexExpression
-    | 'NOT' ccExpression                                                 # NotOperatorExpressiom
+    | 'NOT' ccExpression                                                 # NotOperatorExpression
     | ccExpression 'AND' ccExpression                                    # booleanExpression
     | ccExpression 'OR' ccExpression                                     # booleanExpression
     | ccExpression 'XOR' ccExpression                                    # booleanExpression
