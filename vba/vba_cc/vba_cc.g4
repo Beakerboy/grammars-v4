@@ -38,7 +38,7 @@ ccEndif: NEWLINE+ ENDIF COMMENT?;
 
 // 5.6.16.2 Conditional Compilation Expressions
 ccExpression
-    : literalExpression                                                  # LiteralExpress
+    : literalExpression                                                  # LiteralExpression
     | reservedKeywords                                                   # IdentifierExpression
     | IDENTIFIER                                                         # IdentifierExpression
     | '(' ccExpression ')'                                               # ParenthesizedExpression
