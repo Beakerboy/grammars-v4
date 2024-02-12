@@ -42,7 +42,7 @@ ccExpression
     | reservedKeywords                                                   # IdentifierExpression
     | IDENTIFIER                                                         # IdentifierExpression
     | '(' ccExpression ')'                                               # ParenthesizedExpression
-    | ccExpression ('^') ccExpression                                    # UnaryMinusExpression
+    | ccExpression ('^') ccExpression                                    # Arithmeticxpression
     | '-' ccExpression                                                   # UnaryMinusExpression
     | ccExpression ('*' | '/') ccExpression                              # ArithmeticExpression
     | ccExpression '\\' ccExpression                                     # ArithmeticExpression
