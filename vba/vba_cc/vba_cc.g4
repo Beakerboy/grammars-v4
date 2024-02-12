@@ -201,6 +201,11 @@ NEQ
     | '><'
     ;
 
+BOOLEANLITERAL
+    : TRUE
+    | FALSE
+    ;
+
 IDENTIFIER
     : ~[\]()\r\n\t.,'"|!@#$%^&*\-+:=; ]+
     ;
@@ -323,10 +328,6 @@ fragment AMPM
 
 fragment DIGIT
     : [0-9]
-    ;
-BOOLEANLITERAL
-    : TRUE
-    | FALSE
     ;
 
 COMMENT
