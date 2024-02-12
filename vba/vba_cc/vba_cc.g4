@@ -127,10 +127,6 @@ EMPTY
     : 'EMPTY'
     ;
 
-FALSE
-    : 'FALSE'
-    ;
-
 LIKE
     : 'LIKE'
     ;
@@ -141,9 +137,6 @@ NOTHING
 
 NULL_
     : 'NULL'
-    ;
-TRUE
-    : 'TRUE'
     ;
 
 THEN
@@ -202,8 +195,8 @@ NEQ
     ;
 
 BOOLEANLITERAL
-    : TRUE
-    | FALSE
+    : 'TRUE'
+    | 'FALSE'
     ;
 
 IDENTIFIER
