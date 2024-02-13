@@ -328,28 +328,28 @@ procedureDeclaration
 // Allow a static keyword before or after, but not both
 subroutineDeclaration
     : (procedureScope wsc)? (
-              ((initialStatic wsc)? SUB wsc subroutineName procedureParameters?)
-            | (SUB wsc subroutineName procedureParameters? wsc? trailingStatic)
+              ((initialStatic wsc)? SUB wsc subroutineName (wsc? procedureParameters?))
+            | (SUB wsc subroutineName (wsc? procedureParameters)? wsc? trailingStatic)
         )
         procedureBody?
         endLabel? endOfStatement+ END wsc SUB procedureTail;
 functionDeclaration
     : (procedureScope wsc)? (
-              (initialStatic wsc)? FUNCTION wsc functionName procedureParameters? (wsc? functionType)?
-            | FUNCTION wsc functionName procedureParameters? (wsc? functionType)? wsc? trailingStatic)
+              (initialStatic wsc)? FUNCTION wsc functionName (wsc? procedureParameters)? (wsc? functionType)?
+            | FUNCTION wsc functionName (wsc? procedureParameters)? (wsc? functionType)? wsc? trailingStatic)
         procedureBody?
         endLabel? endOfStatement+ END wsc FUNCTION procedureTail;
   
 propertyGetDeclaration
     : (procedureScope wsc)? (
-              (initialStatic wsc)? PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)?
+              (initialStatic wsc)? PROPERTY wsc GET wsc functionName (wsc? procedureParameters)? (wsc? functionType)?
             | PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)? wsc? trailingStatic)
         procedureBody?
         endLabel? endOfStatement+ END wsc PROPERTY procedureTail;
   
 propertyLhsDeclaration
     : (procedureScope wsc)? (
-              (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters
+              (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName wsc? propertyParameters
             | PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters wsc? trailingStatic)
         procedureBody?
         endLabel? endOfStatement+ END wsc PROPERTY procedureTail;
