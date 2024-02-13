@@ -12,4 +12,6 @@ Attribute VB_Name = "CCTEST"
     #Endif
 #End If
 
-OtherStuff = 3
+Open pth for output as #ff
+    Print #ff, cont
+Close #ff
