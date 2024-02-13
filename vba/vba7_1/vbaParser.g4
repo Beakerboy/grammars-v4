@@ -611,11 +611,11 @@ sameLineStatement
 
 // 5.4.2.10 Select Case Statement
 selectCaseStatement
-    : SELECT wsc CASE wsc selectExpression endOfStatement
+    : SELECT wsc CASE wsc selectExpression
         caseClause*
         caseElseClause?
     endOfStatement+ END wsc SELECT;
-caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? statementBlock?;
+caseClause: endOfStatement+ CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? statementBlock?;
 caseElseClause: endOfStatement+ CASE wsc ELSE statementBlock?;
 rangeClause
     : expression
