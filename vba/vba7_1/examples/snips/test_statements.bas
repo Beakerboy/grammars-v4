@@ -23,4 +23,9 @@ Public Static Function Module()
         Next j
         for each j in k
 next j, i
+
+select case foo
+    case bar: baz
+    case baz: quix
+end select
 End Function
