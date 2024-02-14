@@ -15,3 +15,9 @@ Attribute VB_Name = "CCTEST"
 Open pth for output as #ff
     Print #ff, cont
 Close #ff
+
+' The blocks can each be empty.
+#if Win64 Then
+#Elseif Win32 Then
+#Else
+#Endif

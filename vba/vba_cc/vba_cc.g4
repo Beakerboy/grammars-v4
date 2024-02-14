@@ -28,7 +28,7 @@ ccVarLhs: IDENTIFIER;
 
 // 3.4.2 Conditional Compilation If Directives
 ccIfBlock
-    : ccIf ccBlock ccElseifBlock* ccElseBlock? ccEndif;
+    : ccIf ccBlock? ccElseifBlock* ccElseBlock? ccEndif;
 ccIf: NEWLINE+ IF ccExpression THEN COMMENT?;
 ccElseifBlock: ccElseif ccBlock?;
 ccElseif: NEWLINE+ ELSEIF ccExpression THEN COMMENT?;
