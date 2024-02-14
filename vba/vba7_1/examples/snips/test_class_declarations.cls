@@ -3,4 +3,4 @@ BEGIN
   MultiUse = -1  'True
 END
 Attribute VB_Name = "ClassDeclarations"
-Public Event OnClose(ByVal Data As Variant)
+Public Event Ev(ByVal Data As Variant)
