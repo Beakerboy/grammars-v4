@@ -199,10 +199,6 @@ BOOLEANLITERAL
     | 'FALSE'
     ;
 
-IDENTIFIER
-    : ~[\]()\r\n\t.,'"|!@#$%^&*\-+:=; ]+
-    ;
-
 MISC
     : ~[\r\n\u2028\u2029<>=*+\-/ \t"()A-Z0-9]+
     ;
@@ -321,6 +317,10 @@ fragment AMPM
 
 fragment DIGIT
     : [0-9]
+    ;
+
+IDENTIFIER
+    : ~[\]()\r\n\t.,'"|!@#$%^&*\-+:=; ]+
     ;
 
 COMMENT
