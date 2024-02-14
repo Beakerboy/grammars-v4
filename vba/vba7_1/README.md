@@ -14,6 +14,7 @@ In the course of creating this parser, several bugs were found in the MS-VBAL v1
 * reserved-name keywords should be able to be used within expressions
 * private and public enums missing from a parent
 * Missing July from English-month-names
+* Allow multiple case-range statement in select case.
 
 ### Closed-Planned for inclusion in next release
 * line continuation format
