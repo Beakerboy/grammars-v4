@@ -299,7 +299,7 @@ aliasClause: ALIAS wsc STRINGLITERAL;
 implementsDirective: IMPLEMENTS WS ambiguousIdentifier;
 
 // 5.2.4.3 Event Declaration
-eventDeclaration: PUBLIC? wsc EVENT ambiguousIdentifier eventParameterList?;
+eventDeclaration: PUBLIC? wsc EVENT wsc ambiguousIdentifier eventParameterList?;
 eventParameterList: '(' wsc? positionalParameters? wsc? ')';
 
 
