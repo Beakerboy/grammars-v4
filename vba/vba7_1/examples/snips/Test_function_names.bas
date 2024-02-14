@@ -4,4 +4,6 @@ Attribute VB_Name = "TestFunctionNames"
 Function Baz()
     Foo = String(5, 42)
     Bar = Date
+    Foo2 = String$(5, 42)
+    Bar2 = Date$
 End Function
