@@ -15,10 +15,10 @@ In the course of creating this parser, several bugs were found in the MS-VBAL v1
 * private and public enums missing from a parent
 * Missing July from English-month-names
 * Allow multiple case-range statement in select case.
+* reserved-type-identifier missing from reserved-identifier.
 
 ### Closed-Planned for inclusion in next release
 * line continuation format
-* reserved-type-identifier missing from reserved-identifier
 * VB_invoke_propertyPutRef combined with VB_MemberFlags
 * erase-statement missing from data-manipulation-statements
 * print-statement missing from file-statement
