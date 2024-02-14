@@ -28,4 +28,12 @@ select case foo
     case bar: baz
     case baz: quix
 end select
+
+'Multiple range-clause elements can be present in a case-clause.
+Select Case Foo
+    case 1, 2, 3, 4
+        bar = 3
+    case 5, 6, 7
+        baz = 4
+End Select
 End Function
