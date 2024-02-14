@@ -615,7 +615,7 @@ selectCaseStatement
         caseClause*
         caseElseClause?
     endOfStatement+ END wsc SELECT;
-caseClause: endOfStatement+ CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? statementBlock?;
+caseClause: endOfStatement+ CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)* statementBlock?;
 caseElseClause: endOfStatement+ CASE wsc ELSE statementBlock?;
 rangeClause
     : expression
