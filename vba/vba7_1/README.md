@@ -9,7 +9,7 @@ This grammar ignores conditional-compilation statements. The vba_cc grammar can 
 Line endings, whitespace, and comments are traditionally removed from parsers, but the VBA standard dictates when and how some of these are valid, so they remain. Unfortunately, this leaves open room for more inaccuracy. Please report any whitespace bugs.
 ## Bugs Reported to Microsoft
 In the course of creating this parser, several bugs were found in the MS-VBAL v1.7 document, reported to Microsoft, and are listed below.
-### Open - awaiting feedback
+### Open - awaiting feedback from Microsoft on proper solution.
 * class file header definition
 * reserved-name keywords should be able to be used within expressions
 * private and public enums missing from a parent
@@ -17,7 +17,7 @@ In the course of creating this parser, several bugs were found in the MS-VBAL v1
 * Allow multiple case-range statement in select case.
 * reserved-type-identifier missing from reserved-identifier.
 
-### Closed-Planned for inclusion in next release
+### Closed-Fixed here and planned for inclusion in next release of MS-VBAL
 * line continuation format
 * VB_invoke_propertyPutRef combined with VB_MemberFlags
 * erase-statement missing from data-manipulation-statements
