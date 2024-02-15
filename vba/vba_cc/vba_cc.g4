@@ -200,7 +200,7 @@ BOOLEANLITERAL
     ;
 
 MISC
-    : ~[\r\n\u2028\u2029<>=*+\-/ \t"()A-Z0-9]+
+    : ~[\r\n\u2028\u2029<>&=*+^\-/ \t"()A-Z0-9]+
     ;
 
 NEWLINE
