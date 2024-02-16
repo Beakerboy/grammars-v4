@@ -179,6 +179,7 @@ commonModuleDeclarationElement
     | privateConstDeclaration
     | privateTypeDeclaration
     | privateEnumDeclaration
+    | publicEnumDeclaration
     | privateExternalProcedureDeclaration
     ;
 
