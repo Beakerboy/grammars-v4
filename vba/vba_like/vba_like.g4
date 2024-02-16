@@ -9,24 +9,26 @@ options {
 program
     : patternElement+
     ;
+
 patternElement
     : CHAR
     | set
     | notSet
     | wildcard
     ;
+
 wildcard
     : WILD_CHAR
     | WILD_SEQ
     | WILD_DIGIT
     ;
+
 notSet
-    : '[!' '-'? charList ']'
-    | '[!' charList '-]'
+    : '[!' charList? ']'
     ;
 
 charList
-    : charListElement+
+    : '-'? charListElement+ '-'?
     ;
     
 charListElement
@@ -36,8 +38,7 @@ charListElement
     ;
 
 set
-    : '[' '-'? charList ']'
-    | '[' charList '-]'
+    : '[' charList? ']
     ;
 
 charRange
@@ -55,7 +56,6 @@ specialChar
 
 // lexer rules --------------------------------------------------------------------------------
 
-// keywords
 CHAR
     : [A-Z]
     | [a-z]
