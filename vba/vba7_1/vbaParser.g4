@@ -876,7 +876,7 @@ variable: variableExpression;
 
 // Attribute Statement
 attributeStatement
-    : ATTRIBUTE WS ambiguousIdentifier '.' attributeName WS? EQ WS? STRINGLITERAL
+    : ATTRIBUTE WS ambiguousIdentifier '.' attributeName WS? EQ WS? literalExpression
     | ATTRIBUTE WS ambiguousIdentifier '.' VB_PROCDATA '.' VB_INVOKE_FUNC WS EQ WS STRINGLITERAL
     ;
 
