@@ -213,7 +213,7 @@ classTypeName: definedTypeExpression;
 
 // 5.2.3.1.3 Array Dimensions and Bounds
 arrayDim: '(' wsc? boundsList? wsc? ')';
-boundsList: dimSpec (wsc',' wsc dimSpec)*;
+boundsList: dimSpec (wsc? ',' wsc? dimSpec)*;
 dimSpec: lowerBound? wsc? upperBound;
 lowerBound: constantExpression wsc TO wsc;
 upperBound: constantExpression;
