@@ -33,7 +33,8 @@ likePatternCharlist
     ;
 
 charList
-    : '-'? charListElement* '-'?
+    : '-' charListElement* '-'?
+    | charListElement+ '-'?
     ;
     
 charListElement
