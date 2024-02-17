@@ -16,6 +16,7 @@ In the course of creating this parser, several bugs were found in the MS-VBAL v1
 * Allow multiple case-range statement in select case.
 * reserved-type-identifier missing from reserved-identifier.
 * The use of attributes within the code body is not addressed.
+* Redim of member access espressions
 
 ### Closed-Fixed here and planned for inclusion in next release of MS-VBAL
 * line continuation format
