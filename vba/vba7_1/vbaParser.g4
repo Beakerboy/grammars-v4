@@ -454,6 +454,7 @@ blockStatement
     : endOfStatement* endOfLineNoWs statementLabelDefinition
     | endOfStatement+ remStatement
     | statement
+    | endOfStatement* endOfLineNoWs attributeStatement
     ;
 statement
     : controlStatement
@@ -873,6 +874,19 @@ data: expression;
 getStatement: GET wsc fileNumber wsc? ',' wsc? recordNumber? wsc? ',' wsc? variable;
 variable: variableExpression;
 
+// Attribute Statement
+attributeStatement
+    : ATTRIBUTE WS ambiguousIdentifier '.' attributeName WS? EQ WS? STRINGLITERAL
+    | ATTRIBUTE WS ambiguousIdentifier '.' 'VB_ProcData' '.' 'VB_Invoke_Func' WS EQ WS STRINGLITERAL
+    ;
+
+attributeName
+    : 'VB_DESCRIPTION'
+    | 'VB_VARDESCRIPTION'
+    | 'VB_USERMEMID'
+    | 'VB_VARUSERMEMID'
+
+    ;
 //---------------------------------------------------------------------------------------
 // 5.6  Expressions
 // Modifying the order will affect the order of operations
