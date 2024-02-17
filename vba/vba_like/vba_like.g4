@@ -10,7 +10,7 @@ program
     : likePatternElement+
     ;
 
-patternElement
+likePatternElement
     : likePatternChar
     | likePatternCharlist
     | wildcard
