@@ -877,7 +877,7 @@ variable: variableExpression;
 // Attribute Statement
 attributeStatement
     : ATTRIBUTE WS ambiguousIdentifier '.' attributeName WS? EQ WS? STRINGLITERAL
-    | ATTRIBUTE WS ambiguousIdentifier '.' 'VB_ProcData' '.' 'VB_Invoke_Func' WS EQ WS STRINGLITERAL
+    | ATTRIBUTE WS ambiguousIdentifier '.' VB_PROCDATA '.' VB_INVOKE_FUNC WS EQ WS STRINGLITERAL
     ;
 
 attributeName
