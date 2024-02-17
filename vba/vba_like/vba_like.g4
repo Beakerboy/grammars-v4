@@ -57,6 +57,7 @@ charRange
 
 CHAR
     : ~[-*#?[\]]
+    ;
 
 WILD_CHAR
     : '?'
