@@ -4,3 +4,5 @@ BEGIN
 END
 Attribute VB_Name = "ClassDeclarations"
 Public Event Ev(ByVal Data As Variant)
+Const Foo1
+Private Const Foo2
