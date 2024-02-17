@@ -15,5 +15,6 @@
         <module>vba6</module>
         <module>vba7_1</module>
         <module>vba_cc</module>
+        <module>vba_like</module>
     </modules>
 </project>
