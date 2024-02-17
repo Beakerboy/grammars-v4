@@ -7,7 +7,7 @@ options {
 // module ----------------------------------
 
 program
-    : likePatternElement+ EOF
+    : likePatternElement* EOF
     ;
 
 likePatternElement
