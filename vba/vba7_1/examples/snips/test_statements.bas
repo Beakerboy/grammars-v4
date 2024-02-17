@@ -1,6 +1,8 @@
 Attribute VB_Name = "statements"
 
 Public Static Function Module()
+Attribute Module.VB_Description = "My Description"
+Attribute Module.UserMemId = 0
     ' Call
     Call bar
     bar.Type baz:="7", foo:=5
