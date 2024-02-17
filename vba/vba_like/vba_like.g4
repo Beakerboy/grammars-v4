@@ -7,14 +7,19 @@ options {
 // module ----------------------------------
 
 program
-    : patternElement+
+    : likePatternElement+
     ;
 
 patternElement
-    : CHAR
-    | set
-    | notSet
+    : likePatternChar
+    | likePatternCharlist
     | wildcard
+    ;
+
+likePatternChar
+    : CHAR
+    | '-'
+    | ']'
     ;
 
 wildcard
@@ -23,44 +28,35 @@ wildcard
     | WILD_DIGIT
     ;
 
-notSet
-    : '[!' charList? ']'
+likePatternCharlist
+    : '[' '!'? charList? ']'
     ;
 
 charList
-    : '-'? charListElement+ '-'?
+    : '-'? charListElement* '-'?
     ;
     
 charListElement
-    : CHAR
+    : charlistChar
     | charRange
-    | specialChar
     ;
 
-set
-    : '[' charList? ']
+charlistChar
+    : CHAR
+    | '*'
+    | '#'
+    | '?'
+    | '['
     ;
 
 charRange
-    : CHAR '-' CHAR
+    : charlistChar '-' charlistChar
     ;
-    
-specialChar
-    : '?'
-    | '['
-    | '*'
-    | '#'
-    ;
-
-    
 
 // lexer rules --------------------------------------------------------------------------------
 
 CHAR
-    : [A-Z]
-    | [a-z]
-    | [0-9]
-    ;
+    : ~[-*#?[\]]
 
 WILD_CHAR
     : '?'
