@@ -876,16 +876,18 @@ variable: variableExpression;
 
 // Attribute Statement
 attributeStatement
-    : ATTRIBUTE WS ambiguousIdentifier '.' attributeName WS? EQ WS? literalExpression
+    : ATTRIBUTE WS ambiguousIdentifier '.' attributeDescName WS? EQ WS? STRINGLITERAL
+    | ATTRIBUTE WS ambiguousIdentifier '.' attributeUsrName WS? EQ WS? '-'? INTEGERLITERAL
     | ATTRIBUTE WS ambiguousIdentifier '.' VB_PROCDATA '.' VB_INVOKE_FUNC WS EQ WS STRINGLITERAL
     ;
 
-attributeName
+attributDesceName
     : 'VB_DESCRIPTION'
     | 'VB_VARDESCRIPTION'
-    | 'VB_USERMEMID'
+    ;
+attributeUsrName
+    : 'VB_USERMEMID'
     | 'VB_VARUSERMEMID'
-
     ;
 //---------------------------------------------------------------------------------------
 // 5.6  Expressions
