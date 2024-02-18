@@ -884,10 +884,11 @@ attributeStatement
     | ATTRIBUTE WS ambiguousIdentifier '.' VB_PROCDATA '.' VB_INVOKE_FUNC WS EQ WS STRINGLITERAL
     ;
 
-attributDesceName
+attributDescName
     : 'VB_DESCRIPTION'
     | 'VB_VARDESCRIPTION'
     ;
+
 attributeUsrName
     : 'VB_USERMEMID'
     | 'VB_VARUSERMEMID'
