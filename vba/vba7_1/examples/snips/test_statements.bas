@@ -32,7 +32,8 @@ select case foo
 end select
 
     If True Then
-        ' skip
+        ' Test out the end statement
+        End
     ElseIf True Then 'skip
         Call foo 'skip
     Else
