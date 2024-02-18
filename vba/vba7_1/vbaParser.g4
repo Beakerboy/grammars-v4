@@ -85,7 +85,7 @@ name
     ;
 untypedName
     : ambiguousIdentifier
-    | foreignName
+    | FOREIGN_NAME
     ;
 
 //---------------------------------------------------------------------------------------
@@ -1339,10 +1339,6 @@ futureReserved
     ;
 
 // 3.3.5.3  Special Identifier Forms
-
-// Known as FOREIGN-NAME in MS-VBAL
-foreignName: '[' foreignIdentifier ']';
-foreignIdentifier: ~(NEWLINE | LINE_CONTINUATION);
 
 // known as BUILTIN-TYPE in MS-VBAL
 builtinType
