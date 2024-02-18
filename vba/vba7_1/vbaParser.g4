@@ -74,7 +74,7 @@ proceduralModuleBody: proceduralModuleDeclarationSection? endOfLine* proceduralM
 classModuleBody: classModuleDeclarationSection? classModuleCode;
 unrestrictedName
     : reservedIdentifier
-    | ambiguousIdentifier
+    | name
     ;
 
 // Added markedFileNumber to fix a bug
@@ -85,6 +85,7 @@ name
     ;
 untypedName
     : ambiguousIdentifier
+    | foreignName
     ;
 
 //---------------------------------------------------------------------------------------
