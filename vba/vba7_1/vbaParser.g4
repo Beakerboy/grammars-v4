@@ -1070,7 +1070,7 @@ definedTypeExpression
 
 // 5.6.16.8
 addressofExpression
-    : ADDRESSOF procedurePointerExpression
+    : ADDRESSOF wsc procedurePointerExpression
     ;
 procedurePointerExpression
     : simpleNameExpression
