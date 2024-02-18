@@ -6,3 +6,4 @@ Attribute VB_Name = "ClassDeclarations"
 Public Event Ev(ByVal Data As Variant)
 Const Foo1 = 2
 Private Const Foo2 = 1
+Attribute Foo2.VB_VarHelpID = -1
