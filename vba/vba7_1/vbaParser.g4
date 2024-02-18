@@ -187,9 +187,15 @@ commonModuleDeclarationElement
     ;
 
 // 5.2.3.1 Module Variable Declaration Lists
+// Added variableHelpAttribute, not in MS-VBAL
 moduleVariableDeclaration
     : publicVariableDecalation
     | privateVariableDeclaration
+    | variableHelpAttribute
+    ;
+
+variableHelpAttribute
+    : ATTRIBUTE ambiguousIdentifier '.' VB_VARHELPID WS? '=' WS? '-'? INTEGERLITERAL
     ;
 globalVariableDeclaration: GLOBAL WS variableDeclarationList;
 publicVariableDecalation: PUBLIC (WS SHARED)? WS moduleVariableDeclarationList;
