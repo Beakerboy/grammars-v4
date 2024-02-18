@@ -53,4 +53,7 @@ End Select
 Open foo for Input as #ff
     bar = Input(LOF(ff), #ff)
 Close #ff
+
+' No WS around operators
+Foo = (foo)/count
 End Function
