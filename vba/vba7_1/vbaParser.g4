@@ -891,8 +891,10 @@ attributeStatement
     ;
 
 attributeDescName
-    : 'VB_DESCRIPTION'
-    | 'VB_VARDESCRIPTION'
+    : VB_DESCRIPTION
+    | VB_VARDESCRIPTION
+    | VB_MEMBERFLAGS
+    | VB_VARMEMBERFLAGS
     ;
 
 attributeUsrName
