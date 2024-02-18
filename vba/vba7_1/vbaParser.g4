@@ -591,7 +591,7 @@ elseIfBlock
         statementBlock?
     | endOfStatement* ELSEIF wsc? booleanExpression wsc? THEN statementBlock?
     ;
-elseBlock: endOfLine ELSE endOfLine? wsc? statementBlock?;
+elseBlock: endOfLine+ ELSE endOfLine? wsc? statementBlock?;
 
 // 5.4.2.9 Single-line If Statement
 singleLineIfStatement
