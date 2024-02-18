@@ -1161,7 +1161,7 @@ MACRO_LINE
 
 // identifier
 IDENTIFIER
-    : ~[\]()\r\n\t.,'"|!@#$%^&*/\-+:=; ]+
+    : [A-Z][A-Z0-9_]*
     | L_SQUARE_BRACKET (~[!\]\r\n])+ R_SQUARE_BRACKET
     ;
 
