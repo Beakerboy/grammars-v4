@@ -509,6 +509,7 @@ controlStatementExceptMultilineIf
     | exitPropertyStatement
     | raiseeventStatement
     | withStatement
+    | endStatement
     ;
 
 // 5.4.2.1 Call Statement
@@ -671,6 +672,11 @@ eventArgument: expression;
 
 // 5.4.2.21 With Statement
 withStatement: WITH wsc? expression statementBlock? endOfStatement+ END wsc WITH;
+
+// Missing from documentation
+endStatement
+    : END
+    ;
 
 // 5.4.3 Data Manipulation Statements
 // Added eraseStatement. It is missing from the list in MsS-VBAL 1.7
