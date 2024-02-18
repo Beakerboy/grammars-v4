@@ -250,7 +250,7 @@ untypedNameConstItem: ambiguousIdentifier (wsc constAsClause)? wsc? EQ wsc? cons
 constAsClause: AS wsc builtinType;
 
 // 5.2.3.3 User Defined Type Declarations
-publicTypeDeclaration: (GLOBAL | PUBLIC) wsc udtDeclaration;
+publicTypeDeclaration: ((GLOBAL | PUBLIC) wsc)? udtDeclaration;
 privateTypeDeclaration: PRIVATE wsc udtDeclaration;
 udtDeclaration: TYPE wsc untypedName endOfStatement+ udtMemberList endOfStatement+ END wsc TYPE;
 udtMemberList: udtElement (endOfStatement udtElement)*;
