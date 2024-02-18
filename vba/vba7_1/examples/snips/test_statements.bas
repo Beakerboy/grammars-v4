@@ -31,6 +31,14 @@ select case foo
     case baz: quix
 end select
 
+    If True Then
+        ' skip
+    ElseIf True Then 'skip
+        Call foo 'skip
+    Else
+        Call bar
+    EndIf
+
 'Multiple range-clause elements can be present in a case-clause.
 Select Case Foo
     case 1, 2, 3, 4
