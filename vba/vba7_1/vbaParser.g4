@@ -76,9 +76,12 @@ unrestrictedName
     : reservedIdentifier
     | ambiguousIdentifier
     ;
+
+// Added markedFileNumber to fix a bug
 name
     : untypedName
     | typedName
+    | markedFileNumber
     ;
 untypedName
     : ambiguousIdentifier
@@ -881,10 +884,11 @@ attributeStatement
     | ATTRIBUTE WS ambiguousIdentifier '.' VB_PROCDATA '.' VB_INVOKE_FUNC WS EQ WS STRINGLITERAL
     ;
 
-attributDesceName
+attributeDescName
     : 'VB_DESCRIPTION'
     | 'VB_VARDESCRIPTION'
     ;
+
 attributeUsrName
     : 'VB_USERMEMID'
     | 'VB_VARUSERMEMID'
