@@ -16,6 +16,7 @@ In the course of creating this parser, several bugs were found in the MS-VBAL v1
 * reserved-type-identifier missing from reserved-identifier.
 * The use of attributes within the code body is not addressed.
 * Redim of member access espressions
+* marked-file-numbers cannot be used as an input to a function.
 
 ### Closed-Fixed here and planned for inclusion in next release of MS-VBAL
 * line continuation format
