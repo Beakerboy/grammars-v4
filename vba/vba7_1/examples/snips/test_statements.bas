@@ -38,4 +38,10 @@ Select Case Foo
     case 5, 6, 7
         baz = 4
 End Select
+
+
+' The Input function accepts a marked file number as a prameter
+Open foo for Input as #ff
+    bar = Input(LOF(ff), #ff)
+Close #ff
 End Function
