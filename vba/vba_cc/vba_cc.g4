@@ -18,7 +18,7 @@ classFileHeader
 
 // 3.4 Conditional Compilation
 logicalLine
-    : NEWLINE WS? ~(CONST | IF | ELSEIF| ELSE | NEWLINE)? (~(NEWLINE))*;
+    : NEWLINE WS? (~(CONST | IF | ELSEIF | ELSE | NEWLINE) (~(NEWLINE))*)?;
 conditionalModuleBody: ccBlock;
 ccBlock: (ccConst | ccIfBlock | logicalLine)+;
 
