@@ -76,9 +76,12 @@ unrestrictedName
     : reservedIdentifier
     | ambiguousIdentifier
     ;
+
+// Added markedFileNumber to fix a bug
 name
     : untypedName
     | typedName
+    | markedFileNumber
     ;
 untypedName
     : ambiguousIdentifier
