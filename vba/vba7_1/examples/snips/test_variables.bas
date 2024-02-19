@@ -10,5 +10,6 @@ Function Foo()
     With foo.bar
         ReDim .baz(0 To UBound(params(2)))
     End With
+    Redim Preserve foo.bar(1 to foo.num)
     ' MS-VBAL 3.2.1 states that final line may be non-terminated
 End Function
