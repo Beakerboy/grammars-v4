@@ -46,6 +46,7 @@ Select Case Foo
         bar = 3
     case 5, 6, 7
         baz = 4
+    case is > 3
 End Select
 
 
