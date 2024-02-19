@@ -633,7 +633,7 @@ caseElseClause: endOfStatement+ CASE wsc ELSE statementBlock?;
 rangeClause
     : expression
     | startValue wsc? TO wsc? endValue
-    | IS? wsc comparisonOperator expression;
+    | IS? wsc comparisonOperator wsc? expression;
 selectExpression: expression;
 comparisonOperator
     : EQ
