@@ -713,9 +713,11 @@ redimDeclarationList: redimVariableDcl (wsc? ',' wsc? redimVariableDcl)*;
 redimVariableDcl
     : redimTypedVariableDcl
     | redimUntypedDcl
+    | withExpressionDcl
     ;
-redimTypedVariableDcl: typedName dynamicArrayDim;
+redimTypedVariableDcl: typedName wsc? dynamicArrayDim;
 redimUntypedDcl: untypedName wsc? dynamicArrayClause;
+withExpressionDcl: withExpression wsc? dynamicArrayDim;
 dynamicArrayDim: '(' wsc? dynamicBoundsList wsc? ')';
 dynamicBoundsList: dynamicDimSpec (wsc? ',' wsc? dynamicDimSpec)*;
 dynamicDimSpec: (dynamicLowerBound wsc)? dynamicUpperBound;
