@@ -710,12 +710,18 @@ localConstDeclaration: constDeclaration;
 // 5.4.3.3 ReDim Statement
 redimStatement: REDIM (wsc PRESERVE)? wsc? redimDeclarationList;
 redimDeclarationList: redimVariableDcl (wsc? ',' wsc? redimVariableDcl)*;
+// Had to add withExpression and memberAccess
+// to match callStatement.
 redimVariableDcl
     : redimTypedVariableDcl
     | redimUntypedDcl
+    | withExpressionDcl
+    | memberAccessExpressionDcl
     ;
-redimTypedVariableDcl: typedName dynamicArrayDim;
+redimTypedVariableDcl: typedName wsc? dynamicArrayDim;
 redimUntypedDcl: untypedName wsc? dynamicArrayClause;
+withExpressionDcl: withExpression wsc? dynamicArrayDim;
+memberAccessExpressionDcl: memberAccessExpression wsc? dynamicArrayDim;
 dynamicArrayDim: '(' wsc? dynamicBoundsList wsc? ')';
 dynamicBoundsList: dynamicDimSpec (wsc? ',' wsc? dynamicDimSpec)*;
 dynamicDimSpec: (dynamicLowerBound wsc)? dynamicUpperBound;
