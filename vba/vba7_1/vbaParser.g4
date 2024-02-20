@@ -59,10 +59,12 @@ proceduralModuleHeader
     : endOfLine* ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
     ;
 classModuleHeader: (endOfLine+ classAttr)+ WS?;
+
+// VBA Library Projects are allowed to have GoobalNamespace and creatable as true.
 classAttr
     : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
-    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE
-    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? FALSE
+    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? booleanLiteralIdentifier
+    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? booleanLiteralIdentifier
     | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier
     | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier
     | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier
