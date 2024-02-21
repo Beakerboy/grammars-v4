@@ -7,4 +7,5 @@ Function Baz()
     Foo2 = String$(5, 42)
     Bar2 = Date$
     Foo3 = Abs(-1)
+    Foo3 = Input(7, #6)
 End Function
