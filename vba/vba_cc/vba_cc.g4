@@ -88,8 +88,6 @@ ccExpression
 
 literalExpression
     : BOOLEANLITERAL
-    | HEXLITERAL
-    | OCTLITERAL
     | FLOATLITERAL
     | INTEGERLITERAL
     | STRINGLITERAL
