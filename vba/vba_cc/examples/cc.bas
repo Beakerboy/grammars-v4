@@ -21,3 +21,8 @@ Close #ff
 #Elseif Win32 Then
 #Else
 #Endif
+
+' The blocks can each be empty.
+#if 1 / 2 = .5 Then
+    foo = 4
+#Endif
