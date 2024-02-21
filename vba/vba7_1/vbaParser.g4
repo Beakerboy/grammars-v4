@@ -1292,6 +1292,24 @@ reservedTypeIdentifier
     | STRING
     | VARIANT
     ;
+
+// If we did not scoop up the bracketed forms in the Lexer, they would have become
+// Foreign Names.
+reservedTypeIdentifierB
+    : BOOLEAN_B
+    | BYTE_B
+    | CURRENCY_B
+    | DATE_B
+    | DOUBLE_B
+    | INTEGER_B
+    | LONG_B
+    | LONGLONG_B
+    | LONGPTR_B
+    | SINGLE_B
+    | STRING_B
+    | VARIANT_B
+    ;
+
 typeableReservedName
     : DATE
     | STRING
@@ -1351,9 +1369,9 @@ futureReserved
 // known as BUILTIN-TYPE in MS-VBAL
 builtinType
     : reservedTypeIdentifier
-    | '[' reservedTypeIdentifier ']'
+    | reservedTypeIdentifierB
     | OBJECT
-    | '[' OBJECT ']'
+    | OBJECT_B
     ;
 
 // Known as TYPED-NAME in MS-VBAL

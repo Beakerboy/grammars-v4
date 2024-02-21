@@ -64,6 +64,10 @@ BOOLEAN
     : 'BOOLEAN'
     ;
 
+BOOLEAN_B
+    : '[BOOLEAN]'
+    ;
+
 BYVAL
     : 'BYVAL'
     ;
@@ -74,6 +78,10 @@ BYREF
 
 BYTE
     : 'BYTE'
+    ;
+
+BYTE_B
+    : '[BYTE]'
     ;
 
 CALL
@@ -184,8 +192,16 @@ CURRENCY
     : 'CURRENCY'
     ;
 
+CURRENCY_B
+    : '[CURRENCY]'
+    ;
+
 DATE
     : 'DATE'
+    ;
+
+DATE_B
+    : '[DATE]'
     ;
 
 DEBUG
@@ -270,6 +286,10 @@ DOEVENTS
 
 DOUBLE
     : 'DOUBLE'
+    ;
+
+DOUBLE_B
+    : '[DOUBLE]'
     ;
 
 EACH
@@ -400,6 +420,10 @@ INTEGER
     : 'INTEGER'
     ;
 
+INTEGER_B
+    : '[INTEGER]'
+    ;
+
 KILL
     : 'KILL'
     ;
@@ -444,12 +468,24 @@ LONG
     : 'LONG'
     ;
 
+LONG_B
+    : '[LONG]'
+    ;
+
 LONGLONG
     : 'LONGLONG'
     ;
 
+LONGLONG_B
+    : '[LONGLONG]'
+    ;
+
 LONGPTR
     : 'LONGPTR'
+    ;
+
+LONGPTR_B
+    : '[LONGPTR]'
     ;
 
 LOOP
@@ -510,6 +546,10 @@ NULL_
 
 OBJECT
     : 'OBJECT'
+    ;
+
+OBJECT_B
+    : '[OBJECT]'
     ;
 
 ON
@@ -636,6 +676,10 @@ SINGLE
     : 'SINGLE'
     ;
 
+SINGLE_B
+    : '[SINGLE]'
+    ;
+
 SPC
     : 'SPC'
     ;
@@ -654,6 +698,10 @@ STOP
 
 STRING
     : 'STRING'
+    ;
+
+STRING_B
+    : '[STRING]'
     ;
 
 SUB
@@ -798,6 +846,10 @@ VB_VARUSERMEMID
 
 VARIANT
     : 'VARIANT'
+    ;
+
+VARIANT_B
+    : '[VARIANT]'
     ;
 
 VERSION
