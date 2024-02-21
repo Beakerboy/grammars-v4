@@ -961,9 +961,7 @@ lExpression
 // check on hex and oct
 // check definition of integer and float
 literalExpression
-    : HEXLITERAL
-    | OCTLITERAL
-    | DATELITERAL
+    : DATELITERAL
     | FLOATLITERAL
     | INTEGERLITERAL
     | STRINGLITERAL
