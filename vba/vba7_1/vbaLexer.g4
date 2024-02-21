@@ -548,6 +548,10 @@ OBJECT
     : 'OBJECT'
     ;
 
+OBJECT_B
+    : '[OBJECT]'
+    ;
+
 ON
     : 'ON'
     ;
