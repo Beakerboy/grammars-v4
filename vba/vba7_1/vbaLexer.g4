@@ -1201,7 +1201,7 @@ UNDERSCORE
     ;
 
 WS
-    : ([ \t])+
+    : ([ \t\u0019\u3000])+
     ;
 
 MACRO_LINE
