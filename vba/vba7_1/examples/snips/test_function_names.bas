@@ -6,4 +6,5 @@ Function Baz()
     Bar = Date
     Foo2 = String$(5, 42)
     Bar2 = Date$
+    Foo3 = Abs(-1)
 End Function
