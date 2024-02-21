@@ -24,7 +24,7 @@ ccBlock: (ccConst | ccIfBlock | logicalLine)+;
 
 // 3.4.1 Conditional Compilation Const Directive
 ccConst: NEWLINE CONST ccVarLhs '=' ccExpression COMMENT?;
-ccVarLhs: IDENTIFIER;
+ccVarLhs: name;
 
 // 3.4.2 Conditional Compilation If Directives
 ccIfBlock
@@ -35,6 +35,33 @@ ccElseif: NEWLINE+ ELSEIF ccExpression THEN COMMENT?;
 ccElseBlock: ccElse ccBlock?;
 ccElse: NEWLINE+ ELSE COMMENT?;
 ccEndif: NEWLINE+ ENDIF COMMENT?;
+
+// 5.1
+name
+    : untypedName
+    | typedName
+    ;
+
+untypedName
+    : IDENTIFIER
+    | FOREIGN_NAME
+    ;
+
+// Known as TYPED-NAME in MS-VBAL
+// This probably could be turned into a token
+typedName
+    : IDENTIFIER typeSuffix
+    ;
+
+typeSuffix
+    : '&'
+    | '%'
+    | '#'
+    | '!'
+    | '@'
+    | '$'
+    | '^'
+    ;
 
 // 5.6.16.2 Conditional Compilation Expressions
 ccExpression
@@ -320,7 +347,11 @@ fragment DIGIT
     ;
 
 IDENTIFIER
-    : ~[\]()\r\n\t.,'"|!@#$%^&*\-+:=; ]+
+    : [A-Z][A-Z0-9_]*
+    ;
+
+FOREIGN_NAME
+    : '[' ~[\r\n\u2028\u2029]* ']'
     ;
 
 COMMENT
