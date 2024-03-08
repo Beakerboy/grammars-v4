@@ -1096,13 +1096,13 @@ procedurePointerExpression
 wsc: (WS | LINE_CONTINUATION)+;
 // known as EOL in MS-VBAL
 endOfLine
-    : WS? (NEWLINE | commentBody | remStatement) WS?
+    : wsc? (NEWLINE | commentBody | remStatement) wsc?
     ;
 // We usually don't care if a line of code begins with whitespace, and the parser rules are
 // cleaner if we lump that in with the EOL or EOS "token". However, for those cases where
 // something MUST occur on the start of a line, use endOfLineNoWs.
 endOfLineNoWs
-    : WS? (NEWLINE | commentBody | remStatement)
+    : wsc? (NEWLINE | commentBody | remStatement)
     ;
 // known as EOS in MS-VBAL
 endOfStatement
