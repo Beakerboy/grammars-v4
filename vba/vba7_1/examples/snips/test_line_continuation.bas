@@ -1,3 +1,4 @@
+Attribute VB_Name = "LineContinuation"
 Public _
 Sub _
 Module _
