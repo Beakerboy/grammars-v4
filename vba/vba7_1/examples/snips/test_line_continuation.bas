@@ -12,5 +12,7 @@ Module _
        + _
       3 _
      ): _
+    Call foo _
+
 End _
 Sub
