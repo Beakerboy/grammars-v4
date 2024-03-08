@@ -1090,7 +1090,7 @@ procedurePointerExpression
 // In theory whitespace should be ignored, but there are a handful of cases
 // where statements MUST be at the beginning of a line or where a NO-WS
 // rule appears in the parser rule.
-// If may make things simpler her to send all wsc to the hidden channel
+// If may make things simpler here to send all wsc to the hidden channel
 // and let a linting tool highlight the couple cases where whitespace
 // will cause an error.
 wsc: (WS | LINE_CONTINUATION)+;
@@ -1098,18 +1098,18 @@ wsc: (WS | LINE_CONTINUATION)+;
 endOfLine
     : WS? (NEWLINE | commentBody | remStatement) WS?
     ;
-// We usually don't care if a line of code begins with whitespace, and the paraer rules are
-// cleaner if we limp that in aith the EOL or EOS "token". However, for those cases where
+// We usually don't care if a line of code begins with whitespace, and the parser rules are
+// cleaner if we lump that in with the EOL or EOS "token". However, for those cases where
 // something MUST occur on the start of a line, use endOfLineNoWs.
 endOfLineNoWs
     : WS? (NEWLINE | commentBody | remStatement)
     ;
 // known as EOS in MS-VBAL
 endOfStatement
-    : (endOfLine | WS? COLON WS?)+
+    : (endOfLine | wsc? COLON wsc?)+
     ;
 endOfStatementNoWs
-    : (endOfLineNoWs | WS? COLON)+
+    : (endOfLineNoWs | wsc? COLON)+
     ;
 // The COMMENT token includes the leading single quote
 commentBody: COMMENT;
