@@ -1009,7 +1009,7 @@ memberAccessExpression
 // This expression is also rolled into lExpression.
 // Changes here must be duplicated there
 indexExpression
-    : lExpression WS? '(' wsc? argumentList wsc? ')'
+    : lExpression wsc? '(' wsc? argumentList wsc? ')'
     ;
 
 // 5.6.13.1 Argument Lists
