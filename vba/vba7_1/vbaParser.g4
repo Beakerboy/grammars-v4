@@ -44,7 +44,7 @@ classBeginBlock
     ;
 
 beginBlockConfigElement
-    : endOfLine+ ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)?
+    : endOfLine+ '_'? ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)?
     | formBeginBlock
     | beginPropertyBlock
     ;
@@ -64,7 +64,7 @@ formBeginBlock
     : endOfLine+ BEGIN WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier beginBlockConfigElement+ endOfLine+ END
     ;
 beginPropertyBlock
-    : endOfLine+ BEGINPROPERTY ambiguousIdentifier beginBlockConfigElement+ endOfLine+ ENDPROPERTY
+    : endOfLine+ BEGINPROPERTY WS ambiguousIdentifier beginBlockConfigElement+ endOfLine+ ENDPROPERTY
     ;
 //---------------------------------------------------------------------------------------
 // 4.2 Modules
