@@ -40,11 +40,11 @@ classVersionIdentification
     ;
 
 classBeginBlock
-    : endOfLine BEGIN beginBlockConfigElement+ endOfLine END
+    : endOfLine+ BEGIN beginBlockConfigElement+ endOfLine END
     ;
 
 beginBlockConfigElement
-    : endOfLine ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)?
+    : endOfLine+ ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)?
     | formBeginBlock
     | beginPropertyBlock
     ;
@@ -58,13 +58,13 @@ formVersionIdentification
     : VERSION WS FLOATLITERAL
     ;
 formObjectAssign
-    : endOfLine OBJECT WS? EQ WS? STRINGLITERAL ';' WS? STRINGLITERAL
+    : endOfLine+ OBJECT WS? EQ WS? STRINGLITERAL ';' WS? STRINGLITERAL
     ;
 formBeginBlock
-    : endOfLine BEGIN WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier beginBlockConfigElement+ endOfLine END
+    : endOfLine+ BEGIN WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier beginBlockConfigElement+ endOfLine END
     ;
 beginPropertyBlock
-    : endOfLine BEGINPROPERTY ambiguousIdentifier beginBlockConfigElement+ endOfLine ENDPROPERTY
+    : endOfLine+ BEGINPROPERTY ambiguousIdentifier beginBlockConfigElement+ endOfLine ENDPROPERTY
     ;
 //---------------------------------------------------------------------------------------
 // 4.2 Modules
