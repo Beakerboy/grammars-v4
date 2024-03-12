@@ -13,10 +13,11 @@ In the course of creating this parser, several bugs were found in the MS-VBAL v1
 * class file header definition
 * reserved-name keywords should be able to be used within expressions
 * The use of attributes within the code body is not addressed.
-* marked-file-numbers cannot be used as an input to a function.
+* public types in class modules
 
 ### Closed-Fixed here and planned for inclusion in next release of MS-VBAL
 * private and public enums missing from a parent
 * Allow multiple case-range statements in select case.
 * missing end statement
 * Redim of member access expressions
+* marked-file-numbers cannot be used as an input to a function.
