@@ -46,6 +46,7 @@ classBeginBlock
 beginBlockConfigElement
     : ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)? endOfLine*
     | formBeginBlock
+    | beginPropertyBlock
     ;
 
 // Form entries
@@ -61,6 +62,9 @@ formObjectAssign
     ;
 formBeginBlock
     : endOfLine BEGIN (WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier)? endOfLine* beginBlockConfigElement+ endOfLine END
+    ;
+beginPropertyBlock
+    : BEGINPROPERTY ambiguousIdentifier endOfLine beginBlockConfigElement+ endOfLine ENDPROPERTY
     ;
 //---------------------------------------------------------------------------------------
 // 4.2 Modules
@@ -1420,6 +1424,7 @@ ambiguousKeyword
     | BASE
     | BEEP
     | BEGIN
+    | BEGINPROPERTY
     | BINARY
     | CLASS
     | CHDIR
@@ -1431,6 +1436,7 @@ ambiguousKeyword
     | DATABASE
     | DELETESETTING
     | ERROR
+    | ENDPROPERTY
     | FILECOPY
     | GO
     | KILL
