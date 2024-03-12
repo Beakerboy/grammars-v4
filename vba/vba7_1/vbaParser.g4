@@ -22,10 +22,12 @@ startRule
     : module EOF
     ;
 
+// Added form file entry
 module
     : endOfLineNoWs* (
           proceduralModule
         | classFileHeader classModule
+        | formFileHeader classModule
       ) endOfLine* WS?
     ;
 
@@ -34,17 +36,36 @@ classFileHeader
     ;
 
 classVersionIdentification
-    : VERSION WS FLOATLITERAL (WS CLASS)?
+    : VERSION WS FLOATLITERAL WS CLASS
     ;
 
 classBeginBlock
-    : endOfLine BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* beginBlockConfigElement+ endOfLine END
+    : endOfLine+ BEGIN beginBlockConfigElement+ endOfLine+ END
     ;
 
 beginBlockConfigElement
-    : ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)? endOfLine*
+    : endOfLine+ '_'? ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)?
+    | formBeginBlock
+    | beginPropertyBlock
     ;
 
+// Form entries
+formFileHeader
+    : formVersionIdentification (formObjectAssign)* formBeginBlock
+    ;
+
+formVersionIdentification
+    : VERSION WS FLOATLITERAL
+    ;
+formObjectAssign
+    : endOfLine+ OBJECT WS? EQ WS? STRINGLITERAL ';' WS? STRINGLITERAL
+    ;
+formBeginBlock
+    : endOfLine+ BEGIN WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier beginBlockConfigElement+ endOfLine+ END
+    ;
+beginPropertyBlock
+    : endOfLine+ BEGINPROPERTY WS ambiguousIdentifier beginBlockConfigElement+ endOfLine+ ENDPROPERTY
+    ;
 //---------------------------------------------------------------------------------------
 // 4.2 Modules
 proceduralModule
@@ -1403,6 +1424,7 @@ ambiguousKeyword
     | BASE
     | BEEP
     | BEGIN
+    | BEGINPROPERTY
     | BINARY
     | CLASS
     | CHDIR
@@ -1414,6 +1436,7 @@ ambiguousKeyword
     | DATABASE
     | DELETESETTING
     | ERROR
+    | ENDPROPERTY
     | FILECOPY
     | GO
     | KILL
