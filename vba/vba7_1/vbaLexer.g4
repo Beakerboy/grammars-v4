@@ -1072,18 +1072,10 @@ STRINGLITERAL
     : '"' (~["\r\n] | '""')* '"'
     ;
 
-OCTLITERAL
-    : '&' [O]? [0-7]+
-    ;
-
-HEXLITERAL
-    : '&H' [0-9A-F]+
-    ;
-
 INTEGERLITERAL
     : (DIGIT DIGIT*
-    | HEXLITERAL
-    | OCTLITERAL) [%&^]?
+    | '&H' [0-9A-F]+
+    | '&' [O]? [0-7]+) [%&^]?
     ;
 
 FLOATLITERAL
