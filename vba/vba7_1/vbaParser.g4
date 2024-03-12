@@ -109,7 +109,6 @@ proceduralModuleDeclarationElement
     : commonModuleDeclarationElement
     | globalVariableDeclaration
     | publicConstDeclaration
-    | publicTypeDeclaration
     | publicExternalProcedureDeclaration
     | globalEnumDeclaration
     | commonOptionDirective
@@ -180,10 +179,12 @@ defType
     ;
 
 // 5.2.3 Module Declarations
+// added public-type to fix bug
 commonModuleDeclarationElement
     : moduleVariableDeclaration
     | privateConstDeclaration
     | privateTypeDeclaration
+    | publicTypeDeclaration
     | privateEnumDeclaration
     | publicEnumDeclaration
     | privateExternalProcedureDeclaration
