@@ -22,10 +22,12 @@ startRule
     : module EOF
     ;
 
+// Added form file entry
 module
     : endOfLineNoWs* (
           proceduralModule
         | classFileHeader classModule
+        | formFileHeader classModule
       ) endOfLine* WS?
     ;
 
@@ -34,7 +36,7 @@ classFileHeader
     ;
 
 classVersionIdentification
-    : VERSION WS FLOATLITERAL (WS CLASS)?
+    : VERSION WS FLOATLITERAL WS CLASS
     ;
 
 classBeginBlock
@@ -45,6 +47,20 @@ beginBlockConfigElement
     : ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)? endOfLine*
     ;
 
+// Form entries
+formFileHeader
+    : formVersionIdentification (formObjectAssign)? formBeginBlock
+    ;
+
+formVersionIdentification
+    : VERSION WS FLOATLITERAL
+    ;
+formObjectAssign
+    : endOfLine OBJECT WS? EQ WS? STRINGLITERAL ';'
+    ;
+formBeginBlock
+    : endOfLine BEGIN (WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier)? endOfLine* beginBlockConfigElement+ endOfLine END
+    ;
 //---------------------------------------------------------------------------------------
 // 4.2 Modules
 proceduralModule
