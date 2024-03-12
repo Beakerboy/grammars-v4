@@ -45,18 +45,19 @@ classBeginBlock
 
 beginBlockConfigElement
     : ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)? endOfLine*
+    | formBeginBlock
     ;
 
 // Form entries
 formFileHeader
-    : formVersionIdentification (formObjectAssign)? formBeginBlock
+    : formVersionIdentification (formObjectAssign)* formBeginBlock
     ;
 
 formVersionIdentification
     : VERSION WS FLOATLITERAL
     ;
 formObjectAssign
-    : endOfLine OBJECT WS? EQ WS? STRINGLITERAL ';'
+    : endOfLine OBJECT WS? EQ WS? STRINGLITERAL ';' WS? STRINGLITERAL
     ;
 formBeginBlock
     : endOfLine BEGIN (WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier)? endOfLine* beginBlockConfigElement+ endOfLine END
