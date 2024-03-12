@@ -55,6 +55,9 @@ BASE
 BEGIN
     : 'BEGIN'
     ;
+BEGINPROPERTY
+    : 'BEGINPROPERTY'
+    ;
 
 BINARY
     : 'BINARY'
@@ -314,6 +317,10 @@ ENDIF
 
 END
     : 'END'
+    ;
+
+ENDPROPERTY
+    : 'ENDPROPERTY'
     ;
 
 ENUM
