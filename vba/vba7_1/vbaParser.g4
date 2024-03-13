@@ -58,7 +58,7 @@ formVersionIdentification
     : VERSION WS FLOATLITERAL
     ;
 formObjectAssign
-    : endOfLine+ OBJECT WS? EQ WS? STRINGLITERAL ';' WS? STRINGLITERAL
+    : endOfLine+ OBJECT WS? EQ WS? STRINGLITERAL (';' WS? STRINGLITERAL)?
     ;
 formBeginBlock
     : endOfLine+ BEGIN WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier beginBlockConfigElement+ endOfLine+ END
