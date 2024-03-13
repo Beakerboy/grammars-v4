@@ -1172,6 +1172,9 @@ fragment AMPM
     : WS? ('AM' | 'PM' | 'A' | 'P')
     ;
 
+FILEOFFSET
+    : '$'? STRINGLITERAL ':' HEXDIGIT+
+    ;
 // whitespace, line breaks, comments, ...
 LINE_CONTINUATION
     : WS UNDERSCORE WS? '\r'? '\n'
