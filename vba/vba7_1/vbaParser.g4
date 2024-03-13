@@ -823,10 +823,10 @@ fileStatement
 
 // 5.4.5.1 Open Statement
 openStatement
-    : OPEN wsc? pathName wsc? modeClause? wsc? accessClause? wsc? lock? wsc? AS wsc? fileNumber wsc? lenClause?
+    : OPEN wsc? pathName wsc? modeClause? wsc accessClause? wsc? lock? wsc? AS wsc? fileNumber wsc? lenClause?
     ;
 pathName: expression;
-modeClause: FOR wsc? modeOpt;
+modeClause: FOR wsc modeOpt;
 modeOpt
     : APPEND
     | BINARY
@@ -834,7 +834,7 @@ modeOpt
     | OUTPUT
     | RANDOM
     ;
-accessClause: ACCESS access;
+accessClause: ACCESS wsc access;
 access
     : READ
     | WRITE
