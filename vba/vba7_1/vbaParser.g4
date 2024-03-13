@@ -913,7 +913,7 @@ inputList: inputVariable (wsc? ',' wsc? inputVariable)*;
 inputVariable: boundVariableExpression;
 
 // 5.4.5.11 Put Statement
-putStatement: PUT wsc fileNumber wsc? ',' wsc?recordNumber? wsc? ',' data;
+putStatement: PUT wsc fileNumber wsc? ',' wsc? recordNumber? wsc? ',' wsc? data;
 recordNumber: expression;
 data: expression;
 
