@@ -349,9 +349,12 @@ classModuleCodeElement
     : commonModuleCodeElement
     | implementsDirective
     ;
+
+// Added AttributeStatement.
 commonModuleCodeElement
     : remStatement
     | procedureDeclaration
+    | attributeStatement
     ;
 procedureDeclaration
     : subroutineDeclaration
