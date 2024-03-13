@@ -64,8 +64,9 @@ formBeginBlock
     : endOfLine+ BEGIN WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier beginBlockConfigElement+ endOfLine+ END
     ;
 beginPropertyBlock
-    : endOfLine+ BEGINPROPERTY WS ambiguousIdentifier beginBlockConfigElement+ endOfLine+ ENDPROPERTY
+    : endOfLine+ BEGINPROPERTY WS ambiguousIdentifier (WS GUID)? beginBlockConfigElement+ endOfLine+ ENDPROPERTY
     ;
+
 //---------------------------------------------------------------------------------------
 // 4.2 Modules
 proceduralModule
