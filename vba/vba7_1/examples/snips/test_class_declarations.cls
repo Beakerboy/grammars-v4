@@ -12,3 +12,5 @@ Const Foo1 = 2
 Private Const Foo3 As [String] = "4"
 Private Const Foo2 = 1
 Attribute Foo2.VB_VarHelpID = -1
+Public Function Foo() as Bar: End Function
+Attribute Foo.VB_UserMemId = -4
