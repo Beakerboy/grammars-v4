@@ -64,7 +64,7 @@ formBeginBlock
     : endOfLine+ BEGIN WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier beginBlockConfigElement+ endOfLine+ END
     ;
 beginPropertyBlock
-    : endOfLine+ BEGINPROPERTY WS ambiguousIdentifier (WS GUID)? beginBlockConfigElement+ endOfLine+ ENDPROPERTY
+    : endOfLine+ BEGINPROPERTY WS ambiguousIdentifier (WS GUID WS?)? beginBlockConfigElement+ endOfLine+ ENDPROPERTY
     ;
 
 //---------------------------------------------------------------------------------------
