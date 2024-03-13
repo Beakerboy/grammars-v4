@@ -22,27 +22,49 @@ startRule
     : module EOF
     ;
 
+// Added form file entry
 module
     : endOfLineNoWs* (
           proceduralModule
         | classFileHeader classModule
+        | formFileHeader classModule
       ) endOfLine* WS?
     ;
 
 classFileHeader
-    : classVersionIdentification endOfLine+ classBeginBlock endOfLineNoWs+
+    : classVersionIdentification classBeginBlock
     ;
 
 classVersionIdentification
-    : VERSION WS FLOATLITERAL (WS CLASS)?
+    : VERSION WS FLOATLITERAL WS CLASS
     ;
 
 classBeginBlock
-    : BEGIN (WS GUID WS ambiguousIdentifier)? endOfLine* beginBlockConfigElement+ END
+    : endOfLine+ BEGIN beginBlockConfigElement+ endOfLine+ END
     ;
 
 beginBlockConfigElement
-    : ambiguousIdentifier WS? EQ WS? '-'? literalExpression (COLON literalExpression)? endOfLine*
+    : endOfLine+ '_'? ambiguousIdentifier WS? EQ WS? (('-'? literalExpression) | FILEOFFSET)
+    | formBeginBlock
+    | beginPropertyBlock
+    ;
+
+// Form entries
+formFileHeader
+    : formVersionIdentification (formObjectAssign)* formBeginBlock
+    ;
+
+formVersionIdentification
+    : VERSION WS FLOATLITERAL
+    ;
+formObjectAssign
+    : endOfLine+ OBJECT WS? EQ WS? STRINGLITERAL ';' WS? STRINGLITERAL
+    ;
+formBeginBlock
+    : endOfLine+ BEGIN WS (GUID | (ambiguousIdentifier '.' ambiguousIdentifier)) WS ambiguousIdentifier beginBlockConfigElement+ endOfLine+ END
+    ;
+beginPropertyBlock
+    : endOfLine+ BEGINPROPERTY WS ambiguousIdentifier (WS GUID WS?)? beginBlockConfigElement+ endOfLine+ ENDPROPERTY
     ;
 
 //---------------------------------------------------------------------------------------
@@ -56,16 +78,18 @@ classModule
 
 // Compare STRINGLITERAL to quoted-identifier
 proceduralModuleHeader
-    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLineNoWs
+    : endOfLine* ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
     ;
-classModuleHeader: classAttr+ WS?;
+classModuleHeader: (endOfLine+ classAttr)+ WS?;
+
+// VBA Library Projects are allowed to have GoobalNamespace and creatable as true.
 classAttr
-    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL endOfLineNoWs
-    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? FALSE endOfLineNoWs
-    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? FALSE endOfLineNoWs
-    | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier endOfLineNoWs
-    | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier endOfLineNoWs
-    | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier endOfLineNoWs
+    : ATTRIBUTE WS? VB_NAME WS? EQ WS? STRINGLITERAL
+    | ATTRIBUTE WS? VB_GLOBALNAMESPACE WS? EQ WS? booleanLiteralIdentifier
+    | ATTRIBUTE WS? VB_CREATABLE WS? EQ WS? booleanLiteralIdentifier
+    | ATTRIBUTE WS? VB_PREDECLAREDID WS? EQ WS? booleanLiteralIdentifier
+    | ATTRIBUTE WS? VB_EXPOSED WS? EQ WS? booleanLiteralIdentifier
+    | ATTRIBUTE WS? VB_CUSTOMIZABLE WS? EQ WS? booleanLiteralIdentifier
     ;
 //---------------------------------------------------------------------------------------
 // 5.1 Module Body Structure
@@ -74,21 +98,25 @@ proceduralModuleBody: proceduralModuleDeclarationSection? endOfLine* proceduralM
 classModuleBody: classModuleDeclarationSection? classModuleCode;
 unrestrictedName
     : reservedIdentifier
-    | ambiguousIdentifier
+    | name
     ;
+
+// Added markedFileNumber to fix a bug
 name
     : untypedName
     | typedName
+    | markedFileNumber
     ;
 untypedName
     : ambiguousIdentifier
+    | FOREIGN_NAME
     ;
 
 //---------------------------------------------------------------------------------------
 // 5.2 Module Declaration Section Structure
 proceduralModuleDeclarationSection
-    : (proceduralModuleDeclarationElement endOfLineNoWs)+
-    | ((proceduralModuleDirectiveElement endOfLine+)* defDirective) (proceduralModuleDeclarationElement endOfLineNoWs)*
+    : (endOfLine+ proceduralModuleDeclarationElement)+
+    | ((endOfLine+ proceduralModuleDirectiveElement)* endOfLine+ defDirective) (proceduralModuleDeclarationElement endOfLineNoWs)*
     ;
 classModuleDeclarationSection
     : (classModuleDeclarationElement endOfLine+)+
@@ -103,7 +131,6 @@ proceduralModuleDeclarationElement
     : commonModuleDeclarationElement
     | globalVariableDeclaration
     | publicConstDeclaration
-    | publicTypeDeclaration
     | publicExternalProcedureDeclaration
     | globalEnumDeclaration
     | commonOptionDirective
@@ -174,18 +201,27 @@ defType
     ;
 
 // 5.2.3 Module Declarations
+// added public-type to fix bug
 commonModuleDeclarationElement
     : moduleVariableDeclaration
     | privateConstDeclaration
     | privateTypeDeclaration
-    | enumDeclaration
+    | publicTypeDeclaration
+    | privateEnumDeclaration
+    | publicEnumDeclaration
     | privateExternalProcedureDeclaration
     ;
 
 // 5.2.3.1 Module Variable Declaration Lists
+// Added variableHelpAttribute, not in MS-VBAL
 moduleVariableDeclaration
     : publicVariableDecalation
     | privateVariableDeclaration
+    | variableHelpAttribute
+    ;
+
+variableHelpAttribute
+    : ATTRIBUTE WS ambiguousIdentifier '.' VB_VARHELPID WS? '=' WS? '-'? INTEGERLITERAL
     ;
 globalVariableDeclaration: GLOBAL WS variableDeclarationList;
 publicVariableDecalation: PUBLIC (WS SHARED)? WS moduleVariableDeclarationList;
@@ -200,7 +236,7 @@ variableDcl
     ;
 typedVariableDcl: typedName wsc? arrayDim?;
 untypedVariableDcl: ambiguousIdentifier wsc? (arrayClause | asClause)?;
-arrayClause: arrayDim wsc? asClause;
+arrayClause: arrayDim (wsc asClause)?;
 asClause
     : asAutoObject
     | asType
@@ -212,9 +248,9 @@ classTypeName: definedTypeExpression;
 
 // 5.2.3.1.3 Array Dimensions and Bounds
 arrayDim: '(' wsc? boundsList? wsc? ')';
-boundsList: dimSpec (wsc',' wsc dimSpec)*;
+boundsList: dimSpec (wsc? ',' wsc? dimSpec)*;
 dimSpec: lowerBound? wsc? upperBound;
-lowerBound: constantExpression TO;
+lowerBound: constantExpression wsc TO wsc;
 upperBound: constantExpression;
 
 // 5.2.3.1.4 Variable Type Declarations
@@ -233,7 +269,7 @@ constantName: simpleNameExpression;
 
 // 5.2.3.2 Const Declarations
 publicConstDeclaration: (GLOBAL | PUBLIC) wsc moduleConstDeclaration;
-privateConstDeclaration: PRIVATE wsc moduleConstDeclaration;
+privateConstDeclaration: (PRIVATE wsc)? moduleConstDeclaration;
 moduleConstDeclaration: constDeclaration;
 constDeclaration: CONST wsc constItemList;
 constItemList: constItem (wsc? ',' wsc? constItem)*;
@@ -243,13 +279,13 @@ constItem
     ;
 typedNameConstItem: typedName wsc? EQ wsc? constantExpression;
 untypedNameConstItem: ambiguousIdentifier (wsc constAsClause)? wsc? EQ wsc? constantExpression;
-constAsClause: builtinType;
+constAsClause: AS wsc builtinType;
 
 // 5.2.3.3 User Defined Type Declarations
-publicTypeDeclaration: (GLOBAL | PUBLIC) wsc udtDeclaration;
+publicTypeDeclaration: ((GLOBAL | PUBLIC) wsc)? udtDeclaration;
 privateTypeDeclaration: PRIVATE wsc udtDeclaration;
 udtDeclaration: TYPE wsc untypedName endOfStatement+ udtMemberList endOfStatement+ END wsc TYPE;
-udtMemberList: udtElement wsc (endOfStatement udtElement)*;
+udtMemberList: udtElement (endOfStatement udtElement)*;
 udtElement
     : remStatement
     | udtMember
@@ -260,7 +296,7 @@ udtMember
     ;
 untypedNameMemberDcl: ambiguousIdentifier optionalArrayClause;
 reservedNameMemberDcl: reservedMemberName wsc asClause;
-optionalArrayClause: arrayDim? asClause;
+optionalArrayClause: arrayDim? wsc asClause;
 reservedMemberName
     : statementKeyword
     | markerKeyword
@@ -276,7 +312,7 @@ reservedMemberName
 globalEnumDeclaration: GLOBAL wsc  enumDeclaration;
 publicEnumDeclaration: (PUBLIC wsc)? enumDeclaration;
 privateEnumDeclaration: PRIVATE wsc enumDeclaration;
-enumDeclaration: ENUM wsc untypedName endOfStatement enumMemberList endOfStatement END wsc ENUM ;
+enumDeclaration: ENUM wsc untypedName endOfStatement+ enumMemberList endOfStatement+ END wsc ENUM ;
 enumMemberList: enumElement (endOfStatement enumElement)*;
 enumElement
     : remStatement
@@ -286,20 +322,20 @@ enumMember: untypedName (wsc? EQ wsc? constantExpression)?;
 
 // 5.2.3.5 External Procedure Declaration
 publicExternalProcedureDeclaration: (PUBLIC wsc)? externalProcDcl;
-privateExternalProcedureDeclaration: PRIVATE externalProcDcl;
+privateExternalProcedureDeclaration: PRIVATE wsc externalProcDcl;
 externalProcDcl: DECLARE wsc (PTRSAFE wsc)? (externalSub | externalFunction);
-externalSub: SUB subroutineName libInfo procedureParameters?;
-externalFunction: FUNCTION functionName libInfo procedureParameters? functionType?;
+externalSub: SUB wsc subroutineName wsc libInfo (wsc procedureParameters)?;
+externalFunction: FUNCTION wsc functionName wsc libInfo (wsc procedureParameters)? (wsc functionType)?;
 libInfo: libClause (wsc aliasClause)?;
-libClause: LIB wsc STRING;
-aliasClause: ALIAS wsc STRING;
+libClause: LIB wsc STRINGLITERAL;
+aliasClause: ALIAS wsc STRINGLITERAL;
 
 // 5.2.4 Class Module Declarations
 // 5.2.4.2 Implements Directive
 implementsDirective: IMPLEMENTS WS ambiguousIdentifier;
 
 // 5.2.4.3 Event Declaration
-eventDeclaration: PUBLIC? wsc EVENT ambiguousIdentifier eventParameterList?;
+eventDeclaration: PUBLIC? wsc EVENT wsc ambiguousIdentifier eventParameterList?;
 eventParameterList: '(' wsc? positionalParameters? wsc? ')';
 
 
@@ -328,31 +364,31 @@ procedureDeclaration
 // Allow a static keyword before or after, but not both
 subroutineDeclaration
     : (procedureScope wsc)? (
-              ((initialStatic wsc)? SUB wsc subroutineName procedureParameters?)
-            | (SUB wsc subroutineName procedureParameters? wsc? trailingStatic)
+              ((initialStatic wsc)? SUB wsc subroutineName (wsc? procedureParameters?))
+            | (SUB wsc subroutineName (wsc? procedureParameters)? wsc? trailingStatic)
         )
         procedureBody?
-        endLabel? endOfStatement+ END wsc SUB procedureTail;
+        endLabel? endOfStatement+ END wsc SUB procedureTail?;
 functionDeclaration
     : (procedureScope wsc)? (
-              (initialStatic wsc)? FUNCTION wsc functionName procedureParameters? (wsc? functionType)?
-            | FUNCTION wsc functionName procedureParameters? (wsc? functionType)? wsc? trailingStatic)
+              (initialStatic wsc)? FUNCTION wsc functionName (wsc? procedureParameters)? (wsc? functionType)?
+            | FUNCTION wsc functionName (wsc? procedureParameters)? (wsc? functionType)? wsc? trailingStatic)
         procedureBody?
-        endLabel? endOfStatement+ END wsc FUNCTION procedureTail;
+        endLabel? endOfStatement+ END wsc FUNCTION procedureTail?;
   
 propertyGetDeclaration
     : (procedureScope wsc)? (
-              (initialStatic wsc)? PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)?
+              (initialStatic wsc)? PROPERTY wsc GET wsc functionName (wsc? procedureParameters)? (wsc? functionType)?
             | PROPERTY wsc GET wsc functionName procedureParameters? (wsc? functionType)? wsc? trailingStatic)
         procedureBody?
-        endLabel? endOfStatement+ END wsc PROPERTY procedureTail;
+        endLabel? endOfStatement+ END wsc PROPERTY procedureTail?;
   
 propertyLhsDeclaration
     : (procedureScope wsc)? (
-              (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters
+              (initialStatic wsc)? PROPERTY wsc (LET | SET) wsc subroutineName wsc? propertyParameters
             | PROPERTY wsc (LET | SET) wsc subroutineName propertyParameters wsc? trailingStatic)
         procedureBody?
-        endLabel? endOfStatement+ END wsc PROPERTY procedureTail;
+        endLabel? endOfStatement+ END wsc PROPERTY procedureTail?;
 endLabel: endOfStatement* endOfLineNoWs statementLabelDefinition;
 procedureTail
     : wsc? NEWLINE
@@ -409,7 +445,7 @@ positionalParam: (parameterMechanism wsc)? paramDcl;
 optionalParam
     : optionalPrefix wsc paramDcl wsc? defaultValue?;
 paramArray
-    : PARAMARRAY ambiguousIdentifier '(' wsc? ')' (wsc AS wsc (VARIANT | '[' VARIANT ']'))?;
+    : PARAMARRAY wsc ambiguousIdentifier '(' wsc? ')' (wsc AS wsc (VARIANT | '[' VARIANT ']'))?;
 paramDcl
     : untypedNameParamDcl
     | typedNameParamDcl
@@ -453,6 +489,7 @@ blockStatement
     : endOfStatement* endOfLineNoWs statementLabelDefinition
     | endOfStatement+ remStatement
     | statement
+    | endOfStatement* endOfLineNoWs attributeStatement
     ;
 statement
     : controlStatement
@@ -504,6 +541,7 @@ controlStatementExceptMultilineIf
     | exitPropertyStatement
     | raiseeventStatement
     | withStatement
+    | endStatement
     ;
 
 // 5.4.2.1 Call Statement
@@ -586,7 +624,7 @@ elseIfBlock
         statementBlock?
     | endOfStatement* ELSEIF wsc? booleanExpression wsc? THEN statementBlock?
     ;
-elseBlock: endOfLine ELSE endOfLine? wsc? statementBlock?;
+elseBlock: endOfLine+ ELSE endOfLine? wsc? statementBlock?;
 
 // 5.4.2.9 Single-line If Statement
 singleLineIfStatement
@@ -594,7 +632,7 @@ singleLineIfStatement
     | ifWithEmptyThen
     ;
 ifWithNonEmptyThen
-    : IF wsc booleanExpression wsc THEN wsc listOrLabel wsc singleLineElseClause?;
+    : IF wsc booleanExpression wsc THEN wsc listOrLabel (wsc singleLineElseClause)?;
 ifWithEmptyThen
     : IF wsc booleanExpression wsc THEN wsc singleLineElseClause;
 singleLineElseClause: ELSE wsc? listOrLabel?;
@@ -611,16 +649,16 @@ sameLineStatement
 
 // 5.4.2.10 Select Case Statement
 selectCaseStatement
-    : SELECT wsc CASE wsc selectExpression endOfStatement
+    : SELECT wsc CASE wsc selectExpression
         caseClause*
         caseElseClause?
     endOfStatement+ END wsc SELECT;
-caseClause: CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)? statementBlock?;
+caseClause: endOfStatement+ CASE wsc? rangeClause (wsc? ',' wsc? rangeClause)* statementBlock?;
 caseElseClause: endOfStatement+ CASE wsc ELSE statementBlock?;
 rangeClause
     : expression
     | startValue wsc? TO wsc? endValue
-    | IS? wsc comparisonOperator expression;
+    | IS? wsc comparisonOperator wsc? expression;
 selectExpression: expression;
 comparisonOperator
     : EQ
@@ -667,6 +705,11 @@ eventArgument: expression;
 // 5.4.2.21 With Statement
 withStatement: WITH wsc? expression statementBlock? endOfStatement+ END wsc WITH;
 
+// Missing from documentation
+endStatement
+    : END
+    ;
+
 // 5.4.3 Data Manipulation Statements
 // Added eraseStatement. It is missing from the list in MsS-VBAL 1.7
 dataManipulationStatement
@@ -692,12 +735,18 @@ localConstDeclaration: constDeclaration;
 // 5.4.3.3 ReDim Statement
 redimStatement: REDIM (wsc PRESERVE)? wsc? redimDeclarationList;
 redimDeclarationList: redimVariableDcl (wsc? ',' wsc? redimVariableDcl)*;
+// Had to add withExpression and memberAccess
+// to match callStatement.
 redimVariableDcl
     : redimTypedVariableDcl
     | redimUntypedDcl
+    | withExpressionDcl
+    | memberAccessExpressionDcl
     ;
-redimTypedVariableDcl: typedName dynamicArrayDim;
+redimTypedVariableDcl: typedName wsc? dynamicArrayDim;
 redimUntypedDcl: untypedName wsc? dynamicArrayClause;
+withExpressionDcl: withExpression wsc? dynamicArrayDim;
+memberAccessExpressionDcl: memberAccessExpression wsc? dynamicArrayDim;
 dynamicArrayDim: '(' wsc? dynamicBoundsList wsc? ')';
 dynamicBoundsList: dynamicDimSpec (wsc? ',' wsc? dynamicDimSpec)*;
 dynamicDimSpec: (dynamicLowerBound wsc)? dynamicUpperBound;
@@ -872,6 +921,24 @@ data: expression;
 getStatement: GET wsc fileNumber wsc? ',' wsc? recordNumber? wsc? ',' wsc? variable;
 variable: variableExpression;
 
+// Attribute Statement
+attributeStatement
+    : ATTRIBUTE WS ambiguousIdentifier '.' attributeDescName WS? EQ WS? STRINGLITERAL
+    | ATTRIBUTE WS ambiguousIdentifier '.' attributeUsrName WS? EQ WS? '-'? INTEGERLITERAL
+    | ATTRIBUTE WS ambiguousIdentifier '.' VB_PROCDATA '.' VB_INVOKE_FUNC WS EQ WS STRINGLITERAL
+    ;
+
+attributeDescName
+    : VB_DESCRIPTION
+    | VB_VARDESCRIPTION
+    | VB_MEMBERFLAGS
+    | VB_VARMEMBERFLAGS
+    ;
+
+attributeUsrName
+    : 'VB_USERMEMID'
+    | 'VB_VARUSERMEMID'
+    ;
 //---------------------------------------------------------------------------------------
 // 5.6  Expressions
 // Modifying the order will affect the order of operations
@@ -917,9 +984,7 @@ lExpression
 // check on hex and oct
 // check definition of integer and float
 literalExpression
-    : HEXLITERAL
-    | OCTLITERAL
-    | DATELITERAL
+    : DATELITERAL
     | FLOATLITERAL
     | INTEGERLITERAL
     | STRINGLITERAL
@@ -967,21 +1032,21 @@ memberAccessExpression
 // This expression is also rolled into lExpression.
 // Changes here must be duplicated there
 indexExpression
-    : lExpression WS? '(' wsc? argumentList wsc? ')'
+    : lExpression wsc? '(' wsc? argumentList wsc? ')'
     ;
 
 // 5.6.13.1 Argument Lists
 argumentList: positionalOrNamedArgumentList?;
 positionalOrNamedArgumentList
-    : (positionalArgument wsc? ',')* requiredPositionalArgument
-    | (positionalArgument wsc? ',')* namedArgumentList
+    : (positionalArgument wsc? ',' wsc?)* requiredPositionalArgument
+    | (positionalArgument wsc? ',' wsc?)* namedArgumentList
     ;
 positionalArgument: argumentExpression?;
 requiredPositionalArgument: argumentExpression;
 namedArgumentList: namedArgument (wsc? ',' wsc? namedArgument)*;
 namedArgument: unrestrictedName wsc? ASSIGN wsc? argumentExpression;
 argumentExpression
-    : BYVAL? wsc? expression
+    : (BYVAL wsc)? expression
     | addressofExpression
     ;
 
@@ -1035,7 +1100,7 @@ definedTypeExpression
 
 // 5.6.16.8
 addressofExpression
-    : ADDRESSOF procedurePointerExpression
+    : ADDRESSOF wsc procedurePointerExpression
     ;
 procedurePointerExpression
     : simpleNameExpression
@@ -1048,38 +1113,38 @@ procedurePointerExpression
 // In theory whitespace should be ignored, but there are a handful of cases
 // where statements MUST be at the beginning of a line or where a NO-WS
 // rule appears in the parser rule.
-// If may make things simpler her to send all wsc to the hidden channel
+// If may make things simpler here to send all wsc to the hidden channel
 // and let a linting tool highlight the couple cases where whitespace
 // will cause an error.
 wsc: (WS | LINE_CONTINUATION)+;
 // known as EOL in MS-VBAL
 endOfLine
-    : WS? (NEWLINE | commentBody | remStatement) WS?
+    : wsc? (NEWLINE | commentBody | remStatement) wsc?
     ;
-// We usually don't care if a line of code begins with whitespace, and the paraer rules are
-// cleaner if we limp that in aith the EOL or EOS "token". However, for those cases where
+// We usually don't care if a line of code begins with whitespace, and the parser rules are
+// cleaner if we lump that in with the EOL or EOS "token". However, for those cases where
 // something MUST occur on the start of a line, use endOfLineNoWs.
 endOfLineNoWs
-    : WS? (NEWLINE | commentBody | remStatement)
+    : wsc? (NEWLINE | commentBody | remStatement)
     ;
 // known as EOS in MS-VBAL
 endOfStatement
-    : (endOfLine | WS? COLON WS?)+
+    : (endOfLine | wsc? COLON wsc?)+
     ;
 endOfStatementNoWs
-    : (endOfLineNoWs | WS? COLON)+
+    : (endOfLineNoWs | wsc? COLON)+
     ;
 // The COMMENT token includes the leading single quote
 commentBody: COMMENT;
 
 // 3.3.5.2 Reserved Identifiers and IDENTIFIER
-// should this include reservedTypeIdentifier?
 reservedIdentifier
     : statementKeyword
     | markerKeyword
     | operatorIdentifier
     | specialForm
     | reservedName
+    | reservedTypeIdentifier
     | literalIdentifier
     | remKeyword
     | reservedForImplementationUse
@@ -1248,6 +1313,28 @@ reservedTypeIdentifier
     | STRING
     | VARIANT
     ;
+
+// If we did not scoop up the bracketed forms in the Lexer, they would have become
+// Foreign Names.
+reservedTypeIdentifierB
+    : BOOLEAN_B
+    | BYTE_B
+    | CURRENCY_B
+    | DATE_B
+    | DOUBLE_B
+    | INTEGER_B
+    | LONG_B
+    | LONGLONG_B
+    | LONGPTR_B
+    | SINGLE_B
+    | STRING_B
+    | VARIANT_B
+    ;
+
+typeableReservedName
+    : DATE
+    | STRING
+    ;
 literalIdentifier
     : booleanLiteralIdentifier
     | objectLiteralIdentifier
@@ -1300,22 +1387,19 @@ futureReserved
 
 // 3.3.5.3  Special Identifier Forms
 
-// Known as FOREIGN-NAME in MS-VBAL
-foreignName: '[' foreignIdentifier ']';
-foreignIdentifier: ~(NEWLINE | LINE_CONTINUATION);
-
 // known as BUILTIN-TYPE in MS-VBAL
 builtinType
     : reservedTypeIdentifier
-    | '[' reservedTypeIdentifier ']'
+    | reservedTypeIdentifierB
     | OBJECT
-    | '[' OBJECT ']'
+    | OBJECT_B
     ;
 
 // Known as TYPED-NAME in MS-VBAL
 // This probably could be turned into a token
 typedName
     : ambiguousIdentifier typeSuffix
+    | typeableReservedName typeSuffix
     ;
 typeSuffix
     : '&'
@@ -1331,7 +1415,8 @@ typeSuffix
 // Extra Rules
 
 // lexer keywords not in the reservedIdentifier set
-// should this include reservedTypeIdentifier?
+// any that are unused within the parser rules should probably
+// be removed from the lexer.
 ambiguousKeyword
     : ACCESS
     | ALIAS
@@ -1340,6 +1425,7 @@ ambiguousKeyword
     | BASE
     | BEEP
     | BEGIN
+    | BEGINPROPERTY
     | BINARY
     | CLASS
     | CHDIR
@@ -1351,6 +1437,7 @@ ambiguousKeyword
     | DATABASE
     | DELETESETTING
     | ERROR
+    | ENDPROPERTY
     | FILECOPY
     | GO
     | KILL
