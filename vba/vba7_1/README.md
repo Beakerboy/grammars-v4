@@ -14,6 +14,7 @@ In the course of creating this parser, several bugs were found in the MS-VBAL v1
 * reserved-name keywords should be able to be used within expressions
 * The use of attributes within the code body is not addressed.
 * public types in class modules
+* Semicolons in Debug.Print
 
 ### Closed-Fixed here and planned for inclusion in next release of MS-VBAL
 * private and public enums missing from a parent
