@@ -332,7 +332,7 @@ aliasClause: ALIAS wsc STRINGLITERAL;
 
 // 5.2.4 Class Module Declarations
 // 5.2.4.2 Implements Directive
-implementsDirective: IMPLEMENTS WS ambiguousIdentifier;
+implementsDirective: IMPLEMENTS WS classTypeName;
 
 // 5.2.4.3 Event Declaration
 eventDeclaration: PUBLIC? wsc EVENT wsc ambiguousIdentifier eventParameterList?;
