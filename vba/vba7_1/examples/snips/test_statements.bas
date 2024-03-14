@@ -57,4 +57,5 @@ Close #ff
 
 ' No WS around operators
 Foo = (foo)/count
+Debug.Print A B, C; D & E
 End Function
