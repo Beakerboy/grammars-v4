@@ -946,7 +946,7 @@ attributeUsrName
 
 // Added Statement
 debugStatement
-    : DEBUG '.' PRINT debugArgs
+    : DEBUG '.' PRINT wsc debugArgs
     ;
 debugArgs
     : expression (wsc? debugSep wsc? expression)*
