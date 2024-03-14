@@ -545,6 +545,7 @@ controlStatementExceptMultilineIf
     | raiseeventStatement
     | withStatement
     | endStatement
+    | debugStatement
     ;
 
 // 5.4.2.1 Call Statement
@@ -942,6 +943,20 @@ attributeUsrName
     : 'VB_USERMEMID'
     | 'VB_VARUSERMEMID'
     ;
+
+// Added Statement
+debugStatement
+    : DEBUG '.' PRINT debugArgs
+    ;
+debugArgs
+    : expression (wsc? debugSep wsc? expression)*
+    ;
+debugSep
+    : wsc
+    | ';'
+    | ','
+    ;
+
 //---------------------------------------------------------------------------------------
 // 5.6  Expressions
 // Modifying the order will affect the order of operations
