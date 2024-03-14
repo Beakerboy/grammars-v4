@@ -636,13 +636,13 @@ singleLineIfStatement
     | ifWithEmptyThen
     ;
 ifWithNonEmptyThen
-    : IF wsc booleanExpression wsc THEN wsc listOrLabel (wsc singleLineElseClause)?;
+    : IF wsc booleanExpression wsc THEN wsc? listOrLabel (wsc singleLineElseClause)?;
 ifWithEmptyThen
     : IF wsc booleanExpression wsc THEN wsc singleLineElseClause;
 singleLineElseClause: ELSE wsc? listOrLabel?;
 listOrLabel
     : (statementLabel (':' wsc? sameLineStatement?)*)
-    | ':'? sameLineStatement (':' wsc? sameLineStatement?)*
+    | ':'? wsc? sameLineStatement (wsc? ':' wsc? sameLineStatement?)*
     ;
 sameLineStatement
     : fileStatement
