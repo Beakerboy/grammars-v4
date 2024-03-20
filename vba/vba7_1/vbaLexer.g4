@@ -897,10 +897,6 @@ APPACTIVATE
     : 'APPACTIVATE'
     ;
 
-BEEP
-    : 'BEEP'
-    ;
-
 COLLECTION
     : 'COLLECTION'
     ;
