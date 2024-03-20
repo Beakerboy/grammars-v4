@@ -1441,7 +1441,6 @@ ambiguousKeyword
     | APPACTIVATE
     | APPEND
     | BASE
-    | BEEP
     | BEGIN
     | BEGINPROPERTY
     | BINARY
