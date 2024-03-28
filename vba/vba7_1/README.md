@@ -13,8 +13,9 @@ In the course of creating this parser, several bugs were found in the MS-VBAL v1
 * class file header definition
 * reserved-name keywords should be able to be used within expressions
 * The use of attributes within the code body is not addressed.
-* public types in class modules
+* public types in class modules (allowed in VB6, but not VBA...however, can be imported and exported. code will fail on compiling)
 * Semicolons in Debug.Print
+* VB_Ext_KEY attribute.
 
 ### Closed-Fixed here and planned for inclusion in next release of MS-VBAL
 * private and public enums missing from a parent
