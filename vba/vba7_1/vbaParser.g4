@@ -101,7 +101,6 @@ unrestrictedName
     | name
     ;
 
-// Added markedFileNumber to fix a bug
 name
     : untypedName
     | typedName
