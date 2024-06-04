@@ -10,3 +10,4 @@ Private Sub Module() Static
 
 Global Sub Module(Foo As Boolean, Optional Bar=2)
 End Sub : REM sefkljnsa
+

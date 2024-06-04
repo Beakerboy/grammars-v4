@@ -36,10 +36,6 @@ ATTRIBUTE
     : 'ATTRIBUTE'
     ;
 
-APPACTIVATE
-    : 'APPACTIVATE'
-    ;
-
 APPEND
     : 'APPEND'
     ;
@@ -59,9 +55,8 @@ BASE
 BEGIN
     : 'BEGIN'
     ;
-
-BEEP
-    : 'BEEP'
+BEGINPROPERTY
+    : 'BEGINPROPERTY'
     ;
 
 BINARY
@@ -70,6 +65,10 @@ BINARY
 
 BOOLEAN
     : 'BOOLEAN'
+    ;
+
+BOOLEAN_B
+    : '[BOOLEAN]'
     ;
 
 BYVAL
@@ -82,6 +81,10 @@ BYREF
 
 BYTE
     : 'BYTE'
+    ;
+
+BYTE_B
+    : '[BYTE]'
     ;
 
 CALL
@@ -164,10 +167,6 @@ CLOSE
     : 'CLOSE'
     ;
 
-COLLECTION
-    : 'COLLECTION'
-    ;
-
 COMPARE
     : 'COMPARE'
     ;
@@ -196,12 +195,16 @@ CURRENCY
     : 'CURRENCY'
     ;
 
-DATABASE
-    : 'DATABASE'
+CURRENCY_B
+    : '[CURRENCY]'
     ;
 
 DATE
     : 'DATE'
+    ;
+
+DATE_B
+    : '[DATE]'
     ;
 
 DEBUG
@@ -272,10 +275,6 @@ DEFVAR
     : 'DEFVAR'
     ;
 
-DELETESETTING
-    : 'DELETESETTING'
-    ;
-
 DIM
     : 'DIM'
     ;
@@ -290,6 +289,10 @@ DOEVENTS
 
 DOUBLE
     : 'DOUBLE'
+    ;
+
+DOUBLE_B
+    : '[DOUBLE]'
     ;
 
 EACH
@@ -314,6 +317,10 @@ ENDIF
 
 END
     : 'END'
+    ;
+
+ENDPROPERTY
+    : 'ENDPROPERTY'
     ;
 
 ENUM
@@ -348,10 +355,6 @@ FALSE
     : 'FALSE'
     ;
 
-FILECOPY
-    : 'FILECOPY'
-    ;
-
 FIX
     : 'FIX'
     ;
@@ -379,6 +382,7 @@ GLOBAL
 GO
     : 'GO'
     ;
+
 GOSUB
     : 'GOSUB'
     ;
@@ -423,6 +427,10 @@ INTEGER
     : 'INTEGER'
     ;
 
+INTEGER_B
+    : '[INTEGER]'
+    ;
+
 KILL
     : 'KILL'
     ;
@@ -459,10 +467,6 @@ LINEINPUT
     : 'LINEINPUT'
     ;
 
-LOAD
-    : 'LOAD'
-    ;
-
 LOCK
     : 'LOCK'
     ;
@@ -471,12 +475,24 @@ LONG
     : 'LONG'
     ;
 
+LONG_B
+    : '[LONG]'
+    ;
+
 LONGLONG
     : 'LONGLONG'
     ;
 
+LONGLONG_B
+    : '[LONGLONG]'
+    ;
+
 LONGPTR
     : 'LONGPTR'
+    ;
+
+LONGPTR_B
+    : '[LONGPTR]'
     ;
 
 LOOP
@@ -485,22 +501,6 @@ LOOP
 
 LSET
     : 'LSET'
-    ;
-
-MACRO_CONST
-    : '#CONST'
-    ;
-
-MACRO_IF
-    : '#IF'
-    ;
-
-MACRO_ELSEIF
-    : '#ELSEIF'
-    ;
-
-MACRO_ELSE
-    : '#ELSE'
     ;
 
 ME
@@ -514,6 +514,7 @@ MID
 MIDB
     : 'MIDB'
     ;
+
 MID_D
     : 'MID$'
     ;
@@ -522,20 +523,12 @@ MIDB_D
     : 'MIDB$'
     ;
 
-MKDIR
-    : 'MKDIR'
-    ;
-
 MOD
     : 'MOD'
     ;
 
 MODULE
     : 'MODULE'
-    ;
-
-NAME
-    : 'NAME'
     ;
 
 NEXT
@@ -557,9 +550,15 @@ NOTHING
 NULL_
     : 'NULL'
     ;
+
 OBJECT
     : 'OBJECT'
     ;
+
+OBJECT_B
+    : '[OBJECT]'
+    ;
+
 ON
     : 'ON'
     ;
@@ -599,6 +598,7 @@ PRINT
 PRIVATE
     : 'PRIVATE'
     ;
+
 PROPERTY
     : 'PROPERTY'
     ;
@@ -621,10 +621,6 @@ PUT
 
 RANDOM
     : 'RANDOM'
-    ;
-
-RANDOMIZE
-    : 'RANDOMIZE'
     ;
 
 RAISEEVENT
@@ -655,22 +651,10 @@ RETURN
     : 'RETURN'
     ;
 
-RMDIR
-    : 'RMDIR'
-    ;
-
 RSET
     : 'RSET'
     ;
-
-SAVEPICTURE
-    : 'SAVEPICTURE'
-    ;
-
-SAVESETTING
-    : 'SAVESETTING'
-    ;
-
+ 
 SCALE
     : 'SCALE'
     ;
@@ -683,16 +667,8 @@ SELECT
     : 'SELECT'
     ;
 
-SENDKEYS
-    : 'SENDKEYS'
-    ;
-
 SET
     : 'SET'
-    ;
-
-SETATTR
-    : 'SETATTR'
     ;
 
 SGN
@@ -705,6 +681,10 @@ SHARED
 
 SINGLE
     : 'SINGLE'
+    ;
+
+SINGLE_B
+    : '[SINGLE]'
     ;
 
 SPC
@@ -727,6 +707,10 @@ STRING
     : 'STRING'
     ;
 
+STRING_B
+    : '[STRING]'
+    ;
+
 SUB
     : 'SUB'
     ;
@@ -741,10 +725,6 @@ TEXT
 
 THEN
     : 'THEN'
-    ;
-
-TIME
-    : 'TIME'
     ;
 
 TO
@@ -765,10 +745,6 @@ TYPEOF
 
 UBOUND
     : 'UBOUND'
-    ;
-
-UNLOAD
-    : 'UNLOAD'
     ;
 
 UNLOCK
@@ -879,6 +855,10 @@ VARIANT
     : 'VARIANT'
     ;
 
+VARIANT_B
+    : '[VARIANT]'
+    ;
+
 VERSION
     : 'VERSION'
     ;
@@ -909,6 +889,72 @@ WRITE
 
 XOR
     : 'XOR'
+    ;
+
+// Standard Library functions, subs, and properties
+// should these be removed?
+APPACTIVATE
+    : 'APPACTIVATE'
+    ;
+
+COLLECTION
+    : 'COLLECTION'
+    ;
+
+DATABASE
+    : 'DATABASE'
+    ;
+ 
+DELETESETTING
+    : 'DELETESETTING'
+    ;
+
+FILECOPY
+    : 'FILECOPY'
+    ;
+
+MKDIR
+    : 'MKDIR'
+    ;
+
+NAME
+    : 'NAME'
+    ;
+
+RANDOMIZE
+    : 'RANDOMIZE'
+    ;
+
+RMDIR
+    : 'RMDIR'
+    ;
+
+SAVEPICTURE
+    : 'SAVEPICTURE'
+    ;
+
+SAVESETTING
+    : 'SAVESETTING'
+    ;
+
+SENDKEYS
+    : 'SENDKEYS'
+    ;
+
+SETATTR
+    : 'SETATTR'
+    ;
+
+TIME
+    : 'TIME'
+    ;
+
+LOAD
+    : 'LOAD'
+    ;
+
+UNLOAD
+    : 'UNLOAD'
     ;
 
 // symbols
@@ -943,6 +989,7 @@ EXCLAM
     ;
 GEQ
     : '>='
+    | '=>'
     ;
 
 GT
@@ -954,6 +1001,7 @@ HASH
     ;
 LEQ
     : '<='
+    | '=<'
     ;
 
 LPAREN
@@ -978,6 +1026,7 @@ MULT
 
 NEQ
     : '<>'
+    | '><'
     ;
 
 PERCENT
@@ -1029,16 +1078,10 @@ STRINGLITERAL
     : '"' (~["\r\n] | '""')* '"'
     ;
 
-OCTLITERAL
-    : '&' [O]? [0-7]+
-    ;
-
-HEXLITERAL
-    : '&H' [0-9A-F]+
-    ;
-
 INTEGERLITERAL
-    : DIGIT DIGIT* [%&^]?
+    : (DIGIT DIGIT*
+    | '&H' [0-9A-F]+
+    | '&' [O]? [0-7]+) [%&^]?
     ;
 
 FLOATLITERAL
@@ -1049,7 +1092,9 @@ FLOATLITERAL
 fragment FLOATINGPOINTLITERAL
     : DECIMALLITERAL [DE] [+-]? DECIMALLITERAL
     | DECIMALLITERAL '.' DECIMALLITERAL? ([DE] [+-]? DECIMALLITERAL)?
+    | '.' DECIMALLITERAL ([DE] [+-]? DECIMALLITERAL)?
     ;
+
 fragment DECIMALLITERAL
     : DIGIT DIGIT*
     ;
@@ -1059,7 +1104,7 @@ DATELITERAL
     ;
 
 fragment DATEORTIME
-    : DATEVALUE WS? TIMEVALUE
+    : DATEVALUE WS+ TIMEVALUE
     | DATEVALUE
     | TIMEVALUE
     ;
@@ -1074,7 +1119,8 @@ fragment DATEVALUEPART
     ;
 
 fragment DATESEPARATOR
-    : WS? [/,-]? WS?
+    : WS+
+    | WS? [/,-] WS?
     ;
 
 fragment MONTHNAME
@@ -1088,13 +1134,16 @@ fragment ENGLISHMONTHNAME
     | 'MARCH'
     | 'APRIL'
     | 'MAY'
-    | 'JUNE | AUGUST'
+    | 'JUNE'
+    | 'JULY'
+    | 'AUGUST'
     | 'SEPTEMBER'
     | 'OCTOBER'
     | 'NOVEMBER'
     | 'DECEMBER'
     ;
 
+// May has intentionally been left out
 fragment ENGLISHMONTHABBREVIATION
     : 'JAN'
     | 'FEB'
@@ -1122,9 +1171,12 @@ fragment AMPM
     : WS? ('AM' | 'PM' | 'A' | 'P')
     ;
 
+FILEOFFSET
+    : '$'? STRINGLITERAL ':' HEXDIGIT+
+    ;
 // whitespace, line breaks, comments, ...
 LINE_CONTINUATION
-    : [ \t] UNDERSCORE '\r'? '\n'
+    : WS UNDERSCORE WS? '\r'? '\n'
     ;
 
 NEWLINE
@@ -1152,13 +1204,23 @@ UNDERSCORE
     ;
 
 WS
-    : ([ \t])+
+    : ([ \t\u0019\u3000])+
+    ;
+
+MACRO_LINE
+    : (WS? '#IF' ~[\r\n\u2028\u2029]* THEN COMMENT?
+    | WS? '#ELSEIF' ~[\r\n\u2028\u2029]* THEN COMMENT?
+    | WS? '#ELSE' COMMENT?
+    | WS? ('#END If'|'#endif') COMMENT?) -> channel(HIDDEN)
     ;
 
 // identifier
 IDENTIFIER
-    : ~[\]()\r\n\t.,'"|!@#$%^&*\-+:=; ]+
-    | L_SQUARE_BRACKET (~[!\]\r\n])+ R_SQUARE_BRACKET
+    : [A-Z][A-Z0-9_]*
+    ;
+
+FOREIGN_NAME
+    : '[' ~[\r\n\u2028\u2029]* ']'
     ;
 
 // letters
