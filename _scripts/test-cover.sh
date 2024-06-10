@@ -236,18 +236,6 @@ then
 elif [ "$filter" == "all" ]
 then
     grammars=( "vba_like" )
-    # Test grammars for the enclosing directories.
-    directories=`find . -name desc.xml | sed 's#/desc.xml##' | sort -u`
-    for g in $directories
-    do
-        pushd $g > /dev/null 2>&1
-        g=`pwd`
-        g=${g##*$prefix/}
-        popd > /dev/null 2>&1
-        echo Adding $g
-        grammars+=( $g )
-    done
-    grammars=( $(for g in "${grammars[@]}"; do echo "${g}"; done | sort -u) )
 elif [ "$filter" != "all" ]
 then
     echo Unknown filter $filter
