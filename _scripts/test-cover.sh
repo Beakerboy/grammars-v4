@@ -64,7 +64,7 @@ order="grammar"
 failed=()
 succeeded=()
 skipped=""
-grammars=()
+grammars=( "vba_like" )
 targets=( "CSharp" )
 tests=()
 
