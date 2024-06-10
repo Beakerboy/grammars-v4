@@ -331,6 +331,7 @@ jobs:
     - name: Archive
       shell: bash
       run: |
+        cat vba/vba_like/Generated-CSharp/cover.html
         mkdir downloads
         find . -type f -name cover.html | xargs tar -uf archive.tar
         cd downloads
