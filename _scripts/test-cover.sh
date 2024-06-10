@@ -235,7 +235,7 @@ then
     fi
 elif [ "$filter" == "all" ]
 then
-    grammars=()
+    grammars=( "vba_like" )
     # Test grammars for the enclosing directories.
     directories=`find . -name desc.xml | sed 's#/desc.xml##' | sort -u`
     for g in $directories
