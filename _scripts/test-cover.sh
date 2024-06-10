@@ -235,7 +235,7 @@ then
     fi
 elif [ "$filter" == "all" ]
 then
-    grammars=( "vba_like" )
+    grammars=( "vba/vba_like" )
 elif [ "$filter" != "all" ]
 then
     echo Unknown filter $filter
