@@ -327,7 +327,7 @@ jobs:
             Before="${{github.event.before}}"
             After="${{github.event.after}}"
         fi
-        bash _scripts/test-cover.sh -f vba_like
+        bash _scripts/test-cover.sh -g vba_like
     - name: Archive
       shell: bash
       run: |
