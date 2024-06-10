@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ test-coverage ]
+    branches: [ patch-3 ]
   pull_request:
     branches: [ master ]
 
