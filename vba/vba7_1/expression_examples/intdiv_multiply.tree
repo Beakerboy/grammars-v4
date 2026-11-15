@@ -1,0 +1,1 @@
+(expression (expression (literalExpression 24)) (wsc  ) \ (wsc  ) (expression (expression (literalExpression 4)) (wsc  ) * (wsc  ) (expression (literalExpression 2))))
