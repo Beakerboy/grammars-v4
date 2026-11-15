@@ -988,6 +988,7 @@ expression
     | expression wsc? POW wsc? expression                                          # ArithmeticExpression
     | MINUS wsc? expression                                                        # UnaryMinusExpression
     | expression wsc? (DIV | MULT) wsc? expression                                 # ArithmeticExpression
+    | expression wsc? INTDIV wsc? expression                                       # ArithmeticExpression
     | expression wsc? MOD wsc? expression                                          # ArithmeticExpression
     | expression wsc? (PLUS | MINUS) wsc? expression                               # ArithmeticExpression
     | expression wsc? AMPERSAND wsc? expression                                    # ConcatExpression
