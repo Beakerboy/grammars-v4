@@ -994,7 +994,11 @@ expression
     | expression wsc? AMPERSAND wsc? expression                                    # ConcatExpression
     | expression wsc? (IS | LIKE | GEQ | LEQ | GT | LT | NEQ | EQ) wsc? expression # RelationExpression
     | NOT wsc? expression                                                          # NotOperatorExpression
-    | expression wsc? (AND | OR | XOR | EQV | IMP) wsc? expression                 # BooleanExpress
+    | expression wsc? AND wsc? expression                                          # BooleanExpress
+    | expression wsc? OR wsc? expression                                           # BooleanExpress
+    | expression wsc? XOR wsc? expression                                          # BooleanExpress
+    | expression wsc? EQV wsc? expression                                          # BooleanExpress
+    | expression wsc? IMP wsc? expression                                          # BooleanExpress
     | lExpression                                                                  # LExpress
     ;
 
